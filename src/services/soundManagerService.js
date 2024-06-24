@@ -11,6 +11,7 @@ const playSound = async (audio, setSound) => {
   const newSound = new Sound(audio, Sound.MAIN_BUNDLE, error => {
     if (error) {
       log.error('Failed to load the sound', error);
+      audioFocusService.abandonAudioFocus();
       return;
     }
     newSound.play(success => {
