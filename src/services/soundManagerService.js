@@ -3,7 +3,9 @@ import audioFocusService from './audioFocusService';
 
 import log from '../config/logger';
 
-const playSound = (audio, setSound) => {
+const playSound = async (audio, setSound) => {
+  await audioFocusService.requestAudioFocus();
+
   Sound.setCategory('Playback', true);
 
   const newSound = new Sound(audio, Sound.MAIN_BUNDLE, error => {

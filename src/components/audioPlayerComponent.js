@@ -3,8 +3,8 @@ import {View, Button, BackHandler} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 
 import log from '../config/logger';
-import audioFocusService from '../services/audioFocusService';
 import audioManagerService from '../services/soundManagerService';
+import playerConstants from '../constants/playerConstants';
 
 const AudioPlayerComponent = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -12,9 +12,9 @@ const AudioPlayerComponent = () => {
 
   const playAudio = async () => {
     try {
-      const soundPath = 'https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/start.ogg';
-      await audioFocusService.requestAudioFocus();
-      audioManagerService.playSound(soundPath, setSound);
+      const soundPath =
+        'https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/start.ogg';
+      await audioManagerService.playSound(soundPath, setSound);
     } catch (error) {
       log.error('Error requesting audio focus:', error);
     }
@@ -35,7 +35,7 @@ const AudioPlayerComponent = () => {
     if (isPlaying) {
       BackgroundTimer.runBackgroundTimer(() => {
         playAudio();
-      }, 10000);
+      }, playerConstants.AUDIO_PLAY_INTERVAL);
     } else {
       BackgroundTimer.stopBackgroundTimer();
     }
