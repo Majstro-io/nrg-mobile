@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Button, BackHandler} from 'react-native';
+import {View, BackHandler} from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 
 import log from '../config/logger';
 import audioManagerService from '../services/soundManagerService';
 import playerConstants from '../constants/playerConstants';
+import {Button} from 'react-native-paper';
 
 const AudioPlayerComponent = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -46,8 +47,12 @@ const AudioPlayerComponent = () => {
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Button title="Start" onPress={startPlaying} />
-      <Button title="Stop" onPress={stopPlaying} />
+      <Button mode="contained" onPress={startPlaying}>
+        Start
+      </Button>
+      <Button mode="contained" onPress={stopPlaying}>
+        Stop
+      </Button>
     </View>
   );
 };

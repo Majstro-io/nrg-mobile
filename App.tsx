@@ -7,10 +7,22 @@
 
 import React from 'react';
 
-import AudioPlayerComponent from './src/components/audioPlayerComponent';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { PaperProvider } from 'react-native-paper';
+import ApplicationContent from './src/navigation/stackNavigation';
+import darkTheme from './src/styles/theme';
+import { enGB, registerTranslation } from 'react-native-paper-dates'
 
 function App(): React.JSX.Element {
-  return <AudioPlayerComponent />;
+  registerTranslation('en', enGB)
+
+  return (
+    <PaperProvider theme={darkTheme}>
+      <SafeAreaProvider>
+        <ApplicationContent />
+      </SafeAreaProvider>
+    </PaperProvider>
+  );
 }
 
 export default App;
