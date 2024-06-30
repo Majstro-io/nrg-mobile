@@ -1,0 +1,16 @@
+{
+  "content": [
+    {
+      "activity": "running",
+      "media": [
+        "https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/start.ogg"
+      ]
+    },
+    {
+      "activity": "walking",
+      "media": [
+        "https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/start.ogg"
+      ]
+    }
+  ]
+}

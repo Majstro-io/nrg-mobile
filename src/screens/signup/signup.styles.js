@@ -7,15 +7,26 @@ const loginStyles = StyleSheet.create({
         marginTop: 50,
     },
 
-    button: {
-        borderRadius: 25,
-        backgroundColor: "#a78bfa"
+    registerInputContainer: {
+        marginTop: 10
     },  
-    
-    image: {
+
+    imagePersonalDetails: {
+        marginTop: 65,
+        width: 380, 
+        height: 160,
+    },
+
+    imageContactDetails: {
+        marginTop: 30,
         width: 350, 
         height: 350,
     },
+    button: {
+        borderRadius: 25,
+        backgroundColor: "#a78bfa"
+    }, 
+
 
 
 });

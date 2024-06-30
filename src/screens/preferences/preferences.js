@@ -1,61 +1,106 @@
 import React from "react";
-import {  Image, ScrollView, View } from "react-native";
-import { Button, Text, TextInput, useTheme } from "react-native-paper";
-import loginStyles from "./preferences.styles";
+import { Image, ScrollView, View } from "react-native";
+import { useTheme } from "react-native-paper";
+import preferencesStyles from "./preferences.styles";
 import { useNavigation } from "@react-navigation/native";
-
-import DatePicker from "../../components/datepicker";
-import DropdownComponent from "../../components/dropdown";
+import { Button, Center, CheckIcon, ChevronLeftIcon, FormControl, HStack, Heading, IconButton, Input, Select, VStack } from "native-base";
 
 
-const Preferences = () => {
+const preferences = () => {
     const theme = useTheme();
     const navigation = useNavigation();
 
-    const [text, setText] = React.useState('');
+    const [voice, setVoice] = React.useState('');
+    const [userTheme, setUserTheme] = React.useState('');
 
-    const a = (a) => {
-        console.log(a)
-    }
 
     return (
-        <ScrollView style={[{ backgroundColor: theme.colors.background, padding: 20 }]}>
-            <View style={loginStyles.titleContainer} >
-                <Text variant="headlineMedium">
-                    Personal Details
-                </Text>
-            </View>
-            <View style={loginStyles.registerInputContainer}>
-                <TextInput
-                    label="First Name"
-                    value={text}
-                    onChangeText={text => setText(text)}
-                    style={loginStyles.input}
-                    mode="outlined"
-                />
-                <TextInput
-                    label="Last Name"
-                    value={text}
-                    onChangeText={text => setText(text)}
-                    style={loginStyles.input}
-                    mode="outlined"
-                />
-                <DatePicker onSelect={a} label={"Birthday"} />
+        <ScrollView style={[{ backgroundColor: theme.colors.background }]}>
+            <View style={preferencesStyles.topicLabelContainer}>
+                <HStack space={3} justifyContent="left" alignItems="center" mx="5">
+                    <IconButton icon={<ChevronLeftIcon />}  _icon={{
+                        color: "violet.700",
+                        size: "md",              
+                    }}
+                    _pressed={{
+                        bg: "transparent" 
+                    }}
+                    onPress={() => navigation.navigate('ContactDetails')}
+                    />
+                    <Heading size="xl">
+                        Preferences Details
+                    </Heading>
+                </HStack>
 
             </View>
-            <View style={loginStyles.imageContainer}>
+            <Center>
                 <Image
-                    source={require('../../resources/login.png')}
-                    style={loginStyles.image}
+                    source={require('../../resources/preferences.png')}
+                    style={preferencesStyles.image}
                 />
-            </View>
-            <View style={loginStyles.registerContainer}>
-                <Button style={loginStyles.registerButton} mode="contained" onPress={() => alert('Button Pressed')}>
-                    Register
-                </Button>
+            </Center>
+
+            <View style={preferencesStyles.InputContainer}>
+                <FormControl isRequired>
+
+
+                    <VStack space={4} mt="4" alignItems="center">
+                        <VStack space={1}>
+                            <FormControl.Label alignSelf="flex-start">Voice Preferences</FormControl.Label>
+                            <Select
+                                isReadOnly
+                                selectedValue={voice}
+                                onValueChange={voice => setVoice(voice)}
+                                width="xs"
+                                placeholder="Roy"
+                                _selectedItem={{
+                                    bg: "info.300",
+                                    endIcon: <CheckIcon size="5" />
+                                }}
+                            >
+                                <Select.Item label="Roy" value="Roy" />
+                                <Select.Item label="Mark" value="Mark" />
+
+                            </Select>
+                        </VStack>
+
+                        <VStack space={1}>
+                            <FormControl.Label alignSelf="flex-start">Select Theme</FormControl.Label>
+                            <Select
+                                isReadOnly
+                                selectedValue={userTheme}
+                                onValueChange={userTheme => setUserTheme(userTheme)}
+                                width="xs"
+                                placeholder="Light"
+                                _selectedItem={{
+                                    bg: "info.300",
+                                    endIcon: <CheckIcon size="5" />
+                                }}
+                            >
+                                <Select.Item label="Light" value="Light" />
+                                <Select.Item label="Dark" value="Dark" />
+
+                            </Select>
+                        </VStack>
+
+
+                        <Button
+                            mt={3}
+                            style={preferencesStyles.button}
+                            width="1/4"
+                            onPress={() => navigation.navigate('Preferences')}>
+                            Next
+                        </Button>
+
+
+
+                    </VStack>
+
+                </FormControl>
+
             </View>
         </ScrollView>
     );
 };
 
-export default Preferences;
+export default preferences;

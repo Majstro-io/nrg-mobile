@@ -2,44 +2,33 @@ import { StyleSheet } from "react-native";
 
 const loginStyles = StyleSheet.create({
     loginInputContainer: {
-        flex: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        alignContent: 'flex-end'
     },
-    registerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 16,
-        alignContent: 'flex-end'
-    },
+
     welcomeLabelContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: 100,
     },
-    loginButton: {
-        width: 150,
-        height: 50,
 
-        justifyContent: 'center'
-
-    },
-    registerButton: {
-        width: 150,
-        height: 40,
-
-        justifyContent: 'center'
-    },
-    input: {
-        width: '80%',
-        marginBottom: 20,
-    },
     image: {
-        marginTop: 10,
-        aspectRatio: 1,
+        marginTop: 30
+
     },
+    linkContainer: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        paddingBottom: 15,
+        paddingHorizontal: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    },
+    button: {
+        borderRadius: 25,
+        backgroundColor: "#a78bfa"
+    }, 
 });
 
 
