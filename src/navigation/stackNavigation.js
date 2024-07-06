@@ -1,12 +1,12 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Activities from '../screens/activities';
+import Activities from '../screens/activities/activities';
 import Preferences from '../screens/preferences/preferences';
 import LoginPage from '../screens/login/loginPage';
 import PersonalDetails from '../screens/signup/personalDetails';
 import ContactDetails from '../screens/signup/contactDetails';
-import Activity from '../screens/activity';
+import Activity from '../screens/activities/activity';
 import navigationconstants from '../constants/navigationConstants';
 
 const Stack = createStackNavigator();

@@ -1,20 +1,23 @@
 import { StyleSheet } from "react-native";
 
-const loginStyles = StyleSheet.create({
+const activitiesStyles = StyleSheet.create({
     loginInputContainer: {
         justifyContent: 'center',
         alignItems: 'center',
     },
 
-    welcomeLabelContainer: {
+    LabelContainer: {
         flex: 1,
-        justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: 90,
+        marginTop: 10,
+    },
+
+    appbar: {
+        alignItems: 'left',
     },
 
     image: {
-        marginTop: 35
+        marginTop: 30
 
     },
     linkContainer: {
@@ -29,7 +32,10 @@ const loginStyles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: "#a78bfa"
     }, 
+    activitiesContainer: {
+        marginBottom: 20 
+    }
 });
 
 
-export default loginStyles;
+export default activitiesStyles;

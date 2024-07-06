@@ -4,30 +4,28 @@ const loginStyles = StyleSheet.create({
     topicLabelContainer: {
         justifyContent: 'flex-start',
         alignItems: 'left',
-        marginTop: 50,
+        marginTop: 40,
     },
 
     registerInputContainer: {
-        marginTop: 10
+        marginTop: 15
     },  
 
     imagePersonalDetails: {
-        marginTop: 65,
+        marginTop: 53,
         width: 380, 
-        height: 160,
+        height: 165,
     },
 
     imageContactDetails: {
-        marginTop: 30,
-        width: 350, 
-        height: 350,
+        marginTop: 31,
+        width: 380, 
+        height: 380,
     },
     button: {
         borderRadius: 25,
         backgroundColor: "#a78bfa"
     }, 
-
-
 
 });
 

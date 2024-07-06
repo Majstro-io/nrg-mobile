@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import {extendTheme} from 'native-base';
+import { extendTheme } from 'native-base';
 
 const darkTheme = extendTheme({
   fonts: {
@@ -35,30 +34,40 @@ const darkTheme = extendTheme({
     },
   },
   components: {
+    View: {
+      baseStyle: ({ colorMode }) => ({
+        bg: colorMode === 'dark' ? 'black.300' : 'light.800',
+      }),
+    },
+    Pressable: {
+      baseStyle: ({ colorMode }) => ({
+        bg: colorMode === 'dark' ? 'black.300' : 'muted.100',
+        borderColor: colorMode === 'dark' ? 'black.300' : 'muted.200',
+      }),
+    },
+    Flex: {
+      baseStyle: ({ colorMode }) => ({
+        color: colorMode === 'dark' ? 'black.100' : 'light.800',
+      }),
+    },
     Divider: {
-      baseStyle: ({colorMode}) => {
-        return {
-          backgroundColor: colorMode === 'dark' ? 'black.100' : 'black.200',
-        };
-      },
+      baseStyle: ({ colorMode }) => ({
+        backgroundColor: colorMode === 'dark' ? 'black.100' : 'black.200',
+      }),
     },
     Heading: {
-      baseStyle: ({colorMode}) => {
-        return {
-          color: colorMode === 'dark' ? 'black.100' : 'violet.700',
-        };
-      },
+      baseStyle: ({ colorMode }) => ({
+        color: colorMode === 'dark' ? 'black.100' : 'muted.50',
+      }),
       defaultProps: {
         size: 'xl',
         fontFamily: 'MontSemibold',
       },
     },
     Text: {
-      baseStyle: ({colorMode}) => {
-        return {
-          color: colorMode === 'dark' ? 'black.100' : 'black.300',
-        };
-      },
+      baseStyle: ({ colorMode }) => ({
+        color: colorMode === 'dark' ? 'black.100' : 'black.300',
+      }),
       defaultProps: {
         size: 'md',
         fontFamily: 'MontRegular',
@@ -77,6 +86,14 @@ const darkTheme = extendTheme({
           fontSize: '12px',
         },
       },
+    },
+    FormControl: {
+      baseStyle: ({ colorMode }) => ({
+        label: {
+          color: colorMode === 'dark' ? 'black.100' : 'black.300',
+          fontFamily: 'MontRegular', // Adjust fontFamily as needed
+        },
+      }),
     },
   },
 });
