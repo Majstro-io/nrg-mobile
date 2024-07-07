@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View, Button, Center, CheckIcon, FormControl, Select, VStack } from "native-base";
@@ -7,16 +8,23 @@ import { useTheme } from "../../styles/ThemeContext";
 import preferencesStyles from "./preferences.styles";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
+import TagGroup from "../../components/tagGroup";
+import mappingUtils from "../../utils/mappingUtils";
 
 import assistantOptions from "../../data/assistantOptions.json"
-import userPreferences from "../../data/userPreferences.json"
+import activities from "../../data/activities.json"
+import { addUserFavouriteActivity } from "../../store/slices/userPreferencesSlice";
 
 const Preferences = () => {
   const navigation = useNavigation();
   const { theme, setTheme } = useTheme();
+  const userPreferences = useSelector((state) => state.userPreferences);
+  const dispatch = useDispatch();
+
 
   const [voice, setVoice] = React.useState({});
   const [userTheme, setUserTheme] = React.useState(theme);
+  const [mappedFavourites, setMappedFavourites] = React.useState([]);
 
   const handleThemeChange = (newTheme) => {
     setUserTheme(newTheme);
@@ -31,6 +39,12 @@ const Preferences = () => {
   useEffect(() => {
     getSelectedAssistant()
   }, [])
+
+  useEffect(() => {
+    getSelectedAssistant()
+    const mapped = mappingUtils.mapFavouritesWithActivities(activities.content, userPreferences.favourites).map(item => item.activityName)
+    setMappedFavourites(mapped)
+  }, [userPreferences.favourites])
 
 
   return (
@@ -56,7 +70,6 @@ const Preferences = () => {
                   isReadOnly
                   placeholder="Select Voice Preference"
                   _selectedItem={{
-                    bg: "info.300",
                     endIcon: <CheckIcon size="5" />
                   }}
                 >
@@ -74,7 +87,6 @@ const Preferences = () => {
                   placeholder="Theme"
                   isReadOnly
                   _selectedItem={{
-                    bg: "info.300",
                     endIcon: <CheckIcon size="5" />
                   }}
                 >
@@ -82,12 +94,32 @@ const Preferences = () => {
                   <Select.Item label="Dark" value="dark" />
                 </Select>
               </VStack>
+              <VStack space={1}>
+                <FormControl.Label alignSelf="flex-start">Favourite Activities</FormControl.Label>
+                <Select
+                  style={{backgroundColor:"info.300"}}
+                  onValueChange={(value) => dispatch(addUserFavouriteActivity({ activityId: value }))}
+                  width="xs"
+                  placeholder="Activity"
+                  isReadOnly
+                  _selectedItem={{
+                    endIcon: <CheckIcon size="5" />
+                  }}
+                >
+                  {activities.content.map(activity => {
+                    return <Select.Item label={activity.name} value={activity.id} key={activity.id} />
+                  })}
+                </Select>
+              </VStack>
+              <VStack>
+                <TagGroup tagList={mappedFavourites} />
+              </VStack>
               <Button
                 mt={3}
                 style={preferencesStyles.button}
                 width="1/4"
-                onPress={() => navigation.navigate('Activities')}>
-                Save
+                onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}>
+                Done
               </Button>
             </VStack>
           </FormControl>

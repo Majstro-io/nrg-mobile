@@ -32,7 +32,7 @@ const activitiesStyles = StyleSheet.create({
         backgroundColor: "#a78bfa"
     }, 
     activitiesContainer: {
-        marginBottom: 20 
+        marginBottom: 20 ,
     }
 });
 

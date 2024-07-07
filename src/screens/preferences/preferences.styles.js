@@ -13,8 +13,8 @@ const loginStyles = StyleSheet.create({
     },  
     
     image: {
-        width: 350, 
-        height: 350,
+        width: 250, 
+        height: 250,
     },
 
 

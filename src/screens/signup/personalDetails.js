@@ -11,10 +11,10 @@ import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 const PersonalDetails = () => {
     const navigation = useNavigation();
 
-    const [firstName, setFirstName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
-    const [gender, setGender] = React.useState('');
-    const [date, setDate] = React.useState('');
+    const [firstName, setFirstName] = React.useState(null);
+    const [lastName, setLastName] = React.useState(null);
+    const [gender, setGender] = React.useState(null);
+    const [birthDate, setBirthDate] = React.useState(null);
 
     return (
         <View style={{ flex: 1 }}>
@@ -29,7 +29,7 @@ const PersonalDetails = () => {
                                 <FormControl.Label alignSelf="flex-start">First Name</FormControl.Label>
                                 <Input
                                     width="xs"
-                                    placeholder=""
+                                    placeholder="First Name"
                                     value={firstName}
                                     onChangeText={firstName => setFirstName(firstName)}
                                 />
@@ -39,7 +39,7 @@ const PersonalDetails = () => {
                                 <FormControl.Label alignSelf="flex-start">Last Name</FormControl.Label>
                                 <Input
                                     width="xs"
-                                    placeholder=""
+                                    placeholder="Last Name"
                                     value={lastName}
                                     onChangeText={lastName => setLastName(lastName)}
                                 />
@@ -48,12 +48,11 @@ const PersonalDetails = () => {
                                 <FormControl.Label alignSelf="flex-start">BirthDay</FormControl.Label>
                                 <Select
                                     isReadOnly
-                                    selectedValue={date}
-                                    onValueChange={date => setDate(date)}
+                                    selectedValue={birthDate}
+                                    onValueChange={date => setBirthDate(date)}
                                     width="xs"
                                     placeholder="01/01/2024"
                                     _selectedItem={{
-                                        bg: "info.300",
                                         endIcon: <CheckIcon size="5" />
                                     }}
                                 >
@@ -70,7 +69,6 @@ const PersonalDetails = () => {
                                     width="xs"
                                     placeholder="Male"
                                     _selectedItem={{
-                                        bg: "info.300",
                                         endIcon: <CheckIcon size="5" />
                                     }}
                                 >

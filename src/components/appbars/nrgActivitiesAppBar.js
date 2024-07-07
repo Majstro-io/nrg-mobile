@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { HStack, IconButton, SearchIcon, ThreeDotsIcon, View } from "native-base"
+import { FavouriteIcon, HStack, IconButton, Switch, ThreeDotsIcon, View } from "native-base"
 import navigationconstants from "../../constants/navigationConstants";
 
-const NrgActivitiesAppBar = () => {
+const NrgActivitiesAppBar = ({ onFavouriteToggle, isFavourite }) => {
     const navigation = useNavigation();
 
     return (
@@ -21,14 +21,15 @@ const NrgActivitiesAppBar = () => {
                 </HStack>
                 <HStack space={2} justifyContent="space-between" alignItems="center" mx="5" mt="5">
                     <IconButton
-                        icon={<SearchIcon />}
+                        icon={<FavouriteIcon />}
                         _icon={{ color: "violet.700", size: "md" }}
                         _light={{
                             bg: "transparent"
                         }}
                         _pressed={{ bg: "transparent" }}
-                        onPress={() => alert('Button Pressed')}
+
                     />
+                    <Switch onTrackColor={"violet.700"} value={isFavourite} onToggle={onFavouriteToggle} size="sm" />
                 </HStack>
             </HStack>
         </View>

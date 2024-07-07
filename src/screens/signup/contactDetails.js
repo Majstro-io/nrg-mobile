@@ -10,8 +10,8 @@ import navigationconstants from "../../constants/navigationConstants";
 const ContactDetails = () => {
     const navigation = useNavigation();
 
-    const [email, setEmail] = React.useState('');
-    const [mobile, setMobile] = React.useState('');
+    const [email, setEmail] = React.useState(null);
+    const [mobile, setMobile] = React.useState(null);
 
     return (
         <View style={{ flex: 1 }}>
@@ -25,7 +25,7 @@ const ContactDetails = () => {
                                 <FormControl.Label alignSelf="flex-start">Email</FormControl.Label>
                                 <Input
                                     width="xs"
-                                    placeholder=""
+                                    placeholder="Email"
                                     value={email}
                                     keyboardType="email-address"
                                     onChangeText={email => setEmail(email)}
@@ -36,7 +36,7 @@ const ContactDetails = () => {
                                 <FormControl.Label alignSelf="flex-start">Mobile Number</FormControl.Label>
                                 <Input
                                     width="xs"
-                                    placeholder=""
+                                    placeholder="Mobile Number"
                                     value={mobile}
                                     keyboardType="numeric"
                                     onChangeText={mobile => setMobile(mobile)}

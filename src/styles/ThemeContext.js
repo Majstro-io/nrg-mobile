@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import { extendTheme, NativeBaseProvider } from 'native-base';
 import userPreferences from "../data/userPreferences.json"
+import { background } from 'native-base/lib/typescript/theme/styled-system';
 
 const darkTheme = extendTheme({
   colors: {
@@ -9,6 +10,12 @@ const darkTheme = extendTheme({
       200: '#7C7C7C',
       300: '#292929',
       800: '#181725',
+    },
+    white: {
+      100: '#FFFFFF',
+      200: '#F8F8F8',
+      300: '#E8E8E8',
+      800: '#C0C0C0',
     },
     green: {
       300: '#53B175',
@@ -100,6 +107,12 @@ const darkTheme = extendTheme({
         color: 'white.100',
       },
     },
+    Select: {
+      baseStyle: {
+        color: 'white.100',
+        bg: 'black.800',
+      },
+    },
   },
 });
 
@@ -111,6 +124,12 @@ const lightTheme = extendTheme({
       200: '#F8F8F8',
       300: '#E8E8E8',
       800: '#C0C0C0',
+    },
+    black: {
+      100: '#C4C4C4',
+      200: '#7C7C7C',
+      300: '#292929',
+      800: '#181725',
     },
     green: {
       300: '#53B175',
@@ -211,6 +230,12 @@ const lightTheme = extendTheme({
     Input: {
       baseStyle: {
         color: 'black.300',
+      },
+    },
+    Select: {
+      baseStyle: {
+        color: 'black.300',
+        bg: 'white.100',
       },
     },
   },

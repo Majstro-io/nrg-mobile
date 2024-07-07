@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@notifee/react-native": "^7.8.2",
+    "@react-native-community/datetimepicker": "^8.1.1",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
+    "@reduxjs/toolkit": "^2.2.6",
     "dateformat": "^5.0.3",
     "native-base": "^3.4.28",
     "react": "18.2.0",
@@ -27,7 +29,9 @@
     "react-native-sound": "0.11.2",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "12.1.1",
-    "react-native-vector-icons": "^10.1.0"
+    "react-native-vector-icons": "^10.1.0",
+    "react-redux": "^9.1.2",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

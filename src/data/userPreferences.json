@@ -2,5 +2,10 @@
   "AudioPlayFrequency": 20000,
   "idleReminderTimeout": 120000,
   "theme": "dark",
-  "assistant": "1"
+  "assistant": "1",
+  "favourites": [
+    {"id": "1", "activityId": "1"},
+    {"id": "2", "activityId": "2"},
+    {"id": "3", "activityId": "3"}
+  ]
 }

@@ -1,4 +1,4 @@
-import { Box, ChevronRightIcon, Flex, HStack, Heading, Image, Pressable, Text } from 'native-base';
+import { Box, ChevronRightIcon, Flex, HStack, Image, Pressable, Text } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
 import activityCardStyles from "./activityCard.styles";
