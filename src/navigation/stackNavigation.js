@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 const ApplicationContent = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName={navigationconstants.PAGES.login}>
         <Stack.Screen options={{ headerShown: false, headerTitle: "Activities" }} name={navigationconstants.PAGES.activities} component={Activities} />
         <Stack.Screen options={{ headerShown: false, headerTitle: "Preferences" }} name={navigationconstants.PAGES.preferences} component={Preferences} />
         <Stack.Screen options={{ headerShown: false, headerTitle: "Login" }} name={navigationconstants.PAGES.login} component={LoginPage} />

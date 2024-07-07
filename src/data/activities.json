@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1",
+    "name": "Running",
+    "category": "Running",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Running.png"
+  },
+  {
+    "id": "2",
+    "name": "Cycling",
+    "category": "Cycling",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Cycling.png"
+  },
+  {
+    "id": "3",
+    "name": "Swimming",
+    "category": "Swimming",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Walking.png"
+  },
+  {
+    "id": "4",
+    "name": "Reading",
+    "category": "Reading",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Reading.png"
+  },
+  {
+    "id": "5",
+    "name": "Walking",
+    "category": "Walking",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Walking.png"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "content": {
+    "assistants": [
+      {"name": "Jane", "id": "1"},
+      {"name": "John", "id": "2"},
+      {"name": "Alexa", "id": "3"}
+    ]
+  }
+}

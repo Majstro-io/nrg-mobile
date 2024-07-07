@@ -15,10 +15,9 @@ const activitiesStyles = StyleSheet.create({
     appbar: {
         alignItems: 'left',
     },
-
     image: {
-        marginTop: 30
-
+        width: 125,
+        height: 125
     },
     linkContainer: {
         position: 'absolute',

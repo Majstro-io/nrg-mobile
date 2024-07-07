@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 import { extendTheme, NativeBaseProvider } from 'native-base';
+import userPreferences from "../data/userPreferences.json"
 
 const darkTheme = extendTheme({
   colors: {
@@ -34,28 +35,28 @@ const darkTheme = extendTheme({
   components: {
     View: {
       baseStyle: {
-        bg:  'black.800',
+        bg: 'black.800',
       },
     },
     Pressable: {
       baseStyle: {
         bg: 'black.300',
-        borderColor:'black.300',
+        borderColor: 'black.300',
       },
     },
     Flex: {
-      baseStyle:{
-        color:'black.100',
+      baseStyle: {
+        color: 'black.100',
       },
     },
     Divider: {
-      baseStyle:{
-        backgroundColor:'black.100',
+      baseStyle: {
+        backgroundColor: 'black.100',
       },
     },
     Heading: {
-      baseStyle:{
-        color:'white.100',
+      baseStyle: {
+        color: 'white.100',
       },
       defaultProps: {
         size: 'xl',
@@ -63,8 +64,8 @@ const darkTheme = extendTheme({
       },
     },
     Text: {
-      baseStyle:{
-        color:'white.100',
+      baseStyle: {
+        color: 'white.100',
       },
       defaultProps: {
         size: 'md',
@@ -86,11 +87,17 @@ const darkTheme = extendTheme({
       },
     },
     FormControl: {
-      baseStyle:{
+      baseStyle: {
         label: {
           color: 'white.100',
           fontFamily: 'MontRegular',
         },
+
+      },
+    },
+    Input: {
+      baseStyle: {
+        color: 'white.100',
       },
     },
   },
@@ -152,7 +159,7 @@ const lightTheme = extendTheme({
       },
     },
     Flex: {
-      baseStyle:{
+      baseStyle: {
         color: 'white.800',
       },
     },
@@ -196,9 +203,14 @@ const lightTheme = extendTheme({
     FormControl: {
       baseStyle: {
         label: {
-          color:  'black.300',
+          color: 'black.300',
           fontFamily: 'MontRegular',
         },
+      },
+    },
+    Input: {
+      baseStyle: {
+        color: 'black.300',
       },
     },
   },
@@ -209,7 +221,7 @@ const lightTheme = extendTheme({
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(userPreferences?.theme || 'light');
 
   const themeObject = theme === 'dark' ? darkTheme : lightTheme;
 

@@ -26,10 +26,10 @@ function App(): React.JSX.Element {
     // </NativeBaseProvider>
 
     <ThemeProvider>
-    <SafeAreaProvider>
-      <ApplicationContent />
-    </SafeAreaProvider>
-  </ThemeProvider>
+      <SafeAreaProvider>
+        <ApplicationContent />
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,21 +1,22 @@
-import { Box, ChevronRightIcon, Flex, HStack, Heading, Image, Pressable,Text } from 'native-base';
+import { Box, ChevronRightIcon, Flex, HStack, Heading, Image, Pressable, Text } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
 import activityCardStyles from "./activityCard.styles";
 import { useNavigation } from '@react-navigation/native';
+import navigationconstants from '../../constants/navigationConstants';
 
-const ActivityCard = ({title, description, imageSource}) => {
+const ActivityCard = ({ id, title, description, imageSource }) => {
   const navigation = useNavigation();
 
   return (
-    <View key="activity-card">
+    <View>
       <Box alignItems="center" mt={4}>
         <Pressable
-          onPress={() => navigation.navigate(`${title}`)}
+          onPress={() => navigation.navigate(navigationconstants.PAGES.activity, { id: id, activityName: title, image: imageSource })}
           rounded="8"
           overflow="hidden"
           borderWidth="1"
-          maxW="96"     
+          maxW="96"
           p="5"
           width="90%"
         >
@@ -27,7 +28,7 @@ const ActivityCard = ({title, description, imageSource}) => {
                 </Text>
               </HStack>
               <HStack space={2} justifyContent="space-between" alignItems="center" >
-                <ChevronRightIcon color="violet.700"/>
+                <ChevronRightIcon color="violet.700" />
               </HStack>
 
             </HStack>
@@ -38,7 +39,7 @@ const ActivityCard = ({title, description, imageSource}) => {
                   {description}
                 </Text>
                 <Image
-                  source={imageSource}
+                  source={{ uri: imageSource }}
                   alt={`${title} Image`}
                   style={activityCardStyles.image}
                 />
