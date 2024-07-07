@@ -12,7 +12,6 @@ const formatTime = (secs) => {
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secsLeft.toString().padStart(2, '0')}`;
 };
 
-
 const conversionUtils = {
     formatDate,
     formatTime

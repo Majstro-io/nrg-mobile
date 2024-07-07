@@ -5,42 +5,52 @@ import BackgroundTimer from 'react-native-background-timer';
 import audioManagerService from "../../services/soundManagerService";
 import log from "../../config/logger";
 import playerConstants from "../../constants/playerConstants";
-import soundData from "../../data/soundData.json"
 import conversionUtils from "../../utils/conversionUtils";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import activitiesStyles from "./activity.styles";
 
+import soundData from "../../data/soundData.json"
+import userPreferences from "../../data/userPreferences.json"
+import notificationData from "../../data/notificationData.json"
+import notifications from "../../config/notification";
+import { AppState } from "react-native";
+
 
 const Activity = ({ route }) => {
     const { id, activityName, image } = route.params;
 
-    const [seconds, setSeconds] = useState(0);
+    const [timer, setTimer] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isRunning, setIsRunning] = useState(false);
+    const [playerState, setPlayerState] = useState(playerConstants.PLAYER_STATES.stopped)
     const [sound, setSound] = useState(null);
     const [audioTracks, setAudioTracks] = useState([])
+    const [appState, setAppState] = useState(AppState.currentState);
+
     const currentTrack = useRef(0);
 
     const handleStartStop = () => {
-        if (!isRunning) {
-            setIsRunning(true)
+        if (playerState == playerConstants.PLAYER_STATES.stopped) {
+            setNotificationTrigger();
+            setPlayerState(playerConstants.PLAYER_STATES.playing)
+            currentTrack.current = 0;
+            setTimer(0);
         } else {
             stopPlaying();
-            setIsRunning(false);
+            setPlayerState(playerConstants.PLAYER_STATES.stopped)
             setSound(null);
             currentTrack.current = 0;
-            setSeconds(0);
+            setTimer(0);
         }
     };
 
     const handlePauseResume = () => {
-        if (!isRunning) {
-            setIsRunning(true)
+        if (playerState == playerConstants.PLAYER_STATES.paused) {
+            setPlayerState(playerConstants.PLAYER_STATES.playing)
         } else {
+            setPlayerState(playerConstants.PLAYER_STATES.paused)
             stopPlaying();
         }
-        setIsRunning(!isRunning);
     };
 
     const playAudio = async (soundPath) => {
@@ -58,6 +68,7 @@ const Activity = ({ route }) => {
     const stopPlaying = () => {
         BackgroundTimer.stopBackgroundTimer();
         audioManagerService.stopSound(sound, setSound);
+        cancelNotificationTrigger();
     };
 
     const fetchActivityData = () => {
@@ -65,24 +76,66 @@ const Activity = ({ route }) => {
         setAudioTracks(audioData.media)
     }
 
+    const setNotificationTrigger = () => {
+        notifications.setNotification(
+            notificationData.remindIdle.title,
+            notificationData.remindIdle.message,
+            userPreferences.idleReminderTimeout,
+            notificationData.remindIdle.id
+        )
+    }
+
+    const cancelNotificationTrigger = () => {
+        notifications.cancelNotification(notificationData.remindIdle.id)
+    }
+
     useEffect(() => {
         fetchActivityData();
     }, [id])
 
+    // handle idle notifications when app is in background and timer is running
+    useEffect(() => {
+        const handleAppStateChange = (nextAppState) => {
+            if (appState.match(/inactive|background/) && nextAppState === 'active') {
+                // app has come to foreground
+                //cancel idle notification trigger on stop
+                if (playerState == playerConstants.PLAYER_STATES.playing) {
+                    cancelNotificationTrigger();
+                }
+
+            } else if (appState === 'active' && nextAppState.match(/inactive|background/)) {
+                //app has gone to the background
+                // set notification to prompt to check if user is still using the app at given timeout
+                if (playerState == playerConstants.PLAYER_STATES.playing) {
+                    setNotificationTrigger();
+                }
+            }
+            setAppState(nextAppState);
+        };
+
+        const subscription = AppState.addEventListener('change', handleAppStateChange);
+
+        return () => {
+            subscription.remove();
+        };
+    }, [appState]);
+
+    // timer 
     useEffect(() => {
         let interval = null;
-        if (isRunning) {
+        if (playerState == playerConstants.PLAYER_STATES.playing) {
             interval = setInterval(() => {
-                setSeconds((prevSeconds) => prevSeconds + 1);
+                setTimer((prevSeconds) => prevSeconds + 1);
             }, 1000);
-        } else if (!isRunning && seconds !== 0) {
+        } else if (playerState != playerConstants.PLAYER_STATES.playing && timer !== 0) {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
-    }, [isRunning, seconds]);
+    }, [timer, playerState]);
 
+    // background job which will keep running to play audio at time intervals
     useEffect(() => {
-        if (isRunning) {
+        if (playerState == playerConstants.PLAYER_STATES.playing) {
             BackgroundTimer.runBackgroundTimer(() => {
                 const nextTrack = currentTrack.current >= audioTracks.length - 1 ? 0 : currentTrack.current + 1
                 currentTrack.current = nextTrack;
@@ -94,7 +147,7 @@ const Activity = ({ route }) => {
         return () => {
             BackgroundTimer.stopBackgroundTimer();
         };
-    }, [isRunning]);
+    }, [playerState]);
 
     return (
 
@@ -113,7 +166,7 @@ const Activity = ({ route }) => {
                 </Flex>
                 <VStack space={10} alignItems="center">
                     <Box>
-                        <Text fontSize="6xl">{conversionUtils.formatTime(seconds)}</Text>
+                        <Text fontSize="6xl">{conversionUtils.formatTime(timer)}</Text>
                     </Box>
                     <Button
                         size="lg"
@@ -121,16 +174,16 @@ const Activity = ({ route }) => {
                         onPress={handleStartStop}
                         _text={{ fontSize: '4xl' }}
                     >
-                        {isRunning ? "Stop" : "Start"}
+                        {playerState == playerConstants.PLAYER_STATES.stopped ? "Start" : "Stop"}
                     </Button>
                     <Button
                         size="sm"
                         rounded="full"
                         onPress={handlePauseResume}
                         _text={{ fontSize: '2xl' }}
-                        isDisabled={!isRunning}
+                        isDisabled={playerState == playerConstants.PLAYER_STATES.stopped}
                     >
-                        Pause
+                        {playerState == playerConstants.PLAYER_STATES.paused ? "Resume" : "Pause"}
                     </Button>
                 </VStack>
             </Center>
