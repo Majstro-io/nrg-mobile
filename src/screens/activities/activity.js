@@ -1,3 +1,4 @@
+import { AppState } from "react-native";
 import { Box, Button, Center, Flex, HStack, Image, Text, View, VStack } from "native-base";
 import { useEffect, useRef, useState } from "react";
 import BackgroundTimer from 'react-native-background-timer';
@@ -8,13 +9,11 @@ import playerConstants from "../../constants/playerConstants";
 import conversionUtils from "../../utils/conversionUtils";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
-import activitiesStyles from "./activity.styles";
+import notifications from "../../config/notification";
 
 import soundData from "../../data/soundData.json"
 import userPreferences from "../../data/userPreferences.json"
 import notificationData from "../../data/notificationData.json"
-import notifications from "../../config/notification";
-import { AppState } from "react-native";
 
 
 const Activity = ({ route }) => {
@@ -160,7 +159,8 @@ const Activity = ({ route }) => {
                         <Image
                             source={{ uri: image }}
                             alt={`${activityName} Image`}
-                            style={activitiesStyles.image}
+                            height={125}
+                            width={125}
                         />
                     </HStack>
                 </Flex>

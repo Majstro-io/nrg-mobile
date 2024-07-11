@@ -7,19 +7,14 @@ const showNotification = async (title, body, notificationId, channelName, channe
         // for ios
         await notifee.requestPermission()
 
-        // Create a channel (required for Android)
-        const channel = await notifee.createChannel({
-            id: channelId || 'nrg',
-            name: channelName || 'nrg',
-        });
-
         // Display a notification
         await notifee.displayNotification({
             id: notificationId || "nrg",
             title: title,
             body: body,
             android: {
-                channel,
+                channelId: channelId || 'nrg',
+                name: channelName || 'nrg',
                 pressAction: {
                     id: 'default',
                 },

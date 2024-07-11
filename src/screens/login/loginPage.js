@@ -2,7 +2,8 @@ import React from "react";
 import { Image } from "react-native";
 import loginStyles from "./login.styles";
 import { useNavigation } from "@react-navigation/native";
-import { Button, FormControl, HStack, Heading, Input, Link, ScrollView, Text, VStack, View, useTheme } from 'native-base';
+import { Button, FormControl, HStack, Heading, Input, ScrollView, Text, VStack, View } from 'native-base';
+
 import navigationconstants from "../../constants/navigationConstants";
 
 const LoginPage = () => {
@@ -36,7 +37,6 @@ const LoginPage = () => {
                                 />
                             </VStack>
                             <Button
-                                style={loginStyles.button}
                                 width="1/4"
                                 onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}>
                                 Login
@@ -54,7 +54,6 @@ const LoginPage = () => {
                             I'm a new user{" "}
                         </Text>
                         <Button
-                            style={loginStyles.button}
                             width="1/5"
                             onPress={() => navigation.navigate(navigationconstants.PAGES.personalDetails)}>
                             Sign Up

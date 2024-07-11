@@ -1,7 +1,6 @@
 import { Box, ChevronRightIcon, Flex, HStack, Image, Pressable, Text } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
-import activityCardStyles from "./activityCard.styles";
 import { useNavigation } from '@react-navigation/native';
 import navigationconstants from '../../constants/navigationConstants';
 
@@ -28,7 +27,7 @@ const ActivityCard = ({ id, title, description, imageSource }) => {
                 </Text>
               </HStack>
               <HStack space={2} justifyContent="space-between" alignItems="center" >
-                <ChevronRightIcon color="violet.700" />
+                <ChevronRightIcon color="primary.700" />
               </HStack>
 
             </HStack>
@@ -41,7 +40,8 @@ const ActivityCard = ({ id, title, description, imageSource }) => {
                 <Image
                   source={{ uri: imageSource }}
                   alt={`${title} Image`}
-                  style={activityCardStyles.image}
+                  width={125}
+                  height={125}
                 />
               </HStack>
             </Flex>

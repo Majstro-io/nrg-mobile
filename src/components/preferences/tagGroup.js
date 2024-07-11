@@ -1,4 +1,4 @@
-import { Badge, Center, Flex, HStack, useBreakpointValue, VStack } from "native-base";
+import { Badge } from "native-base";
 
 const TagGroup = ({ tagList }) => {
     return (

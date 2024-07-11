@@ -5,30 +5,28 @@ import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View, Button, Center, CheckIcon, FormControl, Select, VStack } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
-import preferencesStyles from "./preferences.styles";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
-import TagGroup from "../../components/tagGroup";
+import TagGroup from "../../components/preferences/tagGroup";
 import mappingUtils from "../../utils/mappingUtils";
 
 import assistantOptions from "../../data/assistantOptions.json"
 import activities from "../../data/activities.json"
-import { addUserFavouriteActivity } from "../../store/slices/userPreferencesSlice";
+import { addUserFavouriteActivity, updateTheme } from "../../store/slices/userPreferencesSlice";
 
 const Preferences = () => {
   const navigation = useNavigation();
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const userPreferences = useSelector((state) => state.userPreferences);
   const dispatch = useDispatch();
 
 
   const [voice, setVoice] = React.useState({});
-  const [userTheme, setUserTheme] = React.useState(theme);
   const [mappedFavourites, setMappedFavourites] = React.useState([]);
 
-  const handleThemeChange = (newTheme) => {
-    setUserTheme(newTheme);
-    setTheme(newTheme);
+  const handleThemeChange = (selectedTheme) => {
+    dispatch(updateTheme(selectedTheme))
+    setTheme(selectedTheme);
   };
 
   const getSelectedAssistant = () => {
@@ -54,10 +52,9 @@ const Preferences = () => {
         <Center>
           <Image
             source={require('../../resources/preferences.png')}
-            style={preferencesStyles.image}
           />
         </Center>
-        <View style={preferencesStyles.InputContainer}>
+        <View>
           <FormControl isRequired>
             <VStack space={4} mt="4" alignItems="center">
               <VStack space={1}>
@@ -81,7 +78,7 @@ const Preferences = () => {
               <VStack space={1}>
                 <FormControl.Label alignSelf="flex-start">Select Theme</FormControl.Label>
                 <Select
-                  selectedValue={userTheme}
+                  selectedValue={userPreferences.theme}
                   onValueChange={handleThemeChange}
                   width="xs"
                   placeholder="Theme"
@@ -97,7 +94,7 @@ const Preferences = () => {
               <VStack space={1}>
                 <FormControl.Label alignSelf="flex-start">Favourite Activities</FormControl.Label>
                 <Select
-                  style={{backgroundColor:"info.300"}}
+                  style={{ backgroundColor: "info.300" }}
                   onValueChange={(value) => dispatch(addUserFavouriteActivity({ activityId: value }))}
                   width="xs"
                   placeholder="Activity"
@@ -116,7 +113,6 @@ const Preferences = () => {
               </VStack>
               <Button
                 mt={3}
-                style={preferencesStyles.button}
                 width="1/4"
                 onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}>
                 Done

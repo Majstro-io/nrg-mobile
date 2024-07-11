@@ -12,10 +12,8 @@ const loginStyles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 90,
     },
-
     image: {
         marginTop: 35
-
     },
     linkContainer: {
         position: 'absolute',
@@ -25,13 +23,9 @@ const loginStyles = StyleSheet.create({
         paddingTop: 15,
         paddingHorizontal: 20,
         backgroundColor: 'rgba(10, 10, 10, 0.7)',
-        alignItems:'center',
-        justifyContent:'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    button: {
-        borderRadius: 25,
-        backgroundColor: "#a78bfa"
-    }, 
 });
 
 

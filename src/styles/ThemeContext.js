@@ -1,7 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
 import { extendTheme, NativeBaseProvider } from 'native-base';
-import userPreferences from "../data/userPreferences.json"
-import { background } from 'native-base/lib/typescript/theme/styled-system';
 
 const darkTheme = extendTheme({
   colors: {
@@ -17,20 +15,17 @@ const darkTheme = extendTheme({
       300: '#E8E8E8',
       800: '#C0C0C0',
     },
-    green: {
-      300: '#53B175',
-    },
     primary: {
-      50: '#E3F2F9',
-      100: '#C5E4F3',
-      200: '#A2D4EC',
-      300: '#7AC1E4',
-      400: '#47A9DA',
-      500: '#0088CC',
-      600: '#007AB8',
-      700: '#006BA1',
-      800: '#005885',
-      900: '#003F5E',
+      50: '#6B46C1',
+      100: '#6B46C1',
+      200: '#6B46C1',
+      300: '#6B46C1',
+      400: '#6B46C1',
+      500: '#6B46C1',
+      600: '#a78bfa',
+      700: '#6B46C1',
+      800: '#6B46C1',
+      900: '#6B46C1',
     },
     amber: {
       400: '#d97706',
@@ -113,6 +108,21 @@ const darkTheme = extendTheme({
         bg: 'black.800',
       },
     },
+    IconButton: {
+      baseStyle: {
+        _icon: { size: "md" },
+        _light: {
+          bg: "transparent"
+        },
+        _pressed: { bg: "transparent" }
+      }
+    },
+    Button: {
+      baseStyle: {
+        color: 'primary.600',
+        borderRadius: 25
+      }
+    }
   },
 });
 
@@ -246,7 +256,7 @@ const lightTheme = extendTheme({
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(userPreferences?.theme || 'light');
+  const [theme, setTheme] = useState('dark');
 
   const themeObject = theme === 'dark' ? darkTheme : lightTheme;
 

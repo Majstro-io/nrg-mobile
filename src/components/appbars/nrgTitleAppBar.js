@@ -11,16 +11,8 @@ const NrgTitleAppBar = ({ title, backNavigateTo }) => {
             marginTop: 50,
         }}>
             <HStack space={3} justifyContent="left" alignItems="center" mx="5">
-                <IconButton icon={<ChevronLeftIcon />} _icon={{
-                    color: "violet.700",
-                    size: "md",
-                }}
-                    _pressed={{
-                        bg: "transparent"
-                    }}
-                    _light={{
-                        bg: "transparent"
-                    }}
+                <IconButton
+                    icon={<ChevronLeftIcon />}
                     onPress={() => backNavigateTo ? navigation.navigate(backNavigateTo) : null}
                 />
                 <Heading size="xl">

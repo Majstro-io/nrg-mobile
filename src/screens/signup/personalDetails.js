@@ -80,7 +80,6 @@ const PersonalDetails = () => {
 
                             <Button
                                 mt={3}
-                                style={signupStyles.button}
                                 width="1/4"
                                 onPress={() => navigation.navigate(navigationconstants.PAGES.contactDetails)}>
                                 Next

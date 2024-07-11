@@ -11,25 +11,14 @@ const NrgActivitiesAppBar = ({ onFavouriteToggle, isFavourite }) => {
                 <HStack space={2} justifyContent="space-between" alignItems="center" mx="5" mt="5">
                     <IconButton
                         icon={<ThreeDotsIcon />}
-                        _icon={{ color: "violet.700", size: "md" }}
-                        _light={{
-                            bg: "transparent"
-                        }}
-                        _pressed={{ bg: "transparent" }}
                         onPress={() => navigation.navigate(navigationconstants.PAGES.preferences)}
                     />
                 </HStack>
                 <HStack space={2} justifyContent="space-between" alignItems="center" mx="5" mt="5">
                     <IconButton
                         icon={<FavouriteIcon />}
-                        _icon={{ color: "violet.700", size: "md" }}
-                        _light={{
-                            bg: "transparent"
-                        }}
-                        _pressed={{ bg: "transparent" }}
-
                     />
-                    <Switch onTrackColor={"violet.700"} value={isFavourite} onToggle={onFavouriteToggle} size="sm" />
+                    <Switch onTrackColor={"primary.700"} value={isFavourite} onToggle={onFavouriteToggle} size="sm" />
                 </HStack>
             </HStack>
         </View>

@@ -3,7 +3,8 @@ import userPrefs from "../../data/userPreferences.json"
 
 const initialState = {
   favourites: userPrefs.favourites,
-  assistant: userPrefs.assistant
+  assistant: userPrefs.assistant,
+  theme: userPrefs.theme
 };
 
 const userPreferencesSlice = createSlice({
@@ -16,8 +17,11 @@ const userPreferencesSlice = createSlice({
         state.favourites.push(action.payload);
       }
     },
+    updateTheme: (state, action) => {
+      state.theme = action.payload
+    },
   },
 });
 
-export const { addUserFavouriteActivity } = userPreferencesSlice.actions;
+export const { addUserFavouriteActivity, updateTheme } = userPreferencesSlice.actions;
 export default userPreferencesSlice.reducer;

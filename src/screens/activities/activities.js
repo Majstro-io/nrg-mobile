@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ScrollView, View, Heading, } from 'native-base';
+
 import ActivityCard from '../../components/activityCard/activityCard';
-import activitiesStyles from './activity.styles';
 import NrgActivitiesAppBar from '../../components/appbars/nrgActivitiesAppBar';
 
 import activities from '../../data/activities.json'
-import { useSelector } from 'react-redux';
 
 
 const Activities = () => {
@@ -23,12 +23,16 @@ const Activities = () => {
     <View style={{ flex: 1 }}>
       <ScrollView >
         <NrgActivitiesAppBar isFavourite={isOnlyFavourites} onFavouriteToggle={onFavouriteFilterPress} />
-        <View style={activitiesStyles.LabelContainer}>
+        <View
+          flex={1}
+          alignItems={"center"}
+          marginTop={10}
+        >
           <Heading size="4xl">Activities</Heading>
         </View>
 
         {/* display only favourites */}
-        <View style={activitiesStyles.activitiesContainer}>
+        <View marginBottom={10}>
           {isOnlyFavourites ? activities.content.filter(activity => favouriteActivityIds.has(activity.id)).map((activity) => (
             <ActivityCard
               id={activity.id}

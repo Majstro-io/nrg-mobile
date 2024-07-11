@@ -22,11 +22,6 @@ const loginStyles = StyleSheet.create({
         width: 380, 
         height: 380,
     },
-    button: {
-        borderRadius: 25,
-        backgroundColor: "#a78bfa"
-    }, 
-
 });
 
 

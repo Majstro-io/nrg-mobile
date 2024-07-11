@@ -1,6 +1,6 @@
 {
   "AudioPlayFrequency": 20000,
-  "idleReminderTimeout": 120000,
+  "idleReminderTimeout": 10,
   "theme": "dark",
   "assistant": "1",
   "favourites": [
