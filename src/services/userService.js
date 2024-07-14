@@ -10,7 +10,7 @@ const getUserData = async (userId) => {
             method: httpConstants.HTTP_METHODS.GET,
             url: `${USERS_BASE}/${userId}`
         })
-        return response.data;
+        return response;
     } catch (error) {
         log.error(`Error in getting user with id ${userId}`, error)
         throw error;
@@ -24,7 +24,7 @@ const addNewUser = async (userData) => {
             url: `${USERS_BASE}`,
             data: userData
         })
-        return response.data;
+        return response;
     } catch (error) {
         log.error(`Error in adding new user`, error)
         throw error;

@@ -9,24 +9,36 @@ import userService from "../../services/userService";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../store/slices/userSlice";
 import log from "../../config/logger";
+import ErrorModal from "../../components/modals/errorModal";
 
 const LoginPage = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
     const [mobile, setMobile] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [errorModalVisible, setErrorModalVisible] = React.useState(false)
 
     const loginUser = () => {
+        setIsLoading(true);
         userService.getUserData(1).then(res => {
-            dispatch(setUserData(res))
+            dispatch(setUserData(res.data))
             navigation.navigate(navigationconstants.PAGES.activities)
         }).catch((error) => {
             log.error("Error in login", error)
+        }).finally(() => {
+            setIsLoading(false)
         })
     }
 
     return (
         <View style={{ flex: 1 }}>
+            <ErrorModal
+                errorDescription={"We have encountered an error in logging you in"}
+                errorTitle={"Login Error"}
+                setVisible={setErrorModalVisible}
+                visible={errorModalVisible}
+            />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={[loginStyles.welcomeLabelContainer]} >
                     <Heading size="4xl">
@@ -52,6 +64,7 @@ const LoginPage = () => {
                                 />
                             </VStack>
                             <Button
+                                isLoading={isLoading}
                                 width="1/4"
                                 onPress={loginUser}>
                                 Login

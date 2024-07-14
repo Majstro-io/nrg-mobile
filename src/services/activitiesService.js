@@ -10,7 +10,7 @@ const getAllActivities = async () => {
             method: httpConstants.HTTP_METHODS.GET,
             url: ACTIVITIES_BASE
         })
-        return response.data;
+        return response;
     } catch (error) {
         log.error("Error in getting activities", error)
         throw error;

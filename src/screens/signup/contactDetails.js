@@ -11,12 +11,14 @@ import ErrorModal from "../../components/modals/errorModal";
 import log from "../../config/logger";
 import validationUtils from "../../utils/validationUtils";
 import { setUserData } from "../../store/slices/userSlice";
+import httpConstants from "../../constants/httpConstants";
 
 
 const ContactDetails = ({ route }) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
+    const [isLoading, setIsLoading] = React.useState(false);
     const [errorModalVisible, setErrorModalVisible] = React.useState(false)
     const [errorModalMessage, setErrorModalMessage] = React.useState("Please fill in all the details required to proceed with the registration")
     const [userRegistrationData, setUserRegistrationData] = React.useState({
@@ -30,13 +32,22 @@ const ContactDetails = ({ route }) => {
 
     const registerUser = () => {
         const { valid, errors } = validationUtils.validateUserRegistrationDetails(userRegistrationData);
-        console.log(valid)
         if (valid) {
+            setIsLoading(true);
             userService.addNewUser(userRegistrationData).then(res => {
-                dispatch(setUserData(res))
+                dispatch(setUserData(res.data))
                 navigation.navigate(navigationconstants.PAGES.preferences)
             }).catch(err => {
+                console.log(err.code)
+                if (err.code == httpConstants.HTTP_CODES.ERR_BAD_REQUEST) {
+                    setErrorModalMessage("An error occurred in registration, please check your input details and retry")
+                } else {
+                    setErrorModalMessage("An error occurred in registration")
+                }
+                setErrorModalVisible(true)
                 log.error(err)
+            }).finally(() => {
+                setIsLoading(false);
             })
         } else {
             if (errors.email) {
@@ -93,6 +104,7 @@ const ContactDetails = ({ route }) => {
 
 
                             <Button
+                                isLoading={isLoading}
                                 mt={3}
                                 width="1/4"
                                 onPress={() => registerUser()}>
