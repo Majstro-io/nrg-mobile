@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, FormControl, Select, VStack } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, FormControl, Select, VStack, Image } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
-import TagGroup from "../../components/preferences/tagGroup";
 import mappingUtils from "../../utils/mappingUtils";
 
 import assistantOptions from "../../data/assistantOptions.json"
 import activities from "../../data/activities.json"
-import { addUserFavouriteActivity, updateTheme } from "../../store/slices/userPreferencesSlice";
+import { updateTheme } from "../../store/slices/userPreferencesSlice";
+import SelectFavouritesModal from "../../components/preferences/selectFavouritesModal";
 
 const Preferences = () => {
   const navigation = useNavigation();
@@ -22,7 +21,6 @@ const Preferences = () => {
 
 
   const [voice, setVoice] = React.useState({});
-  const [mappedFavourites, setMappedFavourites] = React.useState([]);
 
   const handleThemeChange = (selectedTheme) => {
     dispatch(updateTheme(selectedTheme))
@@ -40,8 +38,6 @@ const Preferences = () => {
 
   useEffect(() => {
     getSelectedAssistant()
-    const mapped = mappingUtils.mapFavouritesWithActivities(activities.content, userPreferences.favourites).map(item => item.activityName)
-    setMappedFavourites(mapped)
   }, [userPreferences.favourites])
 
 
@@ -51,6 +47,8 @@ const Preferences = () => {
         <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"Preferences"} />
         <Center>
           <Image
+            alt="preferencesIconImage"
+            resizeMode="contain"
             source={require('../../resources/preferences.png')}
           />
         </Center>
@@ -93,27 +91,13 @@ const Preferences = () => {
               </VStack>
               <VStack space={1}>
                 <FormControl.Label alignSelf="flex-start">Favourite Activities</FormControl.Label>
-                <Select
-                  style={{ backgroundColor: "info.300" }}
-                  onValueChange={(value) => dispatch(addUserFavouriteActivity({ activityId: value }))}
-                  width="xs"
-                  placeholder="Activity"
-                  isReadOnly
-                  _selectedItem={{
-                    endIcon: <CheckIcon size="5" />
-                  }}
-                >
-                  {activities.content.map(activity => {
-                    return <Select.Item label={activity.name} value={activity.id} key={activity.id} />
-                  })}
-                </Select>
-              </VStack>
-              <VStack>
-                <TagGroup tagList={mappedFavourites} />
+                <SelectFavouritesModal />
               </VStack>
               <Button
                 mt={3}
                 width="1/4"
+                marginBottom={"1/6"}
+                marginTop={"1/6"}
                 onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}>
                 Done
               </Button>

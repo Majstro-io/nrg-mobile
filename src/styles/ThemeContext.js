@@ -8,6 +8,7 @@ const darkTheme = extendTheme({
       200: '#7C7C7C',
       300: '#292929',
       800: '#181725',
+      900: '#181725cc',
     },
     white: {
       100: '#FFFFFF',
@@ -39,6 +40,30 @@ const darkTheme = extendTheme({
       baseStyle: {
         bg: 'black.800',
       },
+    },
+    Modal: {
+      baseStyle: {
+        borderColor:'black.300',
+        bg: 'black.900',
+      }
+    },
+    ModalHeader: {
+      baseStyle: {
+        color:'white.100',
+        bg: 'black.800',
+        borderColor:'black.300'
+      }
+    },
+    ModalContent: {
+      baseStyle: {
+        bg: 'black.800',
+      }
+    },
+    ModalFooter: {
+      baseStyle: {
+        borderColor:'black.300',
+        bg: 'black.800',
+      }
     },
     Pressable: {
       baseStyle: {
