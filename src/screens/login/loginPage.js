@@ -25,6 +25,7 @@ const LoginPage = () => {
             dispatch(setUserData(res.data))
             navigation.navigate(navigationconstants.PAGES.activities)
         }).catch((error) => {
+            setErrorModalVisible(true)
             log.error("Error in login", error)
         }).finally(() => {
             setIsLoading(false)
