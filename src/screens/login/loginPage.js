@@ -5,10 +5,25 @@ import { useNavigation } from "@react-navigation/native";
 import { Button, FormControl, HStack, Heading, Input, ScrollView, Text, VStack, View } from 'native-base';
 
 import navigationconstants from "../../constants/navigationConstants";
+import userService from "../../services/userService";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../store/slices/userSlice";
+import log from "../../config/logger";
 
 const LoginPage = () => {
     const navigation = useNavigation();
-    const [mobile, setMobile] = React.useState('');
+    const dispatch = useDispatch();
+
+    const [mobile, setMobile] = React.useState(null);
+
+    const loginUser = () => {
+        userService.getUserData(1).then(res => {
+            dispatch(setUserData(res))
+            navigation.navigate(navigationconstants.PAGES.activities)
+        }).catch((error) => {
+            log.error("Error in login", error)
+        })
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -38,7 +53,7 @@ const LoginPage = () => {
                             </VStack>
                             <Button
                                 width="1/4"
-                                onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}>
+                                onPress={loginUser}>
                                 Login
                             </Button>
                         </VStack>

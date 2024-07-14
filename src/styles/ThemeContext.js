@@ -8,7 +8,7 @@ const darkTheme = extendTheme({
       200: '#7C7C7C',
       300: '#292929',
       800: '#181725',
-      900: '#181725cc',
+      900: '#181725ee',
     },
     white: {
       100: '#FFFFFF',

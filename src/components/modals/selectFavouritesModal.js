@@ -16,7 +16,7 @@ const SelectFavouritesModal = () => {
         if (favouriteActivityIds.has(activityId)) {
             return { backgroundColor: "#292929" }
         } else {
-            return { backgroundColor: "#181725",  }
+            return { backgroundColor: "#181725", }
         }
     }
 
@@ -25,7 +25,7 @@ const SelectFavouritesModal = () => {
         <Modal size={"xl"} isOpen={showModal} onClose={() => setShowModal(false)}>
             <Modal.Content height="100%">
                 <Modal.CloseButton />
-                <Modal.Header txtDecor={"#ffffff"} >
+                <Modal.Header  >
                     <Text fontSize="2xl">
                         Select Favourites
                     </Text>
@@ -44,13 +44,11 @@ const SelectFavouritesModal = () => {
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button.Group space={2}>
-                        <Button onPress={() => {
-                            setShowModal(false);
-                        }}>
-                            Done
-                        </Button>
-                    </Button.Group>
+                    <Button width={"1/3"} onPress={() => {
+                        setShowModal(false);
+                    }}>
+                        Done
+                    </Button>
                 </Modal.Footer>
             </Modal.Content>
         </Modal>

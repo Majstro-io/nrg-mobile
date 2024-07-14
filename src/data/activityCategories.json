@@ -1,0 +1,35 @@
+{
+    "content": [
+      {
+        "id": "1",
+        "name": "Running",
+        "description": "Running is a high-impact aerobic exercise that strengthens muscles, improves cardiovascular health, and boosts mental well-being.",
+        "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Running.png"
+      },
+      {
+        "id": "2",
+        "name": "Cycling",
+        "description": "Cycling is a low-impact exercise that enhances joint mobility, improves posture, and increases overall fitness levels.",
+        "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Cycling.png"
+      },
+      {
+        "id": "3",
+        "name": "Swimming",
+        "description": "Swimming is a full-body workout that increases endurance, builds muscle strength, and maintains a healthy heart.",
+        "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Walking.png"
+      },
+      {
+        "id": "4",
+        "name": "Indoor",
+        "description": "Reading exercises the brain, enhances knowledge, reduces stress, and improves concentration and focus.",
+        "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Reading.png"
+      },
+      {
+        "id": "5",
+        "name": "Walking",
+        "description": "Walking is a simple yet effective exercise that helps maintain a healthy weight, strengthens bones, and boosts mood.",
+        "imageSource": "https://nrg-test-resources.s3.amazonaws.com/images/Walking.png"
+      }
+    ]
+  }
+  

@@ -6,12 +6,10 @@ import { ScrollView, View, Button, Center, CheckIcon, FormControl, Select, VStac
 import { useTheme } from "../../styles/ThemeContext";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
-import mappingUtils from "../../utils/mappingUtils";
 
 import assistantOptions from "../../data/assistantOptions.json"
-import activities from "../../data/activities.json"
 import { updateTheme } from "../../store/slices/userPreferencesSlice";
-import SelectFavouritesModal from "../../components/preferences/selectFavouritesModal";
+import SelectFavouritesModal from "../../components/modals/selectFavouritesModal";
 
 const Preferences = () => {
   const navigation = useNavigation();
