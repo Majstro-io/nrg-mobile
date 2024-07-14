@@ -65,9 +65,6 @@ const LoginPage = () => {
                     />
 
                     <HStack style={loginStyles.linkContainer}>
-                        <Text fontSize="sm">
-                            I'm a new user{" "}
-                        </Text>
                         <Button
                             width="1/5"
                             onPress={() => navigation.navigate(navigationconstants.PAGES.personalDetails)}>

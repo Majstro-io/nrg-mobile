@@ -1,4 +1,4 @@
-import { Button, Center, Modal, Text } from "native-base";
+import { Button, Center, Modal, Text, useTheme } from "native-base";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import activities from '../../data/activities.json'
@@ -8,15 +8,16 @@ import { addUserFavouriteActivity } from "../../store/slices/userPreferencesSlic
 const SelectFavouritesModal = () => {
     const favourites = useSelector((state) => state.userPreferences.favourites);
     const dispatch = useDispatch();
-
+    const theme = useTheme();
     const [showModal, setShowModal] = useState(false);
     const favouriteActivityIds = new Set(favourites.map(fav => fav.activityId));
 
     const getActiveColor = (activityId) => {
         if (favouriteActivityIds.has(activityId)) {
-            return { backgroundColor: "#292929" }
+
+            return { backgroundColor: theme.colors.primary[800] }
         } else {
-            return { backgroundColor: "#181725", }
+            return { backgroundColor: theme.colors.primary[900], }
         }
     }
 
