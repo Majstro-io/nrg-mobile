@@ -1,0 +1,67 @@
+{
+  "content": [
+    {
+      "id": "1",
+      "activityId": "1",
+      "voiceId": "1",
+      "media": [
+        "https://nrg-test-resources.s3.amazonaws.com/audio/running_1.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/running_2.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/running_3.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/running_4.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/running_5.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/running_6.mp3"
+      ]
+    },
+    {
+      "id": "2",
+      "activityId": "2",
+      "voiceId": "1",
+      "media": [
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_7.m4a",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_11.m4a",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_4.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_5.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_6.m4a"
+      ]
+    },
+    {
+      "id": "3",
+      "activityId": "3",
+      "voiceId": "1",
+      "media": [
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_1.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_2.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_3.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_4.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_5.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_6.m4a"
+      ]
+    },
+    {
+      "id": "4",
+      "activityId": "4",
+      "voiceId": "1",
+      "media": [
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_7.m4a",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_8.m4a",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_9.m4a",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_10.m4a",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/common_11.m4a"
+      ]
+    },
+    {
+      "id": "5",
+      "activityId": "5",
+      "voiceId": "1",
+      "media": [
+        "https://nrg-test-resources.s3.amazonaws.com/audio/walking_1.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/walking_2.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/walking_3.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/walking_4.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/walking_5.mp3",
+        "https://nrg-test-resources.s3.amazonaws.com/audio/walking_6.mp3"
+      ]
+    }
+  ]
+}

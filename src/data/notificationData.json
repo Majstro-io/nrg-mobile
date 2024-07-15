@@ -1,0 +1,7 @@
+{
+  "remindIdle": {
+    "id": "1",
+    "title": "NRG idle check",
+    "message": "Are you still using the app??"
+  }
+}
