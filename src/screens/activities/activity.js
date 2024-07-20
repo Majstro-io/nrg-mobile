@@ -1,6 +1,7 @@
 import { AppState } from "react-native";
 import { Box, Button, Center, Flex, HStack, Image, Text, View, VStack } from "native-base";
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import BackgroundTimer from 'react-native-background-timer';
 
 import audioManagerService from "../../services/soundManagerService";
@@ -10,14 +11,14 @@ import conversionUtils from "../../utils/conversionUtils";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import notifications from "../../config/notification";
-
-import userPreferences from "../../data/userPreferences.json"
-import notificationData from "../../data/notificationData.json"
 import activitiesService from "../../services/activitiesService";
 
+import userPreferenceSettings from "../../data/userPreferences.json"
+import notificationData from "../../data/notificationData.json"
 
 const Activity = ({ route }) => {
     const { id, activityName, image } = route.params;
+    const userPreferences = useSelector((state) => state.userPreferences);
 
     const [timer, setTimer] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -30,6 +31,7 @@ const Activity = ({ route }) => {
     const currentTrack = useRef(0);
     const currentSchedule = useRef(0);
     const currentQuotes = useRef([]);
+    const currentVoice = useRef(userPreferences.assistant);
     const secondsToPlayNextQuote = useRef(0);
 
     const handleStartStop = () => {
@@ -80,7 +82,7 @@ const Activity = ({ route }) => {
         notifications.setNotification(
             notificationData.remindIdle.title,
             notificationData.remindIdle.message,
-            userPreferences.idleReminderTimeout,
+            userPreferenceSettings.idleReminderTimeout,
             notificationData.remindIdle.id
         )
     }
@@ -158,7 +160,7 @@ const Activity = ({ route }) => {
                 if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current].gap) {
                     const nextTrack = handleNextTrack()
                     currentTrack.current = nextTrack;
-                    playAudio(currentQuotes.current[currentTrack.current].voiceFiles.MALE);
+                    playAudio(currentQuotes.current[currentTrack.current].voiceFiles[currentVoice.current]);
                     secondsToPlayNextQuote.current = 0;
                 }
                 setTimer((prevSeconds) => prevSeconds + 1);
