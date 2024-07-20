@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "../../store/slices/userSlice";
 import log from "../../config/logger";
 import ErrorModal from "../../components/modals/errorModal";
+import userPreferencesService from "../../services/userPreferencesService";
+import { setPreferences } from "../../store/slices/userPreferencesSlice";
 
 const LoginPage = () => {
     const navigation = useNavigation();
@@ -23,7 +25,10 @@ const LoginPage = () => {
         setIsLoading(true);
         userService.getUserData(1).then(res => {
             dispatch(setUserData(res.data))
-            navigation.navigate(navigationconstants.PAGES.activities)
+            userPreferencesService.getUserPreferenceData(res.data?.id).then(res => {
+                dispatch(setPreferences(res.data))
+                navigation.navigate(navigationconstants.PAGES.activities)
+            })
         }).catch((error) => {
             setErrorModalVisible(true)
             log.error("Error in login", error)

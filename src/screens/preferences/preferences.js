@@ -8,39 +8,81 @@ import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 
 import assistantOptions from "../../data/assistantOptions.json"
-import { updateTheme } from "../../store/slices/userPreferencesSlice";
+import { setAssistantVoice, setPreferences, updateTheme } from "../../store/slices/userPreferencesSlice";
 import SelectFavouritesModal from "../../components/modals/selectFavouritesModal";
+import userPreferencesService from "../../services/userPreferencesService";
+import log from "../../config/logger";
+import ErrorModal from "../../components/modals/errorModal";
 
 const Preferences = () => {
   const navigation = useNavigation();
   const { setTheme } = useTheme();
+
   const userPreferences = useSelector((state) => state.userPreferences);
+  const userData = useSelector((state) => state.userData.data);
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = React.useState(false);
 
-  const [voice, setVoice] = React.useState({});
+  const [errorModalVisible, setErrorModalVisible] = React.useState(false)
+  const [errorModalText, setErrorModalText] = React.useState("We have encountered an error in fetching user preferences")
+  const [errorModalTitle, setErrorModalTitle] = React.useState("Fetching Activities Failed")
+
 
   const handleThemeChange = (selectedTheme) => {
     dispatch(updateTheme(selectedTheme))
     setTheme(selectedTheme);
   };
 
-  const getSelectedAssistant = () => {
-    const assistant = assistantOptions.content.assistants.find(assistant => assistant.id == userPreferences.assistant)
-    setVoice(assistant.id)
+  const fetchUserPreferences = () => {
+    setLoading(true)
+    userPreferencesService.getUserPreferenceData(userData?.id).then(res => {
+      dispatch(setPreferences(res.data))
+    }).catch(error => {
+      setErrorModalText("Failed to fetch user preferences, please try reloading")
+      setErrorModalTitle("Failed to fetch preferences")
+      setErrorModalVisible(true)
+      log.error("Error in fetching user preferences from preferences page", error)
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
+
+  const updateUserPreferences = async () => {
+    const preferenceData = {
+      preferedActivities: userPreferences.favourites,
+      voice: userPreferences.assistant
+    }
+    setLoading(true)
+    await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData).then(res => {
+      dispatch(setPreferences(res.data))
+      navigation.navigate(navigationconstants.PAGES.activities)
+    }).catch(error => {
+      setErrorModalText("Failed to update user preferences, please retry")
+      setErrorModalTitle("Failed to update preferences")
+      setErrorModalVisible(true)
+      log.error("Error in updating user preferences from preferences page", error)
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
+
+  const handleOnDone = async () => {
+    await updateUserPreferences();
   }
 
   useEffect(() => {
-    getSelectedAssistant()
+    fetchUserPreferences();
   }, [])
-
-  useEffect(() => {
-    getSelectedAssistant()
-  }, [userPreferences.favourites])
-
 
   return (
     <View style={{ flex: 1 }}>
+      <ErrorModal
+        errorDescription={errorModalText}
+        errorTitle={errorModalTitle}
+        setVisible={setErrorModalVisible}
+        visible={errorModalVisible}
+      />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"Preferences"} />
         <Center>
@@ -56,9 +98,9 @@ const Preferences = () => {
               <VStack space={1}>
                 <FormControl.Label alignSelf="flex-start">Voice Preferences</FormControl.Label>
                 <Select
-                  defaultValue={voice}
-                  selectedValue={voice}
-                  onValueChange={setVoice}
+                  defaultValue={userPreferences.assistant}
+                  selectedValue={userPreferences.assistant}
+                  onValueChange={(value) => dispatch(setAssistantVoice(value))}
                   width="xs"
                   isReadOnly
                   placeholder="Select Voice Preference"
@@ -96,7 +138,9 @@ const Preferences = () => {
                 width="1/4"
                 marginBottom={"1/6"}
                 marginTop={"1/6"}
-                onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}>
+                onPress={() => handleOnDone()}
+                isLoading={loading}
+              >
                 Done
               </Button>
             </VStack>

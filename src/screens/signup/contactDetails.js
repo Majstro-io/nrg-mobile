@@ -38,7 +38,6 @@ const ContactDetails = ({ route }) => {
                 dispatch(setUserData(res.data))
                 navigation.navigate(navigationconstants.PAGES.preferences)
             }).catch(err => {
-                console.log(err.code)
                 if (err.code == httpConstants.HTTP_CODES.ERR_BAD_REQUEST) {
                     setErrorModalMessage("An error occurred in registration, please check your input details and retry")
                 } else {

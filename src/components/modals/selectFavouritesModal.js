@@ -1,7 +1,7 @@
 import { Button, Center, Modal, Text, useTheme } from "native-base";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import activities from '../../data/activities.json'
+import activityTypes from "../../data/activityTypes.json"
 import ActivityCard from "../activityCard/activityCard";
 import { addUserFavouriteActivity } from "../../store/slices/userPreferencesSlice";
 
@@ -10,11 +10,10 @@ const SelectFavouritesModal = () => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const [showModal, setShowModal] = useState(false);
-    const favouriteActivityIds = new Set(favourites.map(fav => fav.activityId));
+    const favouriteActivityIds = new Set(favourites.map(fav => fav));
 
     const getActiveColor = (activityId) => {
         if (favouriteActivityIds.has(activityId)) {
-
             return { backgroundColor: theme.colors.primary[800] }
         } else {
             return { backgroundColor: theme.colors.primary[900], }
@@ -32,14 +31,12 @@ const SelectFavouritesModal = () => {
                     </Text>
                 </Modal.Header>
                 <Modal.Body>
-                    {activities.content.map((activity) => {
+                    {activityTypes.content.map((type) => {
                         return <ActivityCard
-                            key={activity.id}
-                            title={activity.name}
-                            description={activity.description}
-                            imageSource={activity.imageSource}
-                            onPress={() => dispatch(addUserFavouriteActivity({ activityId: activity.id, id: activity.id }))}
-                            style={getActiveColor(activity.id)}
+                            key={type.id}
+                            title={type.name}
+                            onPress={() => dispatch(addUserFavouriteActivity(type.value))}
+                            style={getActiveColor(type.value)}
                         />
                     })
                     }
