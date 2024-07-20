@@ -19,6 +19,19 @@ const getAllActivities = async () => {
     }
 }
 
+const getDetailedActivityById = async (activityId) => {
+    try {
+        const response = await apiInstances.nrgBackend.request({
+            method: httpConstants.HTTP_METHODS.GET,
+            url: `${ACTIVITIES_BASE}/${activityId}/detailed`
+        })
+        return response;
+    } catch (error) {
+        log.error("Error in getting detailed activity data", error)
+        throw error;
+    }
+}
+
 const getActivitiesByType = async (types) => {
     const params = {
         types: [types]
@@ -39,7 +52,8 @@ const getActivitiesByType = async (types) => {
 
 const activitiesService = {
     getAllActivities,
-    getActivitiesByType
+    getActivitiesByType,
+    getDetailedActivityById
 }
 
 export default activitiesService;

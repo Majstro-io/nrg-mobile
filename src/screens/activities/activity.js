@@ -11,9 +11,9 @@ import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import notifications from "../../config/notification";
 
-import soundData from "../../data/soundData.json"
 import userPreferences from "../../data/userPreferences.json"
 import notificationData from "../../data/notificationData.json"
+import activitiesService from "../../services/activitiesService";
 
 
 const Activity = ({ route }) => {
@@ -23,10 +23,13 @@ const Activity = ({ route }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [playerState, setPlayerState] = useState(playerConstants.PLAYER_STATES.stopped)
     const [sound, setSound] = useState(null);
-    const [audioTracks, setAudioTracks] = useState([])
+    const [scheduleList, setScheduleList] = useState([])
+
     const [appState, setAppState] = useState(AppState.currentState);
 
     const currentTrack = useRef(0);
+    const currentSchedule = useRef(0);
+    const currentQuotes = useRef([]);
     const secondsToPlayNextQuote = useRef(0);
 
     const handleStartStop = () => {
@@ -73,11 +76,6 @@ const Activity = ({ route }) => {
         cancelNotificationTrigger();
     };
 
-    const fetchActivityData = () => {
-        const audioData = soundData.content.find(data => data.activityId == id)
-        setAudioTracks(audioData.media)
-    }
-
     const setNotificationTrigger = () => {
         notifications.setNotification(
             notificationData.remindIdle.title,
@@ -91,8 +89,37 @@ const Activity = ({ route }) => {
         notifications.cancelNotification(notificationData.remindIdle.id)
     }
 
+    const handleNextTrack = () => {
+        // check if current quotes has finished playing
+        if (currentTrack.current >= currentQuotes.current.length - 1) {
+            // check if there is a next schedule, if so play next schedule quotes, else play the first schedule again
+            const nextSchedule = currentSchedule.current >= scheduleList.length - 1 ? 0 : currentSchedule.current + 1
+            currentSchedule.current = (nextSchedule);
+            // set the first quote of the new schedule
+            currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
+            return 0;
+        } else {
+            // if current quotes list has more quotes, play the next quote
+            return currentTrack.current + 1;
+        }
+    }
+
+    const fetchDetailedActivityData = async (activityId) => {
+        activitiesService.getDetailedActivityById(activityId).then(res => {
+            setScheduleList(res.data?.schedules)
+        }).catch(error => {
+            log.error("Failed to fetch all schedules for activity", error)
+        })
+    }
+
     useEffect(() => {
-        fetchActivityData();
+        if (scheduleList) {
+            currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
+        }
+    }, [scheduleList])
+
+    useEffect(() => {
+        fetchDetailedActivityData(id);
     }, [id])
 
     // handle idle notifications when app is in background and timer is running
@@ -122,14 +149,16 @@ const Activity = ({ route }) => {
         };
     }, [appState]);
 
+
     // background job which will keep running to play audio at time intervals
     useEffect(() => {
         if (playerState == playerConstants.PLAYER_STATES.playing) {
             BackgroundTimer.runBackgroundTimer(() => {
-                if (secondsToPlayNextQuote.current > playerConstants.AUDIO_PLAY_INTERVAL / 1000) {
-                    const nextTrack = currentTrack.current >= audioTracks.length - 1 ? 0 : currentTrack.current + 1
+                // check if specified interval has reached to play the quote, if so proceed
+                if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current].gap) {
+                    const nextTrack = handleNextTrack()
                     currentTrack.current = nextTrack;
-                    playAudio(audioTracks[currentTrack.current]);
+                    playAudio(currentQuotes.current[currentTrack.current].voiceFiles.MALE);
                     secondsToPlayNextQuote.current = 0;
                 }
                 setTimer((prevSeconds) => prevSeconds + 1);
