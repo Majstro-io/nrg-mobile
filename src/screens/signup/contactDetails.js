@@ -12,6 +12,7 @@ import log from "../../config/logger";
 import validationUtils from "../../utils/validationUtils";
 import { setUserData } from "../../store/slices/userSlice";
 import httpConstants from "../../constants/httpConstants";
+import { HttpStatusCode } from "axios";
 
 
 const ContactDetails = ({ route }) => {
@@ -27,18 +28,19 @@ const ContactDetails = ({ route }) => {
         gender: null,
         mobileNo: null,
         email: null,
-        image: ""
+        image: "-"
     });
 
     const registerUser = () => {
         const { valid, errors } = validationUtils.validateUserRegistrationDetails(userRegistrationData);
         if (valid) {
             setIsLoading(true);
+            console.log(userRegistrationData)
             userService.addNewUser(userRegistrationData).then(res => {
                 dispatch(setUserData(res.data))
                 navigation.navigate(navigationconstants.PAGES.preferences)
             }).catch(err => {
-                if (err.code == httpConstants.HTTP_CODES.ERR_BAD_REQUEST) {
+                if (err.response.status == HttpStatusCode.BadRequest) {
                     setErrorModalMessage("An error occurred in registration, please check your input details and retry")
                 } else {
                     setErrorModalMessage("An error occurred in registration")
@@ -96,7 +98,7 @@ const ContactDetails = ({ route }) => {
                                     width="xs"
                                     placeholder="Mobile Number"
                                     value={userRegistrationData.mobileNo}
-                                    keyboardType="numeric"
+                                    keyboardType="phone-pad"
                                     onChangeText={data => setUserRegistrationData({ ...userRegistrationData, mobileNo: data })}
                                 />
                             </VStack>

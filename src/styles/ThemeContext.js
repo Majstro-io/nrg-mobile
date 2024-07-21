@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 import { extendTheme, NativeBaseProvider } from 'native-base';
+import { useSelector } from 'react-redux';
 
 const darkTheme = extendTheme({
   colors: {
@@ -306,7 +307,8 @@ const lightTheme = extendTheme({
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark');
+  const userPreferences = useSelector((state) => state.userPreferences);
+  const [theme, setTheme] = useState(userPreferences.theme || 'dark');
 
   const themeObject = theme === 'dark' ? darkTheme : lightTheme;
 

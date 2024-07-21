@@ -51,7 +51,8 @@ const Preferences = () => {
   const updateUserPreferences = async () => {
     const preferenceData = {
       preferedActivities: userPreferences.favourites,
-      voice: userPreferences.assistant
+      voice: userPreferences.assistant,
+      theme: userPreferences.theme
     }
     setLoading(true)
     await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData).then(res => {

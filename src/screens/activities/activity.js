@@ -157,10 +157,10 @@ const Activity = ({ route }) => {
         if (playerState == playerConstants.PLAYER_STATES.playing) {
             BackgroundTimer.runBackgroundTimer(() => {
                 // check if specified interval has reached to play the quote, if so proceed
-                if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current].gap) {
+                if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current]?.gap) {
                     const nextTrack = handleNextTrack()
                     currentTrack.current = nextTrack;
-                    playAudio(currentQuotes.current[currentTrack.current].voiceFiles[currentVoice.current]);
+                    playAudio(currentQuotes.current[currentTrack.current]?.voiceFiles[currentVoice.current]);
                     secondsToPlayNextQuote.current = 0;
                 }
                 setTimer((prevSeconds) => prevSeconds + 1);
