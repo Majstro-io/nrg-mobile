@@ -115,7 +115,7 @@ const Activity = ({ route }) => {
     }
 
     useEffect(() => {
-        if (scheduleList) {
+        if (scheduleList && scheduleList.length > 0) {
             currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
         }
     }, [scheduleList])
