@@ -24,6 +24,7 @@ const ContactDetails = ({ route }) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [errorModalVisible, setErrorModalVisible] = React.useState(false)
     const [errorModalMessage, setErrorModalMessage] = React.useState("Please fill in all the details required to proceed with the registration")
+    
     const [userRegistrationData, setUserRegistrationData] = React.useState({
         firstName: null,
         lastName: null,
@@ -107,7 +108,7 @@ const ContactDetails = ({ route }) => {
                                 <FormControl.Label alignSelf="flex-start">Mobile Number</FormControl.Label>
                                 <Input
                                     width="xs"
-                                    placeholder="Mobile Number (+"
+                                    placeholder="Mobile Number (ex: +1 xxx xxx xxxx)"
                                     value={userRegistrationData.mobileNo}
                                     keyboardType="phone-pad"
                                     onChangeText={data => setUserRegistrationData({ ...userRegistrationData, mobileNo: data })}
