@@ -110,7 +110,7 @@ const Preferences = () => {
                   }}
                 >
                   {assistantOptions.content.assistants.map(assistant => {
-                    return <Select.Item label={assistant.name} value={assistant.id} key={assistant.id} />
+                    return <Select.Item label={assistant?.name} value={assistant?.id} key={assistant?.id} />
                   })}
                 </Select>
               </VStack>

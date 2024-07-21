@@ -33,10 +33,10 @@ const SelectFavouritesModal = () => {
                 <Modal.Body>
                     {activityTypes.content.map((type) => {
                         return <ActivityCard
-                            key={type.id}
-                            title={type.name}
-                            onPress={() => dispatch(addUserFavouriteActivity(type.value))}
-                            style={getActiveColor(type.value)}
+                            key={type?.id}
+                            title={type?.name}
+                            onPress={() => dispatch(addUserFavouriteActivity(type?.value))}
+                            style={getActiveColor(type?.value)}
                         />
                     })
                     }
