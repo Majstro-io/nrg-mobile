@@ -2,9 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import userPrefs from "../../data/userPreferences.json"
 
 const initialState = {
-  favourites: userPrefs.favourites,
-  assistant: userPrefs.assistant,
-  theme: userPrefs.theme
+  favourites: null,
+  assistant: "MALE",
+  theme: userPrefs.theme,
+  id: null,
 };
 
 const userPreferencesSlice = createSlice({
@@ -12,7 +13,7 @@ const userPreferencesSlice = createSlice({
   initialState,
   reducers: {
     addUserFavouriteActivity: (state, action) => {
-      const index = state.favourites.findIndex(favourite => favourite.activityId == action.payload.activityId)
+      const index = state.favourites.findIndex(favourite => favourite == action.payload)
       if (index == -1) {
         state.favourites.push(action.payload);
       } else {
@@ -22,8 +23,18 @@ const userPreferencesSlice = createSlice({
     updateTheme: (state, action) => {
       state.theme = action.payload
     },
+    setPreferences: (state, action) => {
+      state.favourites = action.payload.preferedActivities || []
+      state.assistant = action.payload.voice
+      state.id = action.payload.id
+    },
+    setAssistantVoice: (state, action) => {
+      state.assistant = action.payload
+
+    },
   },
 });
 
-export const { addUserFavouriteActivity, updateTheme } = userPreferencesSlice.actions;
+
+export const { addUserFavouriteActivity, updateTheme, setPreferences, setAssistantVoice } = userPreferencesSlice.actions;
 export default userPreferencesSlice.reducer;

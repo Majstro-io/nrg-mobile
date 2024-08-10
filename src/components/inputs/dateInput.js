@@ -6,7 +6,7 @@ const DateInput = ({ label, onChange }) => {
     const [date, setDate] = useState('');
 
     const handleDateChange = (text) => {
-        // Format the input as DD/MM/YYYY
+        // Format the input as MM/DD/YYYY
         let formattedDate = text.replace(/\D/g, ''); // Remove non-numeric characters
         if (formattedDate.length > 2) {
             formattedDate = `${formattedDate.slice(0, 2)}/${formattedDate.slice(2)}`;
@@ -23,7 +23,7 @@ const DateInput = ({ label, onChange }) => {
         <View >
             <FormControl.Label alignSelf="flex-start">{label}</FormControl.Label>
             <Input
-                placeholder="DD/MM/YYYY"
+                placeholder="MM/DD/YYYY"
                 keyboardType="numeric"
                 maxLength={10}
                 value={date}

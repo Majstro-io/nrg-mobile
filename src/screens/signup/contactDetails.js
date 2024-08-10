@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Image, } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import signupStyles from "./signup.styles";
 import { ScrollView, View, Button, FormControl, Input, VStack } from "native-base";
+import { HttpStatusCode } from "axios";
+
+import signupStyles from "./signup.styles";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import userService from "../../services/userService";
-import { useDispatch } from "react-redux";
 import ErrorModal from "../../components/modals/errorModal";
 import log from "../../config/logger";
 import validationUtils from "../../utils/validationUtils";
 import { setUserData } from "../../store/slices/userSlice";
-import httpConstants from "../../constants/httpConstants";
-
+import userPreferencesService from "../../services/userPreferencesService";
+import { setPreferences } from "../../store/slices/userPreferencesSlice";
+import defaultUserPreferencesData from "../../data/defaultUserPreferences.json"
 
 const ContactDetails = ({ route }) => {
     const navigation = useNavigation();
@@ -21,14 +24,20 @@ const ContactDetails = ({ route }) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [errorModalVisible, setErrorModalVisible] = React.useState(false)
     const [errorModalMessage, setErrorModalMessage] = React.useState("Please fill in all the details required to proceed with the registration")
+    
     const [userRegistrationData, setUserRegistrationData] = React.useState({
         firstName: null,
         lastName: null,
         gender: null,
         mobileNo: null,
         email: null,
-        image: ""
+        image: "-"
     });
+
+    const createDefaultPreferencesForUser = async (userId) => {
+        const defaultUserPreferences = { ...defaultUserPreferencesData, profileId: userId }
+        return await userPreferencesService.addNewUserPreference(defaultUserPreferences);
+    }
 
     const registerUser = () => {
         const { valid, errors } = validationUtils.validateUserRegistrationDetails(userRegistrationData);
@@ -36,16 +45,22 @@ const ContactDetails = ({ route }) => {
             setIsLoading(true);
             userService.addNewUser(userRegistrationData).then(res => {
                 dispatch(setUserData(res.data))
-                navigation.navigate(navigationconstants.PAGES.preferences)
-            }).catch(err => {
-                console.log(err.code)
-                if (err.code == httpConstants.HTTP_CODES.ERR_BAD_REQUEST) {
+                createDefaultPreferencesForUser(res.data?.id).then(res => {
+                    dispatch(setPreferences(res.data))
+                    navigation.navigate(navigationconstants.PAGES.preferences)
+                }).catch(error => {
+                    setErrorModalMessage("An error occurred in configuring user preferences")
+                    setErrorModalVisible(true)
+                    log.error("Error in creating user preferences for user", error)
+                })
+            }).catch(error => {
+                if (error.response.status == HttpStatusCode.BadRequest) {
                     setErrorModalMessage("An error occurred in registration, please check your input details and retry")
                 } else {
                     setErrorModalMessage("An error occurred in registration")
                 }
                 setErrorModalVisible(true)
-                log.error(err)
+                log.error("Error in registering new user ", error)
             }).finally(() => {
                 setIsLoading(false);
             })
@@ -63,8 +78,6 @@ const ContactDetails = ({ route }) => {
     useEffect(() => {
         setUserRegistrationData({ ...userRegistrationData, ...route.params.userData })
     }, [])
-
-
 
     return (
         <View style={{ flex: 1 }}>
@@ -95,9 +108,9 @@ const ContactDetails = ({ route }) => {
                                 <FormControl.Label alignSelf="flex-start">Mobile Number</FormControl.Label>
                                 <Input
                                     width="xs"
-                                    placeholder="Mobile Number"
+                                    placeholder="Mobile Number (ex: +1 xxx xxx xxxx)"
                                     value={userRegistrationData.mobileNo}
-                                    keyboardType="numeric"
+                                    keyboardType="phone-pad"
                                     onChangeText={data => setUserRegistrationData({ ...userRegistrationData, mobileNo: data })}
                                 />
                             </VStack>

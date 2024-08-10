@@ -32,15 +32,15 @@ const ActivityCard = ({ title, description, imageSource, onPress, style }) => {
 
             <Flex>
               <HStack space={1} justifyContent="space-between" alignItems="center">
-                <Text w="40" fontSize="sm">
+                {description && <Text w="40" fontSize="sm">
                   {description}
-                </Text>
-                <Image
+                </Text>}
+                {imageSource && <Image
                   source={{ uri: imageSource }}
                   alt={`${title} Image`}
                   width={125}
                   height={125}
-                />
+                />}
               </HStack>
             </Flex>
           </Box>

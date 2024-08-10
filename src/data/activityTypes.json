@@ -1,0 +1,7 @@
+{
+  "content": [
+    {"id": "1", "value": "RUNNING", "name": "Running"},
+    {"id": "2", "value": "DRIVING", "name": "Driving"},
+    {"id": "3", "value": "WALKIING", "name": "Walking"}
+  ]
+}

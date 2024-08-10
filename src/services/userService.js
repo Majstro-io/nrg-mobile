@@ -17,6 +17,19 @@ const getUserData = async (userId) => {
     }
 }
 
+const getUserDataFromMobileNumber = async (mobileNumber) => {
+    try {
+        const response = await apiInstances.nrgBackend.request({
+            method: httpConstants.HTTP_METHODS.GET,
+            url: `${USERS_BASE}/mobile/${mobileNumber}`
+        })
+        return response;
+    } catch (error) {
+        log.error(`Error in getting user with mobile ${mobileNumber}`, error)
+        throw error;
+    }
+}
+
 const addNewUser = async (userData) => {
     try {
         const response = await apiInstances.nrgBackend.request({
@@ -32,8 +45,9 @@ const addNewUser = async (userData) => {
 }
 
 const userService = {
+    addNewUser,
     getUserData,
-    addNewUser
+    getUserDataFromMobileNumber,
 }
 
 export default userService;
