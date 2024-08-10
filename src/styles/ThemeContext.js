@@ -8,6 +8,7 @@ const darkTheme = extendTheme({
       200: '#7C7C7C',
       300: '#292929',
       800: '#181725',
+      900: '#181725ee',
     },
     white: {
       100: '#FFFFFF',
@@ -24,8 +25,8 @@ const darkTheme = extendTheme({
       500: '#6B46C1',
       600: '#a78bfa',
       700: '#6B46C1',
-      800: '#6B46C1',
-      900: '#6B46C1',
+      800: '#292929',
+      900: '#181725',
     },
     amber: {
       400: '#d97706',
@@ -39,6 +40,30 @@ const darkTheme = extendTheme({
       baseStyle: {
         bg: 'black.800',
       },
+    },
+    Modal: {
+      baseStyle: {
+        borderColor: 'black.300',
+        bg: 'black.900',
+      }
+    },
+    ModalHeader: {
+      baseStyle: {
+        color: 'white.100',
+        bg: 'black.800',
+        borderColor: 'black.300'
+      }
+    },
+    ModalContent: {
+      baseStyle: {
+        bg: 'black.800',
+      }
+    },
+    ModalFooter: {
+      baseStyle: {
+        borderColor: 'black.300',
+        bg: 'black.800',
+      }
     },
     Pressable: {
       baseStyle: {
@@ -126,53 +151,38 @@ const darkTheme = extendTheme({
   },
 });
 
-
 const lightTheme = extendTheme({
   colors: {
+    black: {
+      100: '#C4C4C4',
+      200: '#7C7C7C',
+      300: '#292929',
+      800: '#181725',
+      900: '#181725ee',
+    },
     white: {
       100: '#FFFFFF',
       200: '#F8F8F8',
       300: '#E8E8E8',
       800: '#C0C0C0',
     },
-    black: {
-      100: '#C4C4C4',
-      200: '#7C7C7C',
-      300: '#292929',
-      800: '#181725',
-    },
-    green: {
-      300: '#53B175',
-    },
     primary: {
-      50: '#E3F2F9',
-      100: '#C5E4F3',
-      200: '#A2D4EC',
-      300: '#7AC1E4',
-      400: '#47A9DA',
-      500: '#0088CC',
-      600: '#007AB8',
-      700: '#006BA1',
-      800: '#005885',
-      900: '#003F5E',
+      50: '#6B46C1',
+      100: '#6B46C1',
+      200: '#6B46C1',
+      300: '#6B46C1',
+      400: '#6B46C1',
+      500: '#6B46C1',
+      600: '#6B46C1',
+      700: '#6B46C1',
+      800: '#888888',
+      900: '#E8E8E8',
     },
     amber: {
       400: '#d97706',
     },
     violet: {
       700: '#6B46C1',
-    },
-    blueGray: {
-      50: '#F8FAFC',
-      100: '#F1F5F9',
-      200: '#E2E8F0',
-      300: '#CBD5E1',
-      400: '#94A3B8',
-      500: '#64748B',
-      600: '#475569',
-      700: '#334155',
-      800: '#1E293B',
-      900: '#0F172A',
     },
   },
   components: {
@@ -181,20 +191,44 @@ const lightTheme = extendTheme({
         bg: 'white.100',
       },
     },
+    Modal: {
+      baseStyle: {
+        borderColor: 'white.300',
+        bg: 'white.900',
+      }
+    },
+    ModalHeader: {
+      baseStyle: {
+        color: 'white.100',
+        bg: 'white.100',
+        borderColor: 'white.300'
+      }
+    },
+    ModalContent: {
+      baseStyle: {
+        bg: 'white.100',
+      }
+    },
+    ModalFooter: {
+      baseStyle: {
+        borderColor: 'white.300',
+        bg: 'white.100',
+      }
+    },
     Pressable: {
       baseStyle: {
-        bg: 'muted.100',
-        borderColor: 'muted.200',
+        bg: 'white.800',
+        borderColor: 'white.300',
       },
     },
     Flex: {
       baseStyle: {
-        color: 'white.800',
+        color: 'white.100',
       },
     },
     Divider: {
       baseStyle: {
-        backgroundColor: 'black.200',
+        backgroundColor: 'white.100',
       },
     },
     Heading: {
@@ -208,7 +242,7 @@ const lightTheme = extendTheme({
     },
     Text: {
       baseStyle: {
-        color: 'blueGray.800', // Default color for Text
+        color: 'black.800',
       },
       defaultProps: {
         size: 'md',
@@ -216,38 +250,54 @@ const lightTheme = extendTheme({
       },
       sizes: {
         xl: {
-          color: 'violet.400', // Customize color for xl size
+          fontSize: '64px',
         },
         lg: {
-          color: 'violet.400', // Customize color for lg size
+          fontSize: '32px',
         },
         md: {
-          color: 'coolGray.800', // Customize color for md size
+          fontSize: '16px',
         },
         sm: {
-          color: 'coolGray.800', // Customize color for sm size
+          fontSize: '12px',
         },
       },
     },
     FormControl: {
       baseStyle: {
         label: {
-          color: 'black.300',
+          color: 'black.800',
           fontFamily: 'MontRegular',
         },
+
       },
     },
     Input: {
       baseStyle: {
-        color: 'black.300',
+        color: 'black.800',
       },
     },
     Select: {
       baseStyle: {
-        color: 'black.300',
+        color: 'black.800',
         bg: 'white.100',
       },
     },
+    IconButton: {
+      baseStyle: {
+        _icon: { size: "md" },
+        _light: {
+          bg: "transparent"
+        },
+        _pressed: { bg: "transparent" }
+      }
+    },
+    Button: {
+      baseStyle: {
+        color: 'primary.700',
+        borderRadius: 300
+      }
+    }
   },
 });
 

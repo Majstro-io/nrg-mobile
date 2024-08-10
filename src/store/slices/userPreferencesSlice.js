@@ -12,9 +12,11 @@ const userPreferencesSlice = createSlice({
   initialState,
   reducers: {
     addUserFavouriteActivity: (state, action) => {
-      const isExist = state.favourites.find(favourite => favourite.activityId == action.payload.activityId)
-      if (!isExist) {
+      const index = state.favourites.findIndex(favourite => favourite.activityId == action.payload.activityId)
+      if (index == -1) {
         state.favourites.push(action.payload);
+      } else {
+        state.favourites.splice(index, 1);
       }
     },
     updateTheme: (state, action) => {

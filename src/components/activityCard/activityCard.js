@@ -1,17 +1,15 @@
 import { Box, ChevronRightIcon, Flex, HStack, Image, Pressable, Text } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import navigationconstants from '../../constants/navigationConstants';
 
-const ActivityCard = ({ id, title, description, imageSource }) => {
-  const navigation = useNavigation();
+const ActivityCard = ({ title, description, imageSource, onPress, style }) => {
 
   return (
     <View>
       <Box alignItems="center" mt={4}>
         <Pressable
-          onPress={() => navigation.navigate(navigationconstants.PAGES.activity, { id: id, activityName: title, image: imageSource })}
+          style={style}
+          onPress={onPress}
           rounded="8"
           overflow="hidden"
           borderWidth="1"

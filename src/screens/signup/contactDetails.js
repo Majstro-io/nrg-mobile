@@ -1,20 +1,79 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import signupStyles from "./signup.styles";
 import { ScrollView, View, Button, FormControl, Input, VStack } from "native-base";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
+import userService from "../../services/userService";
+import { useDispatch } from "react-redux";
+import ErrorModal from "../../components/modals/errorModal";
+import log from "../../config/logger";
+import validationUtils from "../../utils/validationUtils";
+import { setUserData } from "../../store/slices/userSlice";
+import httpConstants from "../../constants/httpConstants";
 
 
-const ContactDetails = () => {
+const ContactDetails = ({ route }) => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
-    const [email, setEmail] = React.useState(null);
-    const [mobile, setMobile] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [errorModalVisible, setErrorModalVisible] = React.useState(false)
+    const [errorModalMessage, setErrorModalMessage] = React.useState("Please fill in all the details required to proceed with the registration")
+    const [userRegistrationData, setUserRegistrationData] = React.useState({
+        firstName: null,
+        lastName: null,
+        gender: null,
+        mobileNo: null,
+        email: null,
+        image: ""
+    });
+
+    const registerUser = () => {
+        const { valid, errors } = validationUtils.validateUserRegistrationDetails(userRegistrationData);
+        if (valid) {
+            setIsLoading(true);
+            userService.addNewUser(userRegistrationData).then(res => {
+                dispatch(setUserData(res.data))
+                navigation.navigate(navigationconstants.PAGES.preferences)
+            }).catch(err => {
+                console.log(err.code)
+                if (err.code == httpConstants.HTTP_CODES.ERR_BAD_REQUEST) {
+                    setErrorModalMessage("An error occurred in registration, please check your input details and retry")
+                } else {
+                    setErrorModalMessage("An error occurred in registration")
+                }
+                setErrorModalVisible(true)
+                log.error(err)
+            }).finally(() => {
+                setIsLoading(false);
+            })
+        } else {
+            if (errors.email) {
+                setErrorModalMessage("Please provide a valid email")
+            } else {
+                setErrorModalMessage("Please fill in all the details required to proceed with the registration")
+            }
+            setErrorModalVisible(true)
+        }
+
+    }
+
+    useEffect(() => {
+        setUserRegistrationData({ ...userRegistrationData, ...route.params.userData })
+    }, [])
+
+
 
     return (
         <View style={{ flex: 1 }}>
+            <ErrorModal
+                errorDescription={errorModalMessage}
+                errorTitle={"Fill all the fields"}
+                setVisible={setErrorModalVisible}
+                visible={errorModalVisible}
+            />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.personalDetails} title={"Contact Details"} />
 
@@ -26,9 +85,9 @@ const ContactDetails = () => {
                                 <Input
                                     width="xs"
                                     placeholder="Email"
-                                    value={email}
+                                    value={userRegistrationData.email}
                                     keyboardType="email-address"
-                                    onChangeText={email => setEmail(email)}
+                                    onChangeText={data => setUserRegistrationData({ ...userRegistrationData, email: data })}
                                 />
                             </VStack>
 
@@ -37,17 +96,18 @@ const ContactDetails = () => {
                                 <Input
                                     width="xs"
                                     placeholder="Mobile Number"
-                                    value={mobile}
+                                    value={userRegistrationData.mobileNo}
                                     keyboardType="numeric"
-                                    onChangeText={mobile => setMobile(mobile)}
+                                    onChangeText={data => setUserRegistrationData({ ...userRegistrationData, mobileNo: data })}
                                 />
                             </VStack>
 
 
                             <Button
+                                isLoading={isLoading}
                                 mt={3}
                                 width="1/4"
-                                onPress={() => navigation.navigate('Preferences')}>
+                                onPress={() => registerUser()}>
                                 Sign Up
                             </Button>
 

@@ -6,15 +6,22 @@ import { ScrollView, View, Button, CheckIcon, FormControl, Input, Select, VStack
 import signupStyles from "./signup.styles";
 import navigationconstants from "../../constants/navigationConstants";
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
+import DateInput from "../../components/inputs/dateInput";
 
 
 const PersonalDetails = () => {
     const navigation = useNavigation();
 
-    const [firstName, setFirstName] = React.useState(null);
-    const [lastName, setLastName] = React.useState(null);
-    const [gender, setGender] = React.useState(null);
-    const [birthDate, setBirthDate] = React.useState(null);
+    const [userData, setUserData] = React.useState({
+        firstName: null,
+        lastName: null,
+        gender: null,
+        dob: null
+    });
+
+    const proceedToNextPage = () => {
+        navigation.navigate(navigationconstants.PAGES.contactDetails, { userData: userData })
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -30,8 +37,8 @@ const PersonalDetails = () => {
                                 <Input
                                     width="xs"
                                     placeholder="First Name"
-                                    value={firstName}
-                                    onChangeText={firstName => setFirstName(firstName)}
+                                    value={userData.firstName}
+                                    onChangeText={data => setUserData({ ...userData, firstName: data })}
                                 />
                             </VStack>
 
@@ -40,48 +47,34 @@ const PersonalDetails = () => {
                                 <Input
                                     width="xs"
                                     placeholder="Last Name"
-                                    value={lastName}
-                                    onChangeText={lastName => setLastName(lastName)}
+                                    value={userData.lastName}
+                                    onChangeText={data => setUserData({ ...userData, lastName: data })}
                                 />
                             </VStack>
-                            <VStack space={1}>
-                                <FormControl.Label alignSelf="flex-start">BirthDay</FormControl.Label>
-                                <Select
-                                    isReadOnly
-                                    selectedValue={birthDate}
-                                    onValueChange={date => setBirthDate(date)}
-                                    width="xs"
-                                    placeholder="01/01/2024"
-                                    _selectedItem={{
-                                        endIcon: <CheckIcon size="5" />
-                                    }}
-                                >
-                                    <Select.Item label="" value="" />
-
-                                </Select>
+                            <VStack width={"80%"} space={1}>
+                                <DateInput label={"BirthDate"} onChange={data => setUserData({ ...userData, dob: data })} />
                             </VStack>
                             <VStack space={1}>
                                 <FormControl.Label alignSelf="flex-start">Select Gender</FormControl.Label>
                                 <Select
                                     isReadOnly
-                                    selectedValue={gender}
-                                    onValueChange={gender => setGender(gender)}
+                                    selectedValue={userData.gender}
+                                    onValueChange={gender => setUserData({ ...userData, gender: gender })}
                                     width="xs"
                                     placeholder="Male"
                                     _selectedItem={{
                                         endIcon: <CheckIcon size="5" />
                                     }}
                                 >
-                                    <Select.Item label="Male" value="male" />
-                                    <Select.Item label="Female" value="female" />
-                                    <Select.Item label="Other" value="other" />
+                                    <Select.Item label="Male" value="MALE" />
+                                    <Select.Item label="Female" value="FEMALE" />
                                 </Select>
                             </VStack>
 
                             <Button
                                 mt={3}
                                 width="1/4"
-                                onPress={() => navigation.navigate(navigationconstants.PAGES.contactDetails)}>
+                                onPress={proceedToNextPage}>
                                 Next
                             </Button>
 

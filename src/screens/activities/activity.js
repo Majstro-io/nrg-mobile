@@ -27,18 +27,21 @@ const Activity = ({ route }) => {
     const [appState, setAppState] = useState(AppState.currentState);
 
     const currentTrack = useRef(0);
+    const secondsToPlayNextQuote = useRef(0);
 
     const handleStartStop = () => {
         if (playerState == playerConstants.PLAYER_STATES.stopped) {
             setNotificationTrigger();
             setPlayerState(playerConstants.PLAYER_STATES.playing)
             currentTrack.current = 0;
+            secondsToPlayNextQuote.current = 0;
             setTimer(0);
         } else {
             stopPlaying();
             setPlayerState(playerConstants.PLAYER_STATES.stopped)
             setSound(null);
             currentTrack.current = 0;
+            secondsToPlayNextQuote.current = 0;
             setTimer(0);
         }
     };
@@ -119,27 +122,19 @@ const Activity = ({ route }) => {
         };
     }, [appState]);
 
-    // timer 
-    useEffect(() => {
-        let interval = null;
-        if (playerState == playerConstants.PLAYER_STATES.playing) {
-            interval = setInterval(() => {
-                setTimer((prevSeconds) => prevSeconds + 1);
-            }, 1000);
-        } else if (playerState != playerConstants.PLAYER_STATES.playing && timer !== 0) {
-            clearInterval(interval);
-        }
-        return () => clearInterval(interval);
-    }, [timer, playerState]);
-
     // background job which will keep running to play audio at time intervals
     useEffect(() => {
         if (playerState == playerConstants.PLAYER_STATES.playing) {
             BackgroundTimer.runBackgroundTimer(() => {
-                const nextTrack = currentTrack.current >= audioTracks.length - 1 ? 0 : currentTrack.current + 1
-                currentTrack.current = nextTrack;
-                playAudio(audioTracks[currentTrack.current]);
-            }, playerConstants.AUDIO_PLAY_INTERVAL);
+                if (secondsToPlayNextQuote.current > playerConstants.AUDIO_PLAY_INTERVAL / 1000) {
+                    const nextTrack = currentTrack.current >= audioTracks.length - 1 ? 0 : currentTrack.current + 1
+                    currentTrack.current = nextTrack;
+                    playAudio(audioTracks[currentTrack.current]);
+                    secondsToPlayNextQuote.current = 0;
+                }
+                setTimer((prevSeconds) => prevSeconds + 1);
+                secondsToPlayNextQuote.current = secondsToPlayNextQuote.current + 1;
+            }, 1000);
         } else {
             BackgroundTimer.stopBackgroundTimer();
         }
