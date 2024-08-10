@@ -176,7 +176,6 @@ const Activity = ({ route }) => {
                 setTimer(0);
                 break;
             }
-            log.info(timer)
             await sleep(1000);
             try {
                 if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current]?.gap) {
