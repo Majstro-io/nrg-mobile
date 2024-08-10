@@ -2,7 +2,7 @@ import { AppState } from "react-native";
 import { Box, Button, Center, Flex, HStack, Image, Text, View, VStack } from "native-base";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import BackgroundTimer from 'react-native-background-timer';
+import BackgroundService from 'react-native-background-actions';
 
 import audioManagerService from "../../services/soundManagerService";
 import log from "../../config/logger";
@@ -28,11 +28,14 @@ const Activity = ({ route }) => {
 
     const [appState, setAppState] = useState(AppState.currentState);
 
+    const playerStateRef = useRef(playerState);
     const currentTrack = useRef(0);
     const currentSchedule = useRef(0);
     const currentQuotes = useRef([]);
     const currentVoice = useRef(userPreferences.assistant);
     const secondsToPlayNextQuote = useRef(0);
+
+    const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
     const handleStartStop = () => {
         if (playerState == playerConstants.PLAYER_STATES.stopped) {
@@ -42,8 +45,8 @@ const Activity = ({ route }) => {
             secondsToPlayNextQuote.current = 0;
             setTimer(0);
         } else {
-            stopPlaying();
             setPlayerState(playerConstants.PLAYER_STATES.stopped)
+            stopPlaying();
             setSound(null);
             currentTrack.current = 0;
             secondsToPlayNextQuote.current = 0;
@@ -72,8 +75,8 @@ const Activity = ({ route }) => {
         }
     };
 
-    const stopPlaying = () => {
-        BackgroundTimer.stopBackgroundTimer();
+    const stopPlaying = async () => {
+        await BackgroundService.stop();
         audioManagerService.stopSound(sound, setSound);
         cancelNotificationTrigger();
     };
@@ -152,11 +155,29 @@ const Activity = ({ route }) => {
     }, [appState]);
 
 
-    // background job which will keep running to play audio at time intervals
-    useEffect(() => {
-        if (playerState == playerConstants.PLAYER_STATES.playing) {
-            BackgroundTimer.runBackgroundTimer(() => {
-                // check if specified interval has reached to play the quote, if so proceed
+    const options = {
+        taskName: 'NRG Remix',
+        taskTitle: 'NRG Remix',
+        taskDesc: `You are running NRG Remix app`,
+        taskIcon: {
+            name: 'ic_launcher',
+            type: 'mipmap',
+        },
+        color: '#6B46C1',
+        parameters: {
+            delay: 1000,
+        },
+    };
+
+    // background process to play quotes
+    const backgroundProcess = async () => {
+        while (true) {
+            if (playerStateRef.current != playerConstants.PLAYER_STATES.playing) {
+                setTimer(0);
+                break;
+            }
+            await sleep(1000);
+            try {
                 if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current]?.gap) {
                     const nextTrack = handleNextTrack()
                     currentTrack.current = nextTrack;
@@ -165,12 +186,39 @@ const Activity = ({ route }) => {
                 }
                 setTimer((prevSeconds) => prevSeconds + 1);
                 secondsToPlayNextQuote.current = secondsToPlayNextQuote.current + 1;
-            }, 1000);
-        } else {
-            BackgroundTimer.stopBackgroundTimer();
+            } catch (err) {
+                log.error("error in background timer")
+            }
         }
+    }
+
+    useEffect(() => {
+        const startBackgroundService = async () => {
+            try {
+                await BackgroundService.start(backgroundProcess, options);
+            } catch (error) {
+                log.error('Error starting background service:', error);
+            }
+        };
+
+        const stopBackgroundService = async () => {
+            try {
+                await BackgroundService.stop();
+            } catch (error) {
+                console.error('Error stopping background service:', error);
+            }
+        };
+
+        if (playerState == playerConstants.PLAYER_STATES.playing) {
+            startBackgroundService();
+            playerStateRef.current = playerConstants.PLAYER_STATES.playing
+        } else {
+            stopBackgroundService();
+            playerStateRef.current = playerConstants.PLAYER_STATES.stopped
+        }
+
         return () => {
-            BackgroundTimer.stopBackgroundTimer();
+            stopBackgroundService();
         };
     }, [playerState]);
 
