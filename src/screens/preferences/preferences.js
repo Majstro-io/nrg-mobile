@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, FormControl, Select, VStack, Image } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
-import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 
 import assistantOptions from "../../data/assistantOptions.json"
 import { setAssistantVoice, setPreferences, updateTheme } from "../../store/slices/userPreferencesSlice";
-import SelectFavouritesModal from "../../components/modals/selectFavouritesModal";
 import userPreferencesService from "../../services/userPreferencesService";
 import log from "../../config/logger";
 import ErrorModal from "../../components/modals/errorModal";
 
-const Preferences = () => {
+const Preferences = ({ route }) => {
+  const { isRegistration } = route.params || false;
+
   const navigation = useNavigation();
   const { setTheme } = useTheme();
 
@@ -50,9 +50,9 @@ const Preferences = () => {
 
   const updateUserPreferences = async () => {
     const preferenceData = {
-      preferedActivities: userPreferences.favourites,
-      voice: userPreferences.assistant,
-      theme: userPreferences.theme
+      preferedActivities: userPreferences?.favourites,
+      voice: userPreferences?.assistant,
+      theme: userPreferences?.theme
     }
     setLoading(true)
     await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData).then(res => {
@@ -84,69 +84,102 @@ const Preferences = () => {
         setVisible={setErrorModalVisible}
         visible={errorModalVisible}
       />
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"Preferences"} />
+      <ScrollView scrollEnabled={false}>
+        <HStack justifyContent="flex-end" alignItems="center" mt={5} mx={2} flex={1}>
+
+        </HStack>
         <Center>
-          <Image
-            alt="preferencesIconImage"
-            resizeMode="contain"
-            source={require('../../resources/preferences.png')}
-          />
-        </Center>
-        <View>
-          <FormControl isRequired>
-            <VStack space={4} mt="4" alignItems="center">
-              <VStack space={1}>
-                <FormControl.Label alignSelf="flex-start">Voice Preferences</FormControl.Label>
+          <VStack space={2} alignItems="center">
+
+            <Text bold fontSize="2xl" color="#181725" mb={3}>NRG Remix</Text>
+            <Text fontSize="3xl" color="#181725">Preferences</Text>
+            <Text fontSize="sm" color="#181725" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
+            <VStack space={5} alignItems="center">
+
+              <Box w="72" mt={5}>
+                <Text fontSize="xs" color="#181725" mb={1}>Voice Preference*</Text>
                 <Select
                   defaultValue={userPreferences.assistant}
                   selectedValue={userPreferences.assistant}
                   onValueChange={(value) => dispatch(setAssistantVoice(value))}
-                  width="xs"
+                  width="72"
                   isReadOnly
                   placeholder="Select Voice Preference"
                   _selectedItem={{
-                    endIcon: <CheckIcon size="5" />
+                    endIcon: <CheckIcon size="5" />,
                   }}
-                >
-                  {assistantOptions.content.assistants.map(assistant => {
-                    return <Select.Item label={assistant?.name} value={assistant?.id} key={assistant?.id} />
-                  })}
+                  _placeholder={{
+                    color: "gray.400",
+                  }}
+
+                >{assistantOptions.content.assistants.map(assistant => {
+                  return <Select.Item
+                    label={assistant?.name}
+                    value={assistant?.id}
+                    key={assistant?.id} />
+                })}
                 </Select>
-              </VStack>
-              <VStack space={1}>
-                <FormControl.Label alignSelf="flex-start">Select Theme</FormControl.Label>
+              </Box>
+
+              <Box w="72">
+                <Text fontSize="xs" color="#181725" mb={1}>Theme Preference*</Text>
                 <Select
                   selectedValue={userPreferences.theme}
                   onValueChange={handleThemeChange}
-                  width="xs"
                   placeholder="Theme"
                   isReadOnly
                   _selectedItem={{
                     endIcon: <CheckIcon size="5" />
                   }}
                 >
-                  <Select.Item label="Light" value="light" />
                   <Select.Item label="Dark" value="dark" />
                 </Select>
-              </VStack>
-              <VStack space={1}>
-                <FormControl.Label alignSelf="flex-start">Favourite Activities</FormControl.Label>
-                <SelectFavouritesModal />
-              </VStack>
+              </Box>
               <Button
                 mt={3}
-                width="1/4"
-                marginBottom={"1/6"}
-                marginTop={"1/6"}
-                onPress={() => handleOnDone()}
+                width="72"
+                bgColor="#181725"
+                onPress={() => navigation.navigate(navigationconstants.PAGES.interest)}>
+                Preferred Activities
+              </Button>
+              <Button
+                mt={3}
+                width="72"
+                bgColor="#181725"
                 isLoading={loading}
-              >
+                onPress={() => handleOnDone()}>
                 Done
               </Button>
+
+              {isRegistration && <>
+                <HStack space={2}>
+                  <Progress
+                    mt={5}
+                    width="10"
+                    value={100}
+                    colorScheme="blue"
+                    size="sm"
+                  />
+                  <Progress
+                    mt={5}
+                    width="10"
+                    value={100}
+                    colorScheme="blue"
+                    size="sm"
+                  />
+                  <Progress
+                    mt={5}
+                    width="10"
+                    value={100}
+                    colorScheme="blue"
+                    size="sm"
+                  />
+                </HStack>
+                <Text fontSize="xs" color="#181725" textAlign="center" mt="-2"> Final step </Text>
+              </>}
             </VStack>
-          </FormControl>
-        </View>
+          </VStack>
+        </Center>
       </ScrollView>
     </View>
   );

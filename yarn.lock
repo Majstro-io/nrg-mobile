@@ -5599,6 +5599,11 @@ react-native-logs@5.1.0:
   resolved "https://registry.npmjs.org/react-native-logs/-/react-native-logs-5.1.0.tgz"
   integrity sha512-bnTDoML/xH2V16ica6q4OJN7LIT0yz9mgeiAR1l3lvMTV6qfPGpiyy1G39mNfVorGIh3KbMLd6Av8dE2Pc33yA==
 
+react-native-otp-textinput@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/react-native-otp-textinput/-/react-native-otp-textinput-1.1.6.tgz"
+  integrity sha512-auj4etyrp8N2GWyWTDO2If3uMdSoMR9oSJweQYfNEYP8cJEoEHLtDJhNOBJMwTrkRG8YbYroHg3b30TOhLv9kw==
+
 react-native-paper-dates@^0.22.12:
   version "0.22.12"
   resolved "https://registry.npmjs.org/react-native-paper-dates/-/react-native-paper-dates-0.22.12.tgz"

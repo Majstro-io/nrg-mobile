@@ -4,7 +4,11 @@ const PAGES = {
     contactDetails: "ContactDetails",
     login: "Login",
     personalDetails: "PersonalDetails",
+    interest: "Interest",
+    createAccount: "createAccount",
     preferences: "Preferences",
+    start: "Start",
+    pause: "Pause"
 }
 
 

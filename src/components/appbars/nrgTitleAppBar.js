@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { ChevronLeftIcon, Heading, HStack, IconButton, View } from "native-base"
+import { ChevronLeftIcon, HStack, IconButton, Text, View } from "native-base"
 
 const NrgTitleAppBar = ({ title, backNavigateTo }) => {
     const navigation = useNavigation();
@@ -8,16 +8,19 @@ const NrgTitleAppBar = ({ title, backNavigateTo }) => {
         <View style={{
             justifyContent: 'flex-start',
             alignItems: 'left',
-            marginTop: 50,
         }}>
-            <HStack space={3} justifyContent="left" alignItems="center" mx="5">
+            <HStack justifyContent="left" alignItems="center" mx="2" mt={5} >
                 <IconButton
-                    icon={<ChevronLeftIcon />}
+                    icon={<ChevronLeftIcon color="black.500" />}
                     onPress={() => backNavigateTo ? navigation.navigate(backNavigateTo) : null}
+                    _pressed={{
+                        bgColor: "transparent",
+                    }}
+                    bgColor="transparent"
                 />
-                <Heading size="xl">
+                <Text size='md' mx="-1" color='black.500'>
                     {title}
-                </Heading>
+                </Text>
             </HStack>
         </View >
     )

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Input, FormControl } from 'native-base';
+import { Input } from 'native-base';
 
 const DateInput = ({ label, onChange }) => {
     const [date, setDate] = useState('');
@@ -21,9 +21,8 @@ const DateInput = ({ label, onChange }) => {
 
     return (
         <View >
-            <FormControl.Label alignSelf="flex-start">{label}</FormControl.Label>
             <Input
-                placeholder="MM/DD/YYYY"
+                placeholder={label}
                 keyboardType="numeric"
                 maxLength={10}
                 value={date}

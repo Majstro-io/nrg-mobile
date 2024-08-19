@@ -1,7 +1,7 @@
 {
   "content": [
-    {"id": "1", "value": "RUNNING", "name": "Running"},
-    {"id": "2", "value": "DRIVING", "name": "Driving"},
-    {"id": "3", "value": "WALKIING", "name": "Walking"}
+    {"id": "1", "value": "RUNNING", "icon": "running.png", "name": "Running"},
+    {"id": "2", "value": "DRIVING", "icon": "driving.png", "name": "Driving"},
+    {"id": "3", "value": "WALKIING", "icon": "walking.png", "name": "Walking"}
   ]
 }

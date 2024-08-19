@@ -1,21 +1,22 @@
-import React from "react";
-import { Image } from "react-native";
-import loginStyles from "./login.styles";
-import { useNavigation } from "@react-navigation/native";
-import { Button, FormControl, HStack, Heading, Input, ScrollView, Text, VStack, View } from 'native-base';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dimensions, Keyboard } from 'react-native';
+import { HttpStatusCode } from "axios";
+import { CommonActions, useNavigation } from "@react-navigation/native";
+import { Image, Box, Button, Center, HStack, Input, ScrollView, Text, VStack, View, Link } from 'native-base';
 
 import navigationconstants from "../../constants/navigationConstants";
 import userService from "../../services/userService";
-import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "../../store/slices/userSlice";
 import log from "../../config/logger";
 import ErrorModal from "../../components/modals/errorModal";
 import userPreferencesService from "../../services/userPreferencesService";
 import { setPreferences } from "../../store/slices/userPreferencesSlice";
 import { useTheme } from "../../styles/ThemeContext";
-import { HttpStatusCode } from "axios";
-import InputModal from "../../components/modals/InputModal";
 import authService from "../../services/authService";
+import OTPInputModal from "../../components/modals/OtpInputModal";
+
+const { width, height } = Dimensions.get('window');
 
 const LoginPage = () => {
     const navigation = useNavigation();
@@ -25,6 +26,7 @@ const LoginPage = () => {
     const userData = useSelector((state) => state.userData.data);
 
     const [mobile, setMobile] = React.useState(null);
+    const [keyboardHeight, setKeyboardHeight] = React.useState(0);
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [isOtpModalLoading, setIsOtpModalLoading] = React.useState(false);
@@ -40,7 +42,12 @@ const LoginPage = () => {
             if (validated.data) {
                 await fetchUserPreferences()
                 setOtpModalVisible(false)
-                navigation.navigate(navigationconstants.PAGES.activities)
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [{ name: navigationconstants.PAGES.activities }],
+                    })
+                );
             } else {
                 setErrorModalText("Please check the OTP and try again")
                 setErrorModalVisible(true)
@@ -88,6 +95,22 @@ const LoginPage = () => {
         }
     }
 
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            (e) => setKeyboardHeight(e.endCoordinates.height)
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => setKeyboardHeight(0)
+        );
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
+
     return (
         <View style={{ flex: 1 }}>
             <ErrorModal
@@ -96,67 +119,84 @@ const LoginPage = () => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <View style={[loginStyles.welcomeLabelContainer]} >
-                    <Heading size="4xl">
-                        Welcome
-                    </Heading>
-                    <Heading size="xl">
-                        NRG Remix
-                    </Heading>
-                </View>
-
-                <View style={loginStyles.loginInputContainer}>
-                    <FormControl isRequired>
-                        <VStack space={4} mt="24" alignItems="center">
-                            <VStack space={1}>
-                                <FormControl.Label mx="10" alignSelf="flex-start">Login</FormControl.Label>
+            <ScrollView
+                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
+            >
+                <Box position="relative" height={height}>
+                    <Image
+                        source={require('../../resources/loginPage.jpeg')}
+                        size="100%"
+                        height="550"
+                        position="absolute"
+                        zIndex={-1}
+                        alt="Login Image"
+                    />
+                    <Box
+                        top={keyboardHeight ? 400 - keyboardHeight : 350}
+                        bg="#FFFFFF"
+                        borderRadius={45}
+                        width={width}
+                        height={height / 1.5}
+                    >
+                        <Center mt={5}>
+                            <VStack space={3} alignItems="center">
+                                <Text bold fontSize="2xl" >NRG Remix</Text>
+                                <VStack space={0} alignItems="center">
+                                    <Text fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
+                                </VStack>
                                 <Input
-                                    width="xs"
                                     mx="10"
-                                    placeholder="mobile number"
+                                    placeholder="Phone number"
                                     keyboardType="phone-pad"
                                     value={mobile}
                                     onChangeText={text => setMobile(text)}
                                 />
+                                <Button
+                                    bg="black.800"
+                                    isLoading={isLoading}
+                                    onPress={loginUser}>
+                                    Login
+                                </Button>
+                                <Link
+                                    _text={{
+                                        fontSize: "xs"
+                                    }}
+                                    isUnderlined={false}>
+                                    Forgot Phone Number?
+                                </Link>
+                                <HStack space={2} alignItems="center" mt={5}>
+                                    <Text fontSize="md"  >Don't have an account?</Text>
+                                    <Link
+
+                                        isUnderlined={false}
+                                        onPress={() => navigation.navigate(navigationconstants.PAGES.createAccount)}>
+                                        Join now
+                                    </Link>
+                                </HStack>
+
                             </VStack>
-                            <Button
-                                isLoading={isLoading}
-                                width="1/4"
-                                onPress={loginUser}>
-                                Login
-                            </Button>
-                        </VStack>
-                    </FormControl>
+                        </Center>
+                    </Box>
 
-                    <Image
-                        source={require('../../resources/login.png')}
-                        style={loginStyles.image}
+                    {/* OTP Validation Modal */}
+                    <OTPInputModal
+                        buttonText={"Login"}
+                        header={"NRG Remix"}
+                        label={`Enter OTP to ${'\n'}Validate your phone`}
+                        label1={"Don’t receive OTP?"}
+                        label2={"Send Again"}
+                        label3={"Don’t have an account?"}
+                        label4={"Join Now"}
+                        instructions={`Enter the OTP sent to ${mobile}`}
+                        confirmButtonText={"Verify and Login"}
+                        modalVisible={otpModalVisible}
+                        setModalVisible={setOtpModalVisible}
+                        onConfirm={validateUser}
+                        isLoading={isOtpModalLoading}
                     />
-
-                    <HStack style={loginStyles.linkContainer}>
-                        <Button
-                            width="1/5"
-                            onPress={() => navigation.navigate(navigationconstants.PAGES.personalDetails)}>
-                            Sign Up
-                        </Button>
-
-
-                    </HStack>
-                </View>
-
-                {/* OTP Validation Modal */}
-                <InputModal
-                    buttonText={"Login"}
-                    header={"Validate mobile"}
-                    label={"OTP"}
-                    confirmButtonText={"Validate"}
-                    modalVisible={otpModalVisible}
-                    setModalVisible={setOtpModalVisible}
-                    onConfirm={validateUser}
-                    isLoading={isOtpModalLoading}
-                />
-            </ScrollView >
+                </Box>
+            </ScrollView>
         </View >
 
     );

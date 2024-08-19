@@ -1,52 +1,56 @@
-import { Box, ChevronRightIcon, Flex, HStack, Image, Pressable, Text } from 'native-base';
+import { Box, HStack, Image, Pressable, Text } from 'native-base';
 import React from 'react';
-import { View } from 'react-native';
 
-const ActivityCard = ({ title, description, imageSource, onPress, style }) => {
-
+const ActivityCard = ({ title, imageSource, onPress, style, hStackBgColor }) => {
   return (
-    <View>
-      <Box alignItems="center" mt={4}>
-        <Pressable
-          style={style}
-          onPress={onPress}
-          rounded="8"
-          overflow="hidden"
-          borderWidth="1"
-          maxW="96"
-          p="5"
-          width="90%"
+    <Box
+      mb={1}
+      rounded="2xl"
+      overflow="hidden"
+      maxW="96"
+      p="1"
+      width="175px"
+      height="150px"
+      bg="white"
+    >
+      <Pressable
+        rounded="2xl"
+        onPress={onPress}
+        overflow="hidden"
+        style={style}
+      >
+        <Box
+          width="100%"
+          height="100%"
+          position="relative"
         >
-          <Box>
-            <HStack justifyContent="space-between" alignItems="center">
-              <HStack space={2} justifyContent="space-between" alignItems="center" >
-                <Text fontSize="3xl" mb={2}>
-                  {title}
-                </Text>
-              </HStack>
-              <HStack space={2} justifyContent="space-between" alignItems="center" >
-                <ChevronRightIcon color="primary.700" />
-              </HStack>
-
+          <Image
+            source={{ uri: imageSource }}
+            alt="Activity Image"
+            style={{ width: '100%', height: '100%' }}
+            resizeMode="cover"
+          />
+          <Box
+            position="absolute"
+            bottom="0"
+            width="100%"
+            bg={hStackBgColor}
+          >
+            <HStack
+              space={4}
+              justifyContent="center"
+              alignItems="center"
+              padding={2}
+            >
+              <Text fontSize="xl" mb={2}>
+                {title}
+              </Text>
             </HStack>
 
-            <Flex>
-              <HStack space={1} justifyContent="space-between" alignItems="center">
-                {description && <Text w="40" fontSize="sm">
-                  {description}
-                </Text>}
-                {imageSource && <Image
-                  source={{ uri: imageSource }}
-                  alt={`${title} Image`}
-                  width={125}
-                  height={125}
-                />}
-              </HStack>
-            </Flex>
           </Box>
-        </Pressable>
-      </Box>
-    </View>
+        </Box>
+      </Pressable>
+    </Box>
   );
 };
 

@@ -24,9 +24,9 @@ const userPreferencesSlice = createSlice({
       state.theme = action.payload
     },
     setPreferences: (state, action) => {
-      state.favourites = action.payload.preferedActivities || []
-      state.assistant = action.payload.voice
-      state.id = action.payload.id
+      state.favourites = action.payload?.preferedActivities || []
+      state.assistant = action.payload?.voice
+      state.id = action.payload?.id
     },
     setAssistantVoice: (state, action) => {
       state.assistant = action.payload
