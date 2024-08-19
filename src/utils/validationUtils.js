@@ -38,8 +38,13 @@ const validateUserRegistrationDetails = (data) => {
     return { valid, errors };
 }
 
+const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+}
+
 const validationUtils = {
-    validateUserRegistrationDetails
+    validateUserRegistrationDetails,
+    validateEmail
 }
 
 export default validationUtils;

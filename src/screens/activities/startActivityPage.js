@@ -327,15 +327,13 @@ const StartActivityPage = ({ route }) => {
                                     <IconButton
                                         onLongPress={handleNavigate}
                                         onPress={ShowPauseAlert}
-                                        _icon={{
-                                            as: () => (
-                                                <Image
-                                                    source={pause}
-                                                    alt="Custom Icon"
-                                                    size="20"
-                                                />
-                                            ),
-                                        }}
+                                        _icon={
+                                            <Image
+                                                source={pause}
+                                                alt="Custom Icon"
+                                                size="20"
+                                            />
+                                        }
                                         bgColor="black.800"
                                         size="32"
                                         width="32"

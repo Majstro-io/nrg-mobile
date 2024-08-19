@@ -6,6 +6,7 @@ import { Dimensions, Keyboard } from 'react-native';
 import OTPInputModal from "../../components/modals/OtpInputModal";
 import authService from "../../services/authService";
 import ErrorModal from "../../components/modals/errorModal";
+import validationUtils from "../../utils/validationUtils";
 
 const { width, height } = Dimensions.get('window');
 
@@ -14,6 +15,7 @@ const CreateAccount = () => {
 
     const [email, setEmail] = React.useState(null);
     const [phoneNumber, setPhoneNumber] = React.useState(null);
+    const [isInputsValid, setIsInputsValid] = React.useState(false);
     const [keyboardHeight, setKeyboardHeight] = React.useState(0);
 
     const [isLoading, setIsLoading] = React.useState(false);
@@ -38,6 +40,14 @@ const CreateAccount = () => {
     const verifyUser = async () => {
         setOtpModalVisible(true)
     }
+
+    useEffect(() => {
+        if (phoneNumber && validationUtils.validateEmail(email)) {
+            setIsInputsValid(true);
+        } else {
+            setIsInputsValid(false);
+        }
+    }, [email, phoneNumber])
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -101,7 +111,6 @@ const CreateAccount = () => {
                                 <VStack space={0} alignItems="center">
                                     <Text fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
                                     <Text fontSize="sm" textAlign="center" lineHeight="xs" mb={4}>
-                                        Explain the benefits of registration.{`\n`}
                                         We will send you the
                                         <Text fontWeight="bold"> 5 digit</Text>
                                         <Text> verification code</Text>
@@ -127,8 +136,10 @@ const CreateAccount = () => {
                                         _pressed={{ bg: "yellow.400" }}
                                         _loading={{ bg: "yellow.700" }}
                                         _text={{ color: "black.800" }}
-                                        onPress={verifyUser}>
-                                        Verify your Details
+                                        disabled={!isInputsValid}
+                                        onPress={verifyUser}
+                                    >
+                                        Register
                                     </Button>
                                 </VStack>
                             </VStack>
