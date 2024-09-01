@@ -11,8 +11,14 @@ const userSlice = createSlice({
     setUserData: (state, action) => {
       state.data = action.payload
     },
+    updateUserDataField: (state, action) => {
+      const { key, value } = action.payload;
+      if (state.data && state.data.hasOwnProperty(key)) {
+        state.data[key] = value;
+      }
+    },
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setUserData, updateUserDataField } = userSlice.actions;
 export default userSlice.reducer;

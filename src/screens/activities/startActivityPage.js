@@ -19,6 +19,7 @@ import notificationData from "../../data/notificationData.json"
 import muted from "../../resources/playerIcons/muted.png";
 import unmuted from "../../resources/playerIcons/unmuted.png";
 import pause from "../../resources/playerIcons/pause.png";
+import ErrorModal from "../../components/modals/errorModal";
 
 const StartActivityPage = ({ route }) => {
     const navigation = useNavigation();
@@ -27,13 +28,15 @@ const StartActivityPage = ({ route }) => {
 
     const [timer, setTimer] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [playerState, setPlayerState] = useState(playerConstants.PLAYER_STATES.playing)
+    const [playerState, setPlayerState] = useState(playerConstants.PLAYER_STATES.stopped)
     const [sound, setSound] = useState(null);
-    const [scheduleList, setScheduleList] = useState([])
+    const [scheduleList, setScheduleList] = useState(null)
     const [appState, setAppState] = useState(AppState.currentState);
     const [showPauseAlert, setShowPauseAlert] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
     const [muteIcon, setMuteIcon] = useState(unmuted);
+
+    const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
     const playerStateRef = useRef(playerState);
     const currentTrack = useRef(0);
@@ -120,18 +123,24 @@ const StartActivityPage = ({ route }) => {
     }
 
     const handleNextTrack = () => {
-        // check if current quotes has finished playing
-        if (currentTrack.current >= currentQuotes.current.length - 1) {
-            // check if there is a next schedule, if so play next schedule quotes, else play the first schedule again
-            const nextSchedule = currentSchedule.current >= scheduleList.length - 1 ? 0 : currentSchedule.current + 1
-            currentSchedule.current = (nextSchedule);
-            // set the first quote of the new schedule
-            currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
-            return 0;
-        } else {
-            // if current quotes list has more quotes, play the next quote
-            return currentTrack.current + 1;
+        try {
+            // check if current quotes has finished playing
+            if (currentTrack.current >= currentQuotes.current.length - 1) {
+                // check if there is a next schedule, if so play next schedule quotes, else play the first schedule again
+                const nextSchedule = currentSchedule.current >= scheduleList.length - 1 ? 0 : currentSchedule.current + 1
+                currentSchedule.current = (nextSchedule);
+                // set the first quote of the new schedule
+                currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
+                return 0;
+            } else {
+                // if current quotes list has more quotes, play the next quote
+                return currentTrack.current + 1;
+            }
+        } catch (err) {
+            log.error("error in playing next track", err)
+            return currentTrack.current;
         }
+
     }
 
     const fetchDetailedActivityData = async (activityId) => {
@@ -153,15 +162,19 @@ const StartActivityPage = ({ route }) => {
     }, [navigation]);
 
     useEffect(() => {
-        if (scheduleList && scheduleList.length > 0) {
-            currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
+        if (scheduleList) {
+            if (scheduleList.length > 0) {
+                currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
+                handleStart();
+            } else {
+                setIsErrorModalVisible(true)
+            }
         }
     }, [scheduleList])
 
     useFocusEffect(
         useCallback(() => {
             fetchDetailedActivityData(id);
-            handleStart();
         }, [id])
     )
 
@@ -225,7 +238,7 @@ const StartActivityPage = ({ route }) => {
                 setTimer((prevSeconds) => prevSeconds + 1);
                 secondsToPlayNextQuote.current = secondsToPlayNextQuote.current + 1;
             } catch (err) {
-                log.error("error in background timer")
+                log.error("error in background timer", err)
             }
         }
     }
@@ -266,6 +279,13 @@ const StartActivityPage = ({ route }) => {
     return (
 
         <View style={{ flex: 1 }} bg="yellow.400" >
+            <ErrorModal
+                errorDescription={"This Activity do not have any quotes configured"}
+                errorTitle={"No Quotes for this Activity"}
+                setVisible={setIsErrorModalVisible}
+                visible={isErrorModalVisible}
+            />
+
             <ScrollView
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}

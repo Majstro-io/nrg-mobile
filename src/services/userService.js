@@ -44,10 +44,25 @@ const addNewUser = async (userData) => {
     }
 }
 
+const updateUser = async (userId, userData) => {
+    try {
+        const response = await apiInstances.nrgBackend.request({
+            method: httpConstants.HTTP_METHODS.PUT,
+            url: `${USERS_BASE}/${userId}`,
+            data: userData
+        })
+        return response;
+    } catch (error) {
+        log.error(`Error in updating user with id ${userId}`, error)
+        throw error;
+    }
+}
+
 const userService = {
     addNewUser,
     getUserData,
     getUserDataFromMobileNumber,
+    updateUser
 }
 
 export default userService;

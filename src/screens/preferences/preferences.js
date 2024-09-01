@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, Input, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import navigationconstants from "../../constants/navigationConstants";
@@ -10,6 +10,8 @@ import userPreferencesService from "../../services/userPreferencesService";
 import log from "../../config/logger";
 import ErrorModal from "../../components/modals/errorModal";
 import assistantOptions from "../../data/assistantOptions.json"
+import { setUserData, updateUserDataField } from "../../store/slices/userSlice";
+import userService from "../../services/userService";
 
 const Preferences = ({ route }) => {
   const { isRegistration } = route.params || false;
@@ -18,6 +20,7 @@ const Preferences = ({ route }) => {
   const { setTheme } = useTheme();
 
   const userPreferences = useSelector((state) => state.userPreferences);
+  const userData = useSelector((state) => state.userData.data);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -38,17 +41,21 @@ const Preferences = ({ route }) => {
       theme: userPreferences?.theme
     }
     setLoading(true)
-    await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData).then(res => {
-      dispatch(setPreferences(res.data))
+    try {
+      const userPreferenceRequest = userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)
+      const userDataRequest = userService.updateUser(userData.id, userData)
+      const [userPreferenceResponse, userDataResponse] = await Promise.all([userPreferenceRequest, userDataRequest])
+      dispatch(setUserData(userDataResponse.data))
+      dispatch(setPreferences(userPreferenceResponse.data))
       navigation.navigate(navigationconstants.PAGES.activities)
-    }).catch(error => {
+    } catch (error) {
       setErrorModalText("Failed to update user preferences, please retry")
       setErrorModalTitle("Failed to update preferences")
       setErrorModalVisible(true)
       log.error("Error in updating user preferences from preferences page", error)
-    }).finally(() => {
+    } finally {
       setLoading(false)
-    })
+    }
   }
 
   const handleOnDone = async () => {
@@ -74,9 +81,8 @@ const Preferences = ({ route }) => {
             <Text fontSize="3xl" color="black.800">Preferences</Text>
             <Text fontSize="sm" color="black.800" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
-
               <Box w="72" mt={5}>
-                <Text fontSize="xs" color="black.800" mb={1}>Voice Preference*</Text>
+                <Text fontSize="xs" color="black.800" mb={1}>Voice Preference</Text>
                 <Select
                   defaultValue={userPreferences.assistant}
                   selectedValue={userPreferences.assistant}
@@ -101,7 +107,7 @@ const Preferences = ({ route }) => {
               </Box>
 
               <Box w="72">
-                <Text fontSize="xs" color="black.800" mb={1}>Theme Preference*</Text>
+                <Text fontSize="xs" color="black.800" mb={1}>Theme Preference</Text>
                 <Select
                   selectedValue={userPreferences.theme}
                   onValueChange={handleThemeChange}
@@ -114,6 +120,28 @@ const Preferences = ({ route }) => {
                   <Select.Item label="Default" value="default" />
                 </Select>
               </Box>
+              {!isRegistration &&
+                <>
+                  <Box w="72">
+                    <Text fontSize="xs" color="black.800" mb={1}>Height (cm)</Text>
+                    <Input
+                      defaultValue={userData?.height}
+                      onChangeText={(value) => dispatch(updateUserDataField({ key: 'height', value: value }))}
+                      placeholder="Height (cm)"
+                      keyboardType="numeric"
+                    />
+                  </Box>
+                  <Box w="72">
+                    <Text fontSize="xs" color="black.800" mb={1}>Weight (kg)</Text>
+                    <Input
+                      defaultValue={userData?.weight}
+                      onChangeText={(value) => dispatch(updateUserDataField({ key: 'weight', value: value }))}
+                      placeholder="Weight (kg)"
+                      keyboardType="numeric"
+                    />
+                  </Box>
+                </>
+              }
               <Button
                 mt={3}
                 width="72"
