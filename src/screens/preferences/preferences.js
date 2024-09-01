@@ -91,13 +91,13 @@ const Preferences = ({ route }) => {
         <Center>
           <VStack space={2} alignItems="center">
 
-            <Text bold fontSize="2xl" color="#181725" mb={3}>NRG Remix</Text>
-            <Text fontSize="3xl" color="#181725">Preferences</Text>
-            <Text fontSize="sm" color="#181725" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
+            <Text bold fontSize="2xl" color="black.800" mb={3}>NRG Remix</Text>
+            <Text fontSize="3xl" color="black.800">Preferences</Text>
+            <Text fontSize="sm" color="black.800" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
 
               <Box w="72" mt={5}>
-                <Text fontSize="xs" color="#181725" mb={1}>Voice Preference*</Text>
+                <Text fontSize="xs" color="black.800" mb={1}>Voice Preference*</Text>
                 <Select
                   defaultValue={userPreferences.assistant}
                   selectedValue={userPreferences.assistant}
@@ -122,7 +122,7 @@ const Preferences = ({ route }) => {
               </Box>
 
               <Box w="72">
-                <Text fontSize="xs" color="#181725" mb={1}>Theme Preference*</Text>
+                <Text fontSize="xs" color="black.800" mb={1}>Theme Preference*</Text>
                 <Select
                   selectedValue={userPreferences.theme}
                   onValueChange={handleThemeChange}
@@ -132,20 +132,20 @@ const Preferences = ({ route }) => {
                     endIcon: <CheckIcon size="5" />
                   }}
                 >
-                  <Select.Item label="Dark" value="dark" />
+                  <Select.Item label="Default" value="default" />
                 </Select>
               </Box>
               <Button
                 mt={3}
                 width="72"
-                bgColor="#181725"
+                bgColor="black.800"
                 onPress={() => navigation.navigate(navigationconstants.PAGES.interest)}>
                 Preferred Activities
               </Button>
               <Button
                 mt={3}
                 width="72"
-                bgColor="#181725"
+                bgColor="black.800"
                 isLoading={loading}
                 onPress={() => handleOnDone()}>
                 Done
@@ -175,7 +175,7 @@ const Preferences = ({ route }) => {
                     size="sm"
                   />
                 </HStack>
-                <Text fontSize="xs" color="#181725" textAlign="center" mt="-2"> Final step </Text>
+                <Text fontSize="xs" color="black.800" textAlign="center" mt="-2"> Final step </Text>
               </>}
             </VStack>
           </VStack>

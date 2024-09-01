@@ -67,9 +67,9 @@ const PreferredActivities = ({ route }) => {
                 <Center>
                     <VStack space={2} alignItems="center"  >
 
-                        <Text bold fontSize="2xl" color="#181725" mb={3}>NRG Remix</Text>
-                        <Text fontSize="3xl" color="#181725">Select your interest</Text>
-                        <Text fontSize="sm" color="#181725" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
+                        <Text bold fontSize="2xl" color="black.800" mb={3}>NRG Remix</Text>
+                        <Text fontSize="3xl" color="black.800">Select your interest</Text>
+                        <Text fontSize="sm" color="black.800" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
 
                         <VStack space={5} alignItems="center" mt={2}>
                             {isLoading ? <Spinner size={'lg'} /> :
@@ -90,7 +90,7 @@ const PreferredActivities = ({ route }) => {
                             <Button
                                 mt={3}
                                 width="72"
-                                bgColor="#181725"
+                                bgColor="black.800"
                                 onPress={() => navigation.navigate(navigationconstants.PAGES.preferences, { isRegistration: isRegistration })}
                             >
                                 Done
@@ -119,7 +119,7 @@ const PreferredActivities = ({ route }) => {
                                         size="sm"
                                     />
                                 </HStack>
-                                <Text fontSize="xs" color="#181725" textAlign="center" mt="-2">1 more step</Text>
+                                <Text fontSize="xs" color="black.800" textAlign="center" mt="-2">1 more step</Text>
                             </>}
                         </VStack>
 

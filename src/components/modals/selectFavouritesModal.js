@@ -1,6 +1,7 @@
 import { Button, Center, Modal, Text, useTheme } from "native-base";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import activityTypes from "../../data/activityTypes.json"
 import ActivityCard from "../activityCard/activityCard";
 import { addUserFavouriteActivity } from "../../store/slices/userPreferencesSlice";

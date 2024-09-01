@@ -1,7 +1,7 @@
 {
   "AudioPlayFrequency": 20000,
   "idleReminderTimeout": 10,
-  "theme": "dark",
+  "theme": "default",
   "assistant": "1",
   "favourites": [
     {"id": "1", "activityId": "1"},

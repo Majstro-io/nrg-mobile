@@ -12,7 +12,7 @@ const Footer = () => {
     const navigation = useNavigation();
 
     return (
-        <Box>
+        <Box >
             <Image
                 source={footerImage}
                 alt="Footer Image"
@@ -23,8 +23,8 @@ const Footer = () => {
                 right={1.5}
                 justifyContent="center"
                 alignItems="center"
-                padding={2}
                 space={8}
+                mt={2}
             >
                 <VStack alignItems="center">
                     <IconButton

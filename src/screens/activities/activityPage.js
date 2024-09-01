@@ -1,11 +1,10 @@
 import { Dimensions } from 'react-native';
-import { Box, Button, Center, HStack, IconButton, Image, ScrollView, Text, View, VStack } from "native-base";
+import { Box, Button, Center, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import Footer from "../../components/footer/footer";
-import mic from "../../resources/mic.png";
 
 const ActivityPage = ({ route }) => {
     const navigation = useNavigation();
@@ -38,32 +37,12 @@ const ActivityPage = ({ route }) => {
                         width={width}
                         height={height / 1.5}
                     >
-
                         <Center padding={10}>
                             <VStack space={5} alignItems="center">
                                 <Text fontSize="4xl" >{activityName}</Text>
                                 <VStack space={5} alignItems="center">
                                     <Text mb={2} fontSize="sm" textAlign="center" lineHeight="xs">{description}</Text>
-                                    <HStack justifyContent="space-between" alignItems="center" right={3.5}>
-                                        <Box flex={1} />
-                                        <IconButton
-                                            icon={
-                                                <Image
-                                                    source={mic}
-                                                    alt="mic"
-                                                    size="6"
-                                                />
-                                            }
-                                            bgColor="black.10"
-                                            size="16"
-                                            width="16"
-                                            rounded="full"
-                                            onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
-                                            _text={{ fontSize: '4xl' }}
-                                        />
-
-                                        <Box flex={1} />
-
+                                    <HStack justifyContent="center" alignItems="center" >
                                         <Button
                                             bgColor="yellow.500"
                                             size="32"
@@ -74,13 +53,8 @@ const ActivityPage = ({ route }) => {
                                         >
                                             Start
                                         </Button>
-
-                                        <Box flex={4} />
                                     </HStack>
-
                                 </VStack>
-
-
                             </VStack>
                         </Center>
                     </Box>

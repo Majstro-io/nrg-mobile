@@ -1,6 +1,6 @@
 import { AppState } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Alert, Box, Center, Heading, HStack, IconButton, Image, PresenceTransition, Progress, ScrollView, Text, View, VStack } from "native-base";
+import { Alert, Box, Center, Heading, HStack, IconButton, Image, PresenceTransition, ScrollView, Text, View, VStack } from "native-base";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import BackgroundService from 'react-native-background-actions';
@@ -16,13 +16,15 @@ import activitiesService from "../../services/activitiesService";
 import userPreferenceSettings from "../../data/userPreferences.json"
 import notificationData from "../../data/notificationData.json"
 
-import mic from "../../resources/mic.png";
-import pause from "../../resources/pause.png";
+import muted from "../../resources/playerIcons/muted.png";
+import unmuted from "../../resources/playerIcons/unmuted.png";
+import pause from "../../resources/playerIcons/pause.png";
 
 const StartActivityPage = ({ route }) => {
     const navigation = useNavigation();
     const { id, activityName, image, description } = route.params;
     const userPreferences = useSelector((state) => state.userPreferences);
+
     const [timer, setTimer] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playerState, setPlayerState] = useState(playerConstants.PLAYER_STATES.playing)
@@ -30,12 +32,16 @@ const StartActivityPage = ({ route }) => {
     const [scheduleList, setScheduleList] = useState([])
     const [appState, setAppState] = useState(AppState.currentState);
     const [showPauseAlert, setShowPauseAlert] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
+    const [muteIcon, setMuteIcon] = useState(unmuted);
+
     const playerStateRef = useRef(playerState);
     const currentTrack = useRef(0);
     const currentSchedule = useRef(0);
     const currentQuotes = useRef([]);
     const currentVoice = useRef(userPreferences.assistant);
     const secondsToPlayNextQuote = useRef(0);
+
     const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
     const ShowPauseAlert = async () => {
@@ -45,16 +51,14 @@ const StartActivityPage = ({ route }) => {
         }, 5000);
     };
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('beforeRemove', async (e) => {
-            setShowPauseAlert(false);
-            await handleStop();
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, [navigation]);
-
+    const handleMute = () => {
+        setIsMuted(!isMuted);
+        if (isMuted) {
+            setMuteIcon(unmuted)
+        } else {
+            setMuteIcon(muted)
+        }
+    }
 
     const handleStart = () => {
         setNotificationTrigger();
@@ -139,6 +143,16 @@ const StartActivityPage = ({ route }) => {
     }
 
     useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', async (e) => {
+            setShowPauseAlert(false);
+            await handleStop();
+        });
+        return () => {
+            unsubscribe();
+        };
+    }, [navigation]);
+
+    useEffect(() => {
         if (scheduleList && scheduleList.length > 0) {
             currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
         }
@@ -186,7 +200,7 @@ const StartActivityPage = ({ route }) => {
             name: 'ic_launcher',
             type: 'mipmap',
         },
-        color: '#6B46C1',
+        color: 'yellow.500',
         parameters: {
             delay: 1000,
         },
@@ -195,9 +209,11 @@ const StartActivityPage = ({ route }) => {
     // background process to play quotes
     const backgroundProcess = async () => {
         while (true) {
+            // if not player state is playing, break the loop and stop the timer
             if (playerStateRef.current != playerConstants.PLAYER_STATES.playing) {
                 break;
             }
+            // proceed with 1 second interval
             await sleep(1000);
             try {
                 if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current]?.gap) {
@@ -215,6 +231,7 @@ const StartActivityPage = ({ route }) => {
     }
 
 
+    // handle play, stop and pause through the background service based on the player state
     useEffect(() => {
         const startBackgroundService = async () => {
             try {
@@ -256,12 +273,15 @@ const StartActivityPage = ({ route }) => {
                 <Center padding={10}>
                     <VStack space={5} alignItems="center">
                         <HStack space={"48"} justifyContent="space-between" alignItems="center" mt="3">
-                            <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text>
-                            <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text>
+                            {/* Display when BPM and km is tracked */}
+                            {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text> */}
+                            {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
+                            <Text fontSize="5xl" textAlign="left"  >{activityName}</Text>
                         </HStack>
                         <Box mt="24" alignItems="center">
                             <Heading fontSize="7xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
-                            <Progress
+                            {/* display when total time for activity is tracked, TODO: move this to a component */}
+                            {/* <Progress
                                 width="72"
                                 value={timer}
                                 _filledTrack={{ bgColor: "black.800" }}
@@ -275,7 +295,7 @@ const StartActivityPage = ({ route }) => {
                                 <Text fontSize="xs" textAlign="center">3 km</Text>
                                 <Text fontSize="xs" textAlign="center">4 km</Text>
                                 <Text fontSize="xs" textAlign="center">5 km</Text>
-                            </HStack>
+                            </HStack> */}
                         </Box>
 
 
@@ -284,25 +304,21 @@ const StartActivityPage = ({ route }) => {
                                 <Box flex={1} />
                                 <IconButton
                                     mt={20}
+
                                     _icon={{
-                                        as: () => (
-                                            <Image
-                                                source={mic}
-                                                alt="Custom Icon"
-                                                size="6"
-                                            />
-                                        ),
+                                        as: Image,
+                                        source: muteIcon,
+                                        alt: "Pause",
+                                        size: "8",
                                     }}
-                                    bgColor="black.100"
+                                    bgColor="black.10"
                                     size="16"
                                     width="16"
                                     rounded="full"
-                                    onPress={() => navigation.navigate(navigationconstants.PAGES.pause, { id, activityName, image, description })}
+                                    onPress={handleMute}
                                     _text={{ fontSize: '4xl' }}
                                 />
-
                                 <Box flex={1} />
-
                                 <VStack space={5}>
                                     <PresenceTransition
                                         visible={showPauseAlert}
@@ -325,23 +341,20 @@ const StartActivityPage = ({ route }) => {
                                         </Center>
                                     </PresenceTransition>
                                     <IconButton
-                                        onLongPress={handleNavigate}
                                         onPress={ShowPauseAlert}
-                                        _icon={
-                                            <Image
-                                                source={pause}
-                                                alt="Custom Icon"
-                                                size="20"
-                                            />
-                                        }
+                                        onLongPress={handleNavigate}
                                         bgColor="black.800"
                                         size="32"
                                         width="32"
                                         rounded="full"
                                         _text={{ fontSize: '4xl' }}
                                         _pressed={{ bgColor: "black.800" }}
-
-                                    />
+                                        _icon={{
+                                            as: Image,
+                                            source: pause,
+                                            alt: "Pause",
+                                            size: "100",
+                                        }} />
                                 </VStack>
                                 <Box flex={4} />
                             </HStack>

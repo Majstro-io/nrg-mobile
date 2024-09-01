@@ -7,6 +7,7 @@ import OTPInputModal from "../../components/modals/OtpInputModal";
 import authService from "../../services/authService";
 import ErrorModal from "../../components/modals/errorModal";
 import validationUtils from "../../utils/validationUtils";
+import log from "../../config/logger";
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,15 +26,23 @@ const CreateAccount = () => {
 
     const procceedToRegistration = async (otp) => {
         setIsLoading(true)
-        const validated = await authService.validateOTP(otp);
-        if (validated.data) {
-            setOtpModalVisible(false)
-            navigation.navigate(navigationconstants.PAGES.personalDetails, { email: email, mobileNo: phoneNumber })
-        } else {
-            setErrorModalText("Please check the OTP and try again")
+        try {
+            const validated = await authService.validateOTP(otp);
+            if (validated.data) {
+                setOtpModalVisible(false)
+                navigation.navigate(navigationconstants.PAGES.personalDetails, { email: email, mobileNo: phoneNumber })
+            } else {
+                setErrorModalText("Please check the OTP and try again")
+                setErrorModalVisible(true)
+            }
+        } catch (error) {
+            log.error("failed to validate otp", error)
+            setErrorModalText("Failed to validate OTP")
             setErrorModalVisible(true)
+        } finally {
+            setIsLoading(false)
         }
-        setIsLoading(false)
+
 
     }
 

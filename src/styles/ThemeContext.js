@@ -1,177 +1,8 @@
 import React, { createContext, useState, useContext, useMemo } from 'react';
 import { extendTheme, NativeBaseProvider } from 'native-base';
 import { useSelector } from 'react-redux';
-import { _View } from 'react-native';
 
-const darkTheme = extendTheme({
-  colors: {
-    black: {
-      100: '#C4C4C4',
-      200: '#7C7C7C',
-      300: '#292929',
-      800: '#181725',
-      900: '#181725ee',
-    },
-    white: {
-      100: '#FFFFFF',
-      200: '#F8F8F8',
-      300: '#E8E8E8',
-      800: '#C0C0C0',
-    },
-    primary: {
-      50: '#6B46C1',
-      100: '#6B46C1',
-      200: '#6B46C1',
-      300: '#6B46C1',
-      400: '#6B46C1',
-      500: '#6B46C1',
-      600: '#a78bfa',
-      700: '#6B46C1',
-      800: '#292929',
-      900: '#181725',
-    },
-    amber: {
-      400: '#d97706',
-    },
-    violet: {
-      700: '#6B46C1',
-    },
-  },
-  components: {
-    View: {
-      baseStyle: {
-        bg: 'black.800',
-      },
-    },
-    Modal: {
-      baseStyle: {
-        borderColor: 'black.300',
-        bg: 'black.900',
-      }
-    },
-    ModalHeader: {
-      baseStyle: {
-        color: 'white.100',
-        bg: 'black.800',
-        borderColor: 'black.300'
-      }
-    },
-    ModalContent: {
-      baseStyle: {
-        bg: 'black.800',
-      }
-    },
-    ModalFooter: {
-      baseStyle: {
-        borderColor: 'black.300',
-        bg: 'black.800',
-      }
-    },
-    Pressable: {
-      baseStyle: {
-        bg: 'transparent',
-      },
-    },
-    Flex: {
-      baseStyle: {
-        color: 'black.100',
-      },
-    },
-    Divider: {
-      baseStyle: {
-        backgroundColor: 'black.100',
-      },
-    },
-    Heading: {
-      baseStyle: {
-        color: 'black.800',
-      },
-      defaultProps: {
-        size: 'md',
-        fontFamily: 'MontRegular',
-      },
-      sizes: {
-        xl: {
-          fontSize: '64px',
-        },
-        lg: {
-          fontSize: '32px',
-        },
-        md: {
-          fontSize: '16px',
-        },
-        sm: {
-          fontSize: '12px',
-        },
-      },
-    },
-    Text: {
-      baseStyle: {
-        color: 'white.100',
-      },
-      defaultProps: {
-        size: 'md',
-        fontFamily: 'MontRegular',
-      },
-      sizes: {
-        xl: {
-          fontSize: '64px',
-        },
-        lg: {
-          fontSize: '32px',
-        },
-        md: {
-          fontSize: '16px',
-        },
-        sm: {
-          fontSize: '12px',
-        },
-      },
-    },
-    FormControl: {
-      baseStyle: {
-        label: {
-          color: 'white.100',
-          fontFamily: 'MontRegular',
-        },
-
-      },
-    },
-    Input: {
-      baseStyle: {
-        color: 'white.100',
-      },
-    },
-    Select: {
-      baseStyle: {
-        color: 'white.100',
-        bg: 'black.800',
-      },
-    },
-    IconButton: {
-      baseStyle: {
-        _icon: { size: "md" },
-        _light: {
-          bg: "transparent"
-        },
-        _pressed: { bg: "transparent" }
-      }
-    },
-    Button: {
-      baseStyle: {
-        backgroundColor: 'black.800',
-        borderRadius: 25,
-        width: "72",
-        _loading: {
-          bg: 'black.800',
-
-        }
-      },
-    },
-  },
-});
-
-const lightTheme = extendTheme({
+const defaultTheme = extendTheme({
   colors: {
     black: {
       10: '#FFFFFF',
@@ -215,6 +46,21 @@ const lightTheme = extendTheme({
       800: '#F57F17',
       900: '#EF6C00',
     },
+
+    red: {
+      50: '#FFEBEE',
+      100: '#FFCDD2',
+      200: '#EF9A9A',
+      300: '#E57373',
+      400: '#EF5350',
+      500: '#F44336',
+      600: '#E53935',
+      700: '#D32F2F',
+      800: '#C62828',
+      900: '#B71C1C',
+    },
+    
+
     violet: {
       700: '#6B46C1',
     },
@@ -386,9 +232,10 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const userPreferences = useSelector((state) => state.userPreferences);
-  const [theme, setTheme] = useState(userPreferences.theme || 'dark');
+  const [theme, setTheme] = useState(userPreferences.theme || 'default');
 
-  const themeObject = useMemo(() => (theme === 'light' ? darkTheme : lightTheme), [theme]);
+  // currently only one theme available
+  const themeObject = useMemo(() => (defaultTheme), [theme]);
   const contextValue = useMemo(() => ({ theme, setTheme }), [theme]);
 
   return (

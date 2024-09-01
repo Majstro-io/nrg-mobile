@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ScrollView, View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, Avatar, IconButton } from 'native-base';
+import { ScrollView, View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import ActivityCard from '../../components/activityCard/activityCard';
 import navigationconstants from '../../constants/navigationConstants';
 import activitiesService from '../../services/activitiesService';
 import log from '../../config/logger';
 import ErrorModal from '../../components/modals/errorModal';
-import profileImage from "../../resources/profileImage.png";
 import Footer from '../../components/footer/footer';
+import LogOffButton from '../../components/modals/logoutConfirmation';
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
@@ -79,6 +79,8 @@ const ActivitiesPage = () => {
     return rows;
   };
 
+
+
   const activityRows = splitActivitiesIntoRows(activities);
 
   return (
@@ -98,7 +100,7 @@ const ActivitiesPage = () => {
               <Text bold fontSize="2xl" flex={1}>NRG Remix</Text>
               <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "red" : "gray"} />
 
-              <Avatar source={profileImage} onTouchStart={() => navigation.navigate(navigationconstants.PAGES.login)} size="sm" />
+              <LogOffButton />
             </HStack>
 
             <VStack space={4} alignItems="center" flex={1}>
@@ -110,7 +112,7 @@ const ActivitiesPage = () => {
                       <ActivityCard
                         key={activity?.id}
                         title={activity?.name}
-                        hStackBgColor="#AAF5FF"
+                        hStackBgColor="blue.100"
                         description={activity?.description}
                         imageSource={activity?.icon}
                         onPress={() => navigation.navigate(navigationconstants.PAGES.activity, { id: activity?.id, activityName: activity?.name, image: activity?.icon, description: activity?.description })}

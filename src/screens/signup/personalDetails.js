@@ -115,9 +115,9 @@ const PersonalDetails = ({ route }) => {
                 <Center>
                     <VStack space={2} alignItems="center"  >
 
-                        <Text bold fontSize="2xl" color="#181725" mb={3}>NRG Remix</Text>
-                        <Text fontSize="3xl" color="#181725">Add profile info</Text>
-                        <Text fontSize="sm" color="#181725" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
+                        <Text bold fontSize="2xl" color="black.800" mb={3}>NRG Remix</Text>
+                        <Text fontSize="3xl" color="black.800">Add profile info</Text>
+                        <Text fontSize="sm" color="black.800" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
 
                         <VStack space={5} alignItems="center">
                             <Input
@@ -154,14 +154,14 @@ const PersonalDetails = ({ route }) => {
 
                             <Input
                                 width="72"
-                                placeholder="Weight"
+                                placeholder="Weight (kg)"
                                 keyboardType="numeric"
                                 value={userRegistrationData.weight}
                                 onChangeText={data => setUserRegistrationData({ ...userRegistrationData, weight: data })}
                             />
                             <Input
                                 width="72"
-                                placeholder="Height"
+                                placeholder="Height (cm)"
                                 keyboardType="numeric"
                                 value={userRegistrationData.height}
                                 onChangeText={data => setUserRegistrationData({ ...userRegistrationData, height: data })}
@@ -170,7 +170,7 @@ const PersonalDetails = ({ route }) => {
                             <Button
                                 mt={3}
                                 width="72"
-                                bgColor="#181725"
+                                bgColor="black.800"
                                 isLoading={isLoading}
                                 onPress={registerUser}>
                                 Next
@@ -198,7 +198,7 @@ const PersonalDetails = ({ route }) => {
                                     size="sm"
                                 />
                             </HStack>
-                            <Text fontSize="xs" color="#181725" textAlign="center" mt="-2"> 2 more steps</Text>
+                            <Text fontSize="xs" color="black.800" textAlign="center" mt="-2"> 2 more steps</Text>
                         </VStack>
 
                     </VStack>

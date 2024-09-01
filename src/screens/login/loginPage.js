@@ -15,6 +15,7 @@ import { setPreferences } from "../../store/slices/userPreferencesSlice";
 import { useTheme } from "../../styles/ThemeContext";
 import authService from "../../services/authService";
 import OTPInputModal from "../../components/modals/OtpInputModal";
+import authUtils from "../../utils/authUtils";
 
 const { width, height } = Dimensions.get('window');
 
@@ -38,8 +39,13 @@ const LoginPage = () => {
     const validateUser = async (otp) => {
         setIsOtpModalLoading(true)
         try {
-            const validated = await authService.validateOTP(otp);
-            if (validated.data) {
+            const validated = await authService.login(otp, mobile);
+            if (validated.status == HttpStatusCode.Created) {
+                await authUtils.saveTokens(
+                    validated.data.idToken,
+                    validated.data.accessToken,
+                    validated.data.refreshToken
+                )
                 await fetchUserPreferences()
                 setOtpModalVisible(false)
                 navigation.dispatch(
@@ -55,7 +61,7 @@ const LoginPage = () => {
         } catch (error) {
             setErrorModalText("Failed to validate OTP")
             setErrorModalVisible(true)
-            log.error(`Error in validation`, error)
+            log.error(`Error in validation otp`, error)
         } finally {
             setIsOtpModalLoading(false)
         }
@@ -134,7 +140,7 @@ const LoginPage = () => {
                     />
                     <Box
                         top={keyboardHeight ? 400 - keyboardHeight : 350}
-                        bg="#FFFFFF"
+                        bg="white.100"
                         borderRadius={45}
                         width={width}
                         height={height / 1.5}
@@ -158,13 +164,13 @@ const LoginPage = () => {
                                     onPress={loginUser}>
                                     Login
                                 </Button>
-                                <Link
+                                {/* <Link
                                     _text={{
                                         fontSize: "xs"
                                     }}
                                     isUnderlined={false}>
                                     Forgot Phone Number?
-                                </Link>
+                                </Link> */}
                                 <HStack space={2} alignItems="center" mt={5}>
                                     <Text fontSize="md"  >Don't have an account?</Text>
                                     <Link

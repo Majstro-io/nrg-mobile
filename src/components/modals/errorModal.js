@@ -1,25 +1,41 @@
-import { Button, Modal, Text } from "native-base";
+import { Button, Modal, Text, VStack, HStack, Box } from "native-base";
 
-const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible }) => {
-    return <Modal size={"xl"} isOpen={visible} onClose={() => setVisible(false)}>
-        <Modal.Content>
-            <Modal.CloseButton />
-            <Modal.Header fontSize="2xl"><Text>{errorTitle || "Error"}</Text></Modal.Header>
-            <Modal.Body>
-                <Text>
-                    {errorDescription}
-                </Text>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button width="1/2" onPress={() => {
-                    setVisible(false);
-                }}>
-                    Ok
-                </Button>
-            </Modal.Footer>
-        </Modal.Content>
-    </Modal>
+const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible, onConfirm }) => {
 
+    const onConfirmAction = () => {
+        if (onConfirm) {
+            onConfirm()
+        }
+        setVisible(false);
+    }
+
+    return (
+        <Modal size="lg" isOpen={visible} onClose={() => setVisible(false)}>
+            <Modal.Content>
+                <VStack space={2}>
+                    <Box p={4}>
+                        <Text mb={5} fontSize="xl" textAlign="center" bold>
+                            {errorTitle || "Error"}
+                        </Text>
+                        <Text fontSize="lg" textAlign="center">
+                            {errorDescription}
+                        </Text>
+                    </Box>
+                    <HStack justifyContent="center">
+                        <Button
+                            width="100%"
+                            bgColor="transparent"
+                            variant="outline"
+                            borderRadius={0}
+                            _text={{ color: 'red.500', fontSize: 'md' }}
+                            onPress={onConfirmAction}>
+                            Ok
+                        </Button>
+                    </HStack>
+                </VStack>
+            </Modal.Content>
+        </Modal>
+    );
 };
 
 export default ErrorModal;
