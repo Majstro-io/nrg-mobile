@@ -33,13 +33,13 @@ const StartActivityPage = ({ route }) => {
     const [scheduleList, setScheduleList] = useState(null)
     const [appState, setAppState] = useState(AppState.currentState);
     const [showPauseAlert, setShowPauseAlert] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
     const [muteIcon, setMuteIcon] = useState(unmuted);
 
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
     const playerStateRef = useRef(playerState);
     const currentTrack = useRef(0);
+    const isMuted = useRef(false);
     const currentSchedule = useRef(0);
     const currentQuotes = useRef([]);
     const currentVoice = useRef(userPreferences.assistant);
@@ -55,11 +55,11 @@ const StartActivityPage = ({ route }) => {
     };
 
     const handleMute = () => {
-        setIsMuted(!isMuted);
-        if (isMuted) {
-            setMuteIcon(unmuted)
-        } else {
+        isMuted.current = !isMuted.current;
+        if (isMuted.current) {
             setMuteIcon(muted)
+        } else {
+            setMuteIcon(unmuted)
         }
     }
 
@@ -232,7 +232,9 @@ const StartActivityPage = ({ route }) => {
                 if (secondsToPlayNextQuote.current > currentQuotes.current[currentTrack.current]?.gap) {
                     const nextTrack = handleNextTrack()
                     currentTrack.current = nextTrack;
-                    playAudio(currentQuotes.current[currentTrack.current]?.voiceFiles[currentVoice.current]);
+                    if (!isMuted.current) {
+                        playAudio(currentQuotes.current[currentTrack.current]?.voiceFiles[currentVoice.current]);
+                    }
                     secondsToPlayNextQuote.current = 0;
                 }
                 setTimer((prevSeconds) => prevSeconds + 1);
