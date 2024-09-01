@@ -1,26 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import navigationconstants from "../../constants/navigationConstants";
-
-import assistantOptions from "../../data/assistantOptions.json"
 import { setAssistantVoice, setPreferences, updateTheme } from "../../store/slices/userPreferencesSlice";
 import userPreferencesService from "../../services/userPreferencesService";
 import log from "../../config/logger";
 import ErrorModal from "../../components/modals/errorModal";
+import assistantOptions from "../../data/assistantOptions.json"
 
 const Preferences = ({ route }) => {
   const { isRegistration } = route.params || false;
-
+  const dispatch = useDispatch()
   const navigation = useNavigation();
   const { setTheme } = useTheme();
 
   const userPreferences = useSelector((state) => state.userPreferences);
-  const userData = useSelector((state) => state.userData.data);
-  const dispatch = useDispatch();
 
   const [loading, setLoading] = React.useState(false);
 
@@ -33,20 +30,6 @@ const Preferences = ({ route }) => {
     dispatch(updateTheme(selectedTheme))
     setTheme(selectedTheme);
   };
-
-  const fetchUserPreferences = () => {
-    setLoading(true)
-    userPreferencesService.getUserPreferenceData(userData?.id).then(res => {
-      dispatch(setPreferences(res.data))
-    }).catch(error => {
-      setErrorModalText("Failed to fetch user preferences, please try reloading")
-      setErrorModalTitle("Failed to fetch preferences")
-      setErrorModalVisible(true)
-      log.error("Error in fetching user preferences from preferences page", error)
-    }).finally(() => {
-      setLoading(false)
-    })
-  }
 
   const updateUserPreferences = async () => {
     const preferenceData = {
@@ -71,10 +54,6 @@ const Preferences = ({ route }) => {
   const handleOnDone = async () => {
     await updateUserPreferences();
   }
-
-  useEffect(() => {
-    fetchUserPreferences();
-  }, [])
 
   return (
     <View style={{ flex: 1 }}>
