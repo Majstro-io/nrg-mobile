@@ -17,7 +17,7 @@ const ActivityPage = ({ route }) => {
             <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"back"} />
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
-                scrollEnabled={false}
+                scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
             >
                 <Box position="relative" height={height}>
@@ -33,13 +33,13 @@ const ActivityPage = ({ route }) => {
                     <Box
                         top={250}
                         bg="yellow.100"
-                        borderRadius={45}
+                        borderTopRadius={45}
                         width={width}
-                        height={height / 1.5}
+                        height={height}
                     >
                         <Center padding={10}>
                             <VStack space={5} alignItems="center">
-                                <Text fontSize="4xl" >{activityName}</Text>
+                                <Text fontSize="2xl" >{activityName}</Text>
                                 <VStack space={5} alignItems="center">
                                     <Text mb={2} fontSize="sm" textAlign="center" lineHeight="xs">{description}</Text>
                                     <HStack justifyContent="center" alignItems="center" >

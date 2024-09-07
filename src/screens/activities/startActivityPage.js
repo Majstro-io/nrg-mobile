@@ -124,18 +124,21 @@ const StartActivityPage = ({ route }) => {
 
     const handleNextTrack = () => {
         try {
-            // check if current quotes has finished playing
-            if (currentTrack.current >= currentQuotes.current.length - 1) {
-                // check if there is a next schedule, if so play next schedule quotes, else play the first schedule again
-                const nextSchedule = currentSchedule.current >= scheduleList.length - 1 ? 0 : currentSchedule.current + 1
-                currentSchedule.current = (nextSchedule);
-                // set the first quote of the new schedule
-                currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
-                return 0;
-            } else {
-                // if current quotes list has more quotes, play the next quote
-                return currentTrack.current + 1;
+            if (scheduleList) {
+                // check if current quotes has finished playing
+                if (currentTrack.current >= currentQuotes.current.length - 1) {
+                    // check if there is a next schedule, if so play next schedule quotes, else play the first schedule again
+                    const nextSchedule = currentSchedule.current >= scheduleList.length - 1 ? 0 : currentSchedule.current + 1
+                    currentSchedule.current = (nextSchedule);
+                    // set the first quote of the new schedule
+                    currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
+                    return 0;
+                } else {
+                    // if current quotes list has more quotes, play the next quote
+                    return currentTrack.current + 1;
+                }
             }
+
         } catch (err) {
             log.error("error in playing next track", err)
             return currentTrack.current;

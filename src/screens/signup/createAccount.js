@@ -47,7 +47,12 @@ const CreateAccount = () => {
     }
 
     const verifyUser = async () => {
-        setOtpModalVisible(true)
+        if (isInputsValid) {
+            setOtpModalVisible(true)
+        } else {
+            setErrorModalText("Please input valid email and phone number")
+            setErrorModalVisible(true)
+        }
     }
 
     useEffect(() => {
@@ -99,7 +104,7 @@ const CreateAccount = () => {
                     />
                     <Box
                         top={keyboardHeight ? 400 - keyboardHeight : 325}
-                        bg="#FFFFFF"
+                        bg="white.100"
                         borderRadius={45}
                         width={width}
                         height={height / 1.5}
@@ -145,7 +150,6 @@ const CreateAccount = () => {
                                         _pressed={{ bg: "yellow.400" }}
                                         _loading={{ bg: "yellow.700" }}
                                         _text={{ color: "black.800" }}
-                                        disabled={!isInputsValid}
                                         onPress={verifyUser}
                                     >
                                         Register
