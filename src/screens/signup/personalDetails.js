@@ -42,7 +42,6 @@ const PersonalDetails = ({ route }) => {
         try {
             const defaultUserPreferences = { ...defaultUserPreferencesData, profileId: userId }
             const userPrefs = await (userPreferencesService.addNewUserPreference(defaultUserPreferences))
-            console.log(userPrefs.data)
             dispatch(setPreferences(userPrefs.data))
             navigation.dispatch(
                 CommonActions.reset({

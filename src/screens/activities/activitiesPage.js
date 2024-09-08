@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView, View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
+
 import ActivityCard from '../../components/activityCard/activityCard';
 import navigationconstants from '../../constants/navigationConstants';
 import activitiesService from '../../services/activitiesService';
@@ -9,11 +10,13 @@ import log from '../../config/logger';
 import ErrorModal from '../../components/modals/errorModal';
 import Footer from '../../components/footer/footer';
 import LogOffButton from '../../components/modals/logoutConfirmation';
+import preferences from "../../data/updatedPreferences.json"
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
 
   const favourites = useSelector((state) => state.userPreferences.favourites);
+
   const [isOnlyFavourites, setIsOnlyFavourites] = useState(true);
   const [activities, setActivities] = useState([]);
 
@@ -43,23 +46,32 @@ const ActivitiesPage = () => {
   };
 
   const getAllFavouriteActivities = async () => {
-    if (favouriteActivityIds.length === 0) {
+    // if (favouriteActivityIds.length === 0) {
+    //   setErrorModalVisible(true);
+    //   setErrorModalText("You don't have any favourites selected, please select favourite activities from preferences");
+    //   setErrorModalTitle("No Favourites Selected");
+    //   setIsOnlyFavourites(false);
+    // } else {
+    //   setIsLoading(true);
+    //   activitiesService.getActivitiesByType(favouriteActivityIds).then(res => {
+    //     setActivities(res?.data);
+    //   }).catch(error => {
+    //     setErrorModalVisible(true);
+    //     setErrorModalText("We have encountered an error in fetching favourite activities");
+    //     setErrorModalTitle("Fetching Activities Failed");
+    //     log.error("Failed to fetch activities", error);
+    //   }).finally(() => {
+    //     setIsLoading(false);
+    //   });
+    // }
+
+    if (!preferences.favourites || preferences.favourites.length === 0) {
       setErrorModalVisible(true);
       setErrorModalText("You don't have any favourites selected, please select favourite activities from preferences");
       setErrorModalTitle("No Favourites Selected");
       setIsOnlyFavourites(false);
     } else {
-      setIsLoading(true);
-      activitiesService.getActivitiesByType(favouriteActivityIds).then(res => {
-        setActivities(res?.data);
-      }).catch(error => {
-        setErrorModalVisible(true);
-        setErrorModalText("We have encountered an error in fetching favourite activities");
-        setErrorModalTitle("Fetching Activities Failed");
-        log.error("Failed to fetch activities", error);
-      }).finally(() => {
-        setIsLoading(false);
-      });
+      setActivities(preferences.favourites)
     }
   };
 
@@ -78,8 +90,6 @@ const ActivitiesPage = () => {
     }
     return rows;
   };
-
-
 
   const activityRows = splitActivitiesIntoRows(activities);
 
@@ -111,6 +121,7 @@ const ActivitiesPage = () => {
                     {row?.activities?.map(activity => (
                       <ActivityCard
                         key={activity?.id}
+                        activityId={activity?.id}
                         title={activity?.name}
                         hStackBgColor="blue.100"
                         description={activity?.description}

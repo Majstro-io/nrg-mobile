@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Input } from 'native-base';
 
-const DateInput = ({ label, onChange }) => {
+const DateInput = ({ label, onChange, value }) => {
     const [date, setDate] = useState('');
 
-    const handleDateChange = (text) => {
-        // Format the input as MM/DD/YYYY
-        let formattedDate = text.replace(/\D/g, ''); // Remove non-numeric characters
-        if (formattedDate.length > 2) {
-            formattedDate = `${formattedDate.slice(0, 2)}/${formattedDate.slice(2)}`;
-        }
-        if (formattedDate.length > 5) {
-            formattedDate = `${formattedDate.slice(0, 5)}/${formattedDate.slice(5, 9)}`;
-        }
+    useEffect(() => {
+        handleDateChange(value)
+    }, [])
 
-        setDate(formattedDate);
-        onChange(formattedDate);
+    const handleDateChange = (text) => {
+        if (text) {
+            // Format the input as MM/DD/YYYY
+            let formattedDate = text.replace(/\D/g, ''); // Remove non-numeric characters
+            if (formattedDate.length > 2) {
+                formattedDate = `${formattedDate.slice(0, 2)}/${formattedDate.slice(2)}`;
+            }
+            if (formattedDate.length > 5) {
+                formattedDate = `${formattedDate.slice(0, 5)}/${formattedDate.slice(5, 9)}`;
+            }
+
+            setDate(formattedDate);
+            onChange(formattedDate);
+        }
     };
 
     return (

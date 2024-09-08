@@ -8,7 +8,9 @@ const PAGES = {
     createAccount: "createAccount",
     preferences: "Preferences",
     start: "Start",
-    pause: "Pause"
+    pause: "Pause",
+    updatePersonalDetails: "Update personal Data",
+    setInitialPreferences: "Add preferences"
 }
 
 

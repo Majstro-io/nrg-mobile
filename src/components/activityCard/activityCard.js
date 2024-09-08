@@ -1,7 +1,15 @@
-import { Box, HStack, Image, Pressable, Text } from 'native-base';
-import React from 'react';
+import { Box, FavouriteIcon, HStack, IconButton, Image, Pressable, Text } from 'native-base';
+import React, { useEffect, useState } from 'react';
 
-const ActivityCard = ({ title, imageSource, onPress, style, hStackBgColor }) => {
+import preferences from "../../data/updatedPreferences.json"
+
+const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBgColor }) => {
+  const [isFavourite, setIsFavourite] = useState(false);
+
+  useEffect(() => {
+    setIsFavourite(preferences.favourites.some(favourite => favourite.id === activityId));
+  },[])
+
   return (
     <Box
       mb={1}
@@ -35,18 +43,20 @@ const ActivityCard = ({ title, imageSource, onPress, style, hStackBgColor }) => 
             bottom="0"
             width="100%"
             bg={hStackBgColor}
+            padding={2}
           >
-            <HStack
-              space={4}
-              justifyContent="center"
-              alignItems="center"
-              padding={2}
-            >
-              <Text fontSize="xl" mb={2}>
+            <HStack justifyContent="space-between" alignItems="center">
+              <Text fontSize="md" mb={2} flex={0.9}>
                 {title}
               </Text>
+              <IconButton
+                padding={2}
+                icon={<FavouriteIcon size="sm" />}
+                onPress={null}
+                colorScheme={isFavourite ? "red" : "gray"}
+                flex={0.1}
+              />
             </HStack>
-
           </Box>
         </Box>
       </Pressable>

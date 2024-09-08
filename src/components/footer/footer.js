@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, HStack, IconButton, Image, Text, VStack } from 'native-base';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import navigationconstants from '../../constants/navigationConstants';
 import footerImage from '../../resources/footer.png';
@@ -8,12 +8,20 @@ import notificationIcon from '../../resources/footerIcons/notification.png';
 import recentsIcon from '../../resources/footerIcons/recent.png';
 import profile from '../../resources/footerIcons/profile.png';
 import home from '../../resources/footerIcons/home.png';
-import playlist from '../../resources/footerIcons/playlist.png';
+import preferences from '../../resources/footerIcons/preferences.png';
 import ComingSoonModal from '../modals/comingSoonModal';
+import { useNavigationState } from '@react-navigation/native';
 
 const Footer = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+
     const [isComingSoonModalVisible, setIsComingSoonModalVisible] = React.useState(false);
+
+    useEffect(() => {
+        console.log(route.name)
+    }, [route])
+
     return (
         <>
             <ComingSoonModal setVisible={setIsComingSoonModalVisible} visible={isComingSoonModalVisible} />
@@ -28,27 +36,9 @@ const Footer = () => {
                     right={1.5}
                     justifyContent="center"
                     alignItems="center"
-                    space={8}
+                    space={7}
                     mt={2}
                 >
-                    <VStack alignItems="center">
-                        <IconButton
-                            mb={-1}
-                            icon={
-                                <Image
-                                    source={playlist}
-                                    alt="Playlist"
-                                    size="7"
-                                />
-                            }
-                            _pressed={{
-                                bgColor: "transparent",
-                            }}
-                            bgColor="transparent"
-                            onPress={() => setIsComingSoonModalVisible(true)}
-                        />
-                        <Text fontSize="xs">Library</Text>
-                    </VStack>
                     <VStack alignItems="center">
                         <IconButton
                             mb={-1}
@@ -57,6 +47,7 @@ const Footer = () => {
                                     source={recentsIcon}
                                     alt="Recent"
                                     size="7"
+                                    tintColor={"black.750"}
                                 />
                             }
                             _pressed={{
@@ -65,25 +56,7 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => setIsComingSoonModalVisible(true)}
                         />
-                        <Text fontSize="xs">History</Text>
-                    </VStack>
-                    <VStack alignItems="center" mb={5} space={2}>
-                        <IconButton
-                            mb={-1}
-                            icon={
-                                <Image
-                                    source={home}
-                                    alt="Home Icon"
-                                    size="7"
-                                />
-                            }
-                            _pressed={{
-                                bgColor: "transparent",
-                            }}
-                            bgColor="transparent"
-                            onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}
-                        />
-                        <Text fontSize="xs">Home</Text>
+                        <Text color={"black.750"} fontSize="xs">History</Text>
                     </VStack>
                     <VStack alignItems="center">
                         <IconButton
@@ -93,6 +66,7 @@ const Footer = () => {
                                     source={notificationIcon}
                                     alt="Notifications"
                                     size="7"
+                                    tintColor={"black.750"}
                                 />
                             }
                             _pressed={{
@@ -101,7 +75,45 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => setIsComingSoonModalVisible(true)}
                         />
-                        <Text fontSize="xs">Alerts</Text>
+                        <Text color={"black.750"} fontSize="xs">Alerts</Text>
+                    </VStack>
+                    <VStack alignItems="center" mb={5} space={2}>
+                        <IconButton
+                            mb={-1}
+                            icon={
+                                <Image
+                                    source={home}
+                                    alt="Home Icon"
+                                    size="7"
+                                    tintColor={route.name == navigationconstants.PAGES.activities ? 'blue.400' : "black.750"}
+                                />
+                            }
+                            _pressed={{
+                                bgColor: "transparent",
+                            }}
+                            bgColor="transparent"
+                            onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}
+                        />
+                        <Text color={route.name == navigationconstants.PAGES.activities ? 'blue.400' : "black.750"} fontSize="xs">Home</Text>
+                    </VStack>
+                    <VStack alignItems="center">
+                        <IconButton
+                            mb={-1}
+                            icon={
+                                <Image
+                                    source={preferences}
+                                    alt="Preferences"
+                                    size="7"
+                                    tintColor={route.name == navigationconstants.PAGES.preferences ? 'blue.400' : "black.750"}
+                                />
+                            }
+                            _pressed={{
+                                bgColor: "transparent",
+                            }}
+                            bgColor="transparent"
+                            onPress={() => navigation.navigate(navigationconstants.PAGES.preferences)}
+                        />
+                        <Text color={route.name == navigationconstants.PAGES.preferences ? 'blue.400' : "black.750"} fontSize="xs">Settings</Text>
                     </VStack>
                     <VStack alignItems="center">
                         <IconButton
@@ -111,15 +123,16 @@ const Footer = () => {
                                     source={profile}
                                     alt="Profile Icon"
                                     size="7"
+                                    tintColor={route.name == navigationconstants.PAGES.updatePersonalDetails ? 'blue.400' : "black.750"}
                                 />
                             }
                             _pressed={{
                                 bgColor: "transparent",
                             }}
                             bgColor="transparent"
-                            onPress={() => navigation.navigate(navigationconstants.PAGES.preferences)}
+                            onPress={() => navigation.navigate(navigationconstants.PAGES.updatePersonalDetails)}
                         />
-                        <Text fontSize="xs">Profile</Text>
+                        <Text color={route.name == navigationconstants.PAGES.updatePersonalDetails ? 'blue.400' : "black.750"} fontSize="xs">Profile</Text>
                     </VStack>
                 </HStack>
             </Box>

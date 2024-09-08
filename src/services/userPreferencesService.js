@@ -45,10 +45,25 @@ const updateUserPreference = async (userPreferenceId, userPreferenceData) => {
     }
 }
 
+const updateUserFavouriteActivities = async (userPreferenceId, favouriteActivityIds) => {
+    try {
+        const response = await apiInstances.nrgBackend.request({
+            method: httpConstants.HTTP_METHODS.PUT,
+            url: `${USER_PREFERENCES_BASE}/${userPreferenceId}/favourites`,
+            data: favouriteActivityIds
+        })
+        return response;
+    } catch (error) {
+        log.error(`Error in updating user favourites`, error)
+        throw error;
+    }
+}
+
 const userPreferencesService = {
     getUserPreferenceData,
     addNewUserPreference,
-    updateUserPreference
+    updateUserPreference,
+    updateUserFavouriteActivities
 }
 
 export default userPreferencesService;

@@ -1,0 +1,55 @@
+{
+  "assistant": "FEMALE",
+  "favourites": [
+    {
+      "createdAt": "2024-07-15T18:07:29.879392",
+      "createdBy": "System",
+      "description": "Ready to run? Boost your stamina, clear your mind, and enjoy the exhilarating rush of a good run. Let's hit the ground running!",
+      "duration": 0,
+      "icon": "https://nrg-test-resources.s3.amazonaws.com/images/Running.png",
+      "id": 2,
+      "modifiedAt": "2024-07-22T14:45:38.452543",
+      "modifiedBy": "System",
+      "name": "Running",
+      "type": "RUNNING"
+    },
+    {
+      "createdAt": "2024-07-20T20:06:51.278855",
+      "createdBy": "System",
+      "description": "Feel the adrenaline with a sprint! Push your limits, enhance your speed, and experience the thrill of quick bursts of power. Let's sprint to the finish!",
+      "duration": 0,
+      "icon": "https://nrg-test-resources.s3.amazonaws.com/images/Running.png",
+      "id": 22,
+      "modifiedAt": "2024-07-22T14:46:57.09335",
+      "modifiedBy": "System",
+      "name": "Sprinting",
+      "type": "RUNNING"
+    },
+    {
+      "createdAt": "2024-08-22T18:59:55.787017",
+      "createdBy": "System",
+      "description": "Test Description",
+      "duration": 3,
+      "icon": "https://api.dicebear.com/9.x/shapes/svg?seed=Leo",
+      "id": 46,
+      "modifiedAt": "2024-08-22T18:59:55.787017",
+      "modifiedBy": "System",
+      "name": "Test Activity 2",
+      "type": "RUNNING"
+    },
+    {
+      "createdAt": "2024-08-23T16:38:44.030254",
+      "createdBy": "System",
+      "description": "Lorem ipsum odor amet, consectetuer adipiscing elit.",
+      "duration": 3,
+      "icon": "https://api.dicebear.com/9.x/shapes/svg?seed=Leo",
+      "id": 48,
+      "modifiedAt": "2024-08-23T16:38:44.030254",
+      "modifiedBy": "System",
+      "name": "Lorem ipsum odor ame",
+      "type": "RUNNING"
+    }
+  ],
+  "id": 68,
+  "theme": "default"
+}

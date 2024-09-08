@@ -47,7 +47,7 @@ const ContactDetails = ({ route }) => {
                 dispatch(setUserData(res.data))
                 createDefaultPreferencesForUser(res.data?.id).then(res => {
                     dispatch(setPreferences(res.data))
-                    navigation.navigate(navigationconstants.PAGES.preferences)
+                    navigation.navigate(navigationconstants.PAGES.setInitialPreferences)
                 }).catch(error => {
                     setErrorModalMessage("An error occurred in configuring user preferences")
                     setErrorModalVisible(true)

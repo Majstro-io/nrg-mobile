@@ -17,7 +17,7 @@ const LogOffButton = () => {
     }
     return (
         <>
-            <Avatar source={profileImage} onTouchStart={() => setVisible(true)} size="sm" />
+            <Avatar source={profileImage} size="sm" />
             <AlertModal
                 errorDescription={"Please confirm to log out"}
                 errorTitle={"Confirm Logout"}
