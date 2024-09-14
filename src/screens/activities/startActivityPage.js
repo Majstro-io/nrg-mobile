@@ -20,6 +20,8 @@ import muted from "../../resources/playerIcons/muted.png";
 import unmuted from "../../resources/playerIcons/unmuted.png";
 import pause from "../../resources/playerIcons/pause.png";
 import ErrorModal from "../../components/modals/errorModal";
+import RoundButton from "../../components/inputs/roundButton";
+import RoundIconButton from "../../components/inputs/roundIconButton";
 
 const StartActivityPage = ({ route }) => {
     const navigation = useNavigation();
@@ -225,7 +227,7 @@ const StartActivityPage = ({ route }) => {
             name: 'ic_launcher',
             type: 'mipmap',
         },
-        color: 'yellow.500',
+        color: 'base.500',
         parameters: {
             delay: 1000,
         },
@@ -292,7 +294,7 @@ const StartActivityPage = ({ route }) => {
 
     return (
 
-        <View style={{ flex: 1 }} bg="yellow.400" >
+        <View style={{ flex: 1 }} bg="base.400" >
             <ErrorModal
                 errorDescription={"This Activity do not have any quotes configured"}
                 errorTitle={"No Quotes for this Activity"}
@@ -301,19 +303,19 @@ const StartActivityPage = ({ route }) => {
             />
 
             <ScrollView
-                scrollEnabled={false}
+                scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
             >
                 <Center padding={10}>
-                    <VStack space={5} alignItems="center">
+                    <VStack space={2} alignItems="center">
                         <HStack space={"48"} justifyContent="space-between" alignItems="center" mt="3">
                             {/* Display when BPM and km is tracked */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text> */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
-                            <Text fontSize="2xl" textAlign="center"  >{activityName}</Text>
+                            <Text fontSize="3xl" textAlign="center"  >{activityName}</Text>
                         </HStack>
                         <Box mt="24" alignItems="center">
-                            <Heading fontSize="7xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
+                            <Heading fontSize="6xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
                             {/* display when total time for activity is tracked, TODO: move this to a component */}
                             {/* <Progress
                                 width="72"
@@ -336,25 +338,20 @@ const StartActivityPage = ({ route }) => {
                         <VStack space={5} alignItems="center" mt="20">
                             <HStack justifyContent="space-between" alignItems="center">
                                 <Box flex={1} />
-                                <IconButton
-                                    mt={20}
-
-                                    _icon={{
+                                <RoundIconButton
+                                    icon={{
                                         as: Image,
                                         source: muteIcon,
-                                        alt: "Pause",
-                                        size: "8",
+                                        alt: "mute",
+                                        size: "50%",
                                     }}
-                                    bgColor="black.10"
-                                    size="16"
-                                    width="16"
-                                    rounded="full"
+                                    color={"black.10"}
+                                    size={0.2}
                                     onPress={handleMute}
-                                    _text={{ fontSize: '4xl' }}
                                 />
                                 <Box flex={1} />
-                                <VStack space={5}>
-                                    <PresenceTransition
+                                <VStack space={3}>
+                                    {/* <PresenceTransition
                                         visible={showPauseAlert}
                                         initial={{
                                             opacity: 0,
@@ -373,22 +370,20 @@ const StartActivityPage = ({ route }) => {
                                                 <Text fontSize="sm" textAlign="center">Hold to pause</Text>
                                             </Alert>
                                         </Center>
-                                    </PresenceTransition>
-                                    <IconButton
-                                        onPress={ShowPauseAlert}
-                                        onLongPress={handleNavigate}
-                                        bgColor="black.800"
-                                        size="32"
-                                        width="32"
-                                        rounded="full"
-                                        _text={{ fontSize: '4xl' }}
-                                        _pressed={{ bgColor: "black.800" }}
-                                        _icon={{
+                                    </PresenceTransition> */}
+                                    <RoundIconButton
+                                        icon={{
                                             as: Image,
                                             source: pause,
                                             alt: "Pause",
-                                            size: "100",
-                                        }} />
+                                            size: "70%",
+                                        }}
+                                        color={"black.800"}
+                                        size={0.35}
+                                        onPress={handleNavigate}
+                                        _pressed={{ bgColor: "black.100" }}
+                                    />
+
                                 </VStack>
                                 <Box flex={4} />
                             </HStack>

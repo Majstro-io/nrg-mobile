@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Dimensions } from 'react-native';
-import { Box, Center, Heading, HStack, IconButton, Image,  ScrollView, View, VStack } from "native-base";
+import { Box, Center, Heading, HStack, IconButton, Image, ScrollView, View, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import conversionUtils from "../../utils/conversionUtils";
@@ -9,6 +9,7 @@ import AleartModel from "../../components/modals/aleart";
 
 import stop from "../../resources/playerIcons/stop.png";
 import play from "../../resources/playerIcons/play.png";
+import RoundIconButton from "../../components/inputs/roundIconButton";
 
 const PauseActivityPage = ({ route }) => {
     const navigation = useNavigation();
@@ -31,14 +32,15 @@ const PauseActivityPage = ({ route }) => {
                     <Image
                         source={{ uri: image }}
                         size="100%"
-                        height="400"
-                        width="400"
+                        height="60%"
+                        width="100%"
                         position="absolute"
                         zIndex={-1}
+                        alt="Activity Image"
                     />
                     <Box
                         top={300}
-                        bg="yellow.100"
+                        bg="base.50"
                         borderRadius={45}
                         width={width}
                         height={height / 1.5}
@@ -51,7 +53,7 @@ const PauseActivityPage = ({ route }) => {
                                     <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
                                 </HStack>
                                 <Box alignItems="center">
-                                    <Heading fontSize="7xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
+                                    <Heading fontSize="6xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
                                     {/* <Progress
                                         width="72"
                                         value={timer}
@@ -69,7 +71,7 @@ const PauseActivityPage = ({ route }) => {
                                     </HStack> */}
                                 </Box>
                                 <HStack justifyContent="space-between" alignItems="center" space={20} mt={2}>
-                                    <IconButton
+                                    {/* <IconButton
                                         icon={
                                             <Image
                                                 source={stop}
@@ -84,9 +86,34 @@ const PauseActivityPage = ({ route }) => {
                                         rounded="full"
                                         onPress={() => setIsErrorModalVisible(true)}
                                         _text={{ fontSize: '4xl' }}
+                                    /> */}
+                                    <RoundIconButton
+                                        icon={{
+                                            as: Image,
+                                            source: stop,
+                                            alt: "stop",
+                                            size: "100%",
+                                        }}
+                                        _pressed={{ bgColor: "black.800" }}
+                                        color={"black.800"}
+                                        size={0.2}
+                                        _text={{ fontSize: '4xl' }}
+                                        onPress={() => setIsErrorModalVisible(true)}
                                     />
-
-                                    <IconButton
+                                    <RoundIconButton
+                                        icon={{
+                                            as: Image,
+                                            source: play,
+                                            alt: "resume",
+                                            size: "100%",
+                                        }}
+                                        _pressed={{ bgColor: "base.500" }}
+                                        color={"base.500"}
+                                        size={0.25}
+                                        _text={{ fontSize: '4xl' }}
+                                        onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
+                                    />
+                                    {/* <IconButton
                                         icon={
                                             <Image
                                                 source={play}
@@ -101,7 +128,7 @@ const PauseActivityPage = ({ route }) => {
                                         rounded="full"
                                         onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
                                         _text={{ fontSize: '4xl' }}
-                                    />
+                                    /> */}
                                 </HStack>
                             </VStack>
                         </Center>

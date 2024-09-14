@@ -103,7 +103,7 @@ const CreateAccount = () => {
                         alt="Create Account Image"
                     />
                     <Box
-                        top={keyboardHeight ? 400 - keyboardHeight : 325}
+                        top={keyboardHeight ? '20%' : '40%'}
                         bg="white.100"
                         borderRadius={45}
                         width={width}
@@ -123,7 +123,7 @@ const CreateAccount = () => {
                             <VStack space={2} alignItems="center">
                                 <Text bold fontSize="2xl" >NRG Remix</Text>
                                 <VStack space={0} alignItems="center">
-                                    <Text fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
+                                    <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
                                     <Text fontSize="sm" textAlign="center" lineHeight="xs" mb={4}>
                                         We will send you the
                                         <Text fontWeight="bold"> 5 digit</Text>
@@ -146,9 +146,9 @@ const CreateAccount = () => {
                                         onChangeText={text => setPhoneNumber(text)}
                                     />
                                     <Button
-                                        bg="yellow.500"
-                                        _pressed={{ bg: "yellow.400" }}
-                                        _loading={{ bg: "yellow.700" }}
+                                        bg="base.500"
+                                        _pressed={{ bg: "base.400" }}
+                                        _loading={{ bg: "base.700" }}
                                         _text={{ color: "black.800" }}
                                         onPress={verifyUser}
                                     >
@@ -159,7 +159,7 @@ const CreateAccount = () => {
                         </Center>
                     </Box>
 
-                    {/* OTP Validation Modal */}
+                    {/* OTP Validation Modal TODO: refactor */}
                     <OTPInputModal
                         buttonText={"Login"}
                         header={"NRG Remix"}

@@ -1,10 +1,11 @@
 import { Dimensions } from 'react-native';
-import { Box, Button, Center, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
+import { Box, Center, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import Footer from "../../components/footer/footer";
+import RoundButton from '../../components/inputs/roundButton';
 
 const ActivityPage = ({ route }) => {
     const navigation = useNavigation();
@@ -12,27 +13,26 @@ const ActivityPage = ({ route }) => {
     const { width, height } = Dimensions.get('window');
 
     return (
-
         <View style={{ flex: 1 }}>
-            <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"back"} />
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
             >
                 <Box position="relative" height={height}>
+                    <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"back"} />
                     <Image
                         source={{ uri: image }}
                         size="100%"
-                        height="400"
-                        width="400"
+                        height="60%"
+                        width="100%"
                         position="absolute"
                         zIndex={-1}
                         alt="Activity Image"
                     />
                     <Box
                         top={250}
-                        bg="yellow.100"
+                        bg="base.50"
                         borderTopRadius={45}
                         width={width}
                         height={height}
@@ -43,16 +43,12 @@ const ActivityPage = ({ route }) => {
                                 <VStack space={5} alignItems="center">
                                     <Text mb={2} fontSize="sm" textAlign="center" lineHeight="xs">{description}</Text>
                                     <HStack justifyContent="center" alignItems="center" >
-                                        <Button
-                                            bgColor="yellow.500"
-                                            size="32"
-                                            width="32"
-                                            rounded="full"
+                                        <RoundButton
+                                            color={"base.500"}
+                                            size={0.3}
                                             onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
-                                            _text={{ fontSize: '3xl', color: 'black.800' }}
-                                        >
-                                            Start
-                                        </Button>
+                                            text={"Start"}
+                                        />
                                     </HStack>
                                 </VStack>
                             </VStack>
@@ -60,7 +56,7 @@ const ActivityPage = ({ route }) => {
                     </Box>
                 </Box>
             </ScrollView>
-            <View bg="yellow.100">
+            <View bg="base.50">
                 <Footer />
             </View>
         </View>

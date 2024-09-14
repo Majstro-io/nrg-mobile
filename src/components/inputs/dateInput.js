@@ -16,7 +16,7 @@ const DateInput = ({ label, onChange, value }) => {
         onChange(formattedDate);
         setIsPickerVisible(false);
     }
-    
+
     return (
         <View >
             <TouchableOpacity onPressIn={() => setIsPickerVisible(true)} activeOpacity={1}>
@@ -30,7 +30,7 @@ const DateInput = ({ label, onChange, value }) => {
             <DateTimePickerModal
                 isVisible={isPickerVisible}
                 mode="date"
-                date={new Date(date)}
+                date={date ? new Date(date) : new Date()}
                 maximumDate={new Date()}
                 onConfirm={handleDatePick}
                 onCancel={() => setIsPickerVisible(false)}

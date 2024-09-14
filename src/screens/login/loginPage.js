@@ -153,7 +153,7 @@ const LoginPage = () => {
     }, []);
 
     useEffect(() => {
-       // retrieveLoggedData();
+        // retrieveLoggedData();
     }, [])
 
     return (
@@ -170,15 +170,15 @@ const LoginPage = () => {
             >
                 <Box position="relative" height={height}>
                     <Image
-                        source={require('../../resources/loginPage.jpeg')}
+                        source={require('../../resources/login/login.jpeg')}
                         size="100%"
-                        height="550"
+                        height={height / 1.8}
                         position="absolute"
                         zIndex={-1}
                         alt="Login Image"
                     />
                     <Box
-                        top={keyboardHeight ? 400 - keyboardHeight : 350}
+                        top={keyboardHeight ? '20%' : '40%'}
                         bg="white.100"
                         borderRadius={45}
                         width={width}
@@ -188,7 +188,7 @@ const LoginPage = () => {
                             <VStack space={3} alignItems="center">
                                 <Text bold fontSize="2xl" >NRG Remix</Text>
                                 <VStack space={0} alignItems="center">
-                                    <Text fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
+                                    <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
                                 </VStack>
                                 <Input
                                     mx="10"
@@ -203,13 +203,6 @@ const LoginPage = () => {
                                     onPress={loginUser}>
                                     Login
                                 </Button>
-                                {/* <Link
-                                    _text={{
-                                        fontSize: "xs"
-                                    }}
-                                    isUnderlined={false}>
-                                    Forgot Phone Number?
-                                </Link> */}
                                 <HStack space={2} alignItems="center" mt={5}>
                                     <Text fontSize="md"  >Don't have an account?</Text>
                                     <Link
@@ -224,7 +217,7 @@ const LoginPage = () => {
                         </Center>
                     </Box>
 
-                    {/* OTP Validation Modal */}
+                    {/* OTP Validation Modal TODO: refactor */}
                     <OTPInputModal
                         buttonText={"Login"}
                         header={"NRG Remix"}

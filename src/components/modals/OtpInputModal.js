@@ -50,7 +50,7 @@ const OTPInputModal = ({
     return (
         <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
             <Box
-                top={keyboardHeight ? 350 - keyboardHeight : 350}
+                top={keyboardHeight ? '20%' : '40%'}
                 bg="#FFFFFF"
                 borderRadius={45}
                 width={width}
@@ -61,7 +61,7 @@ const OTPInputModal = ({
                     <VStack space={2} alignItems="center">
                         <Text bold fontSize="2xl"  >{header}</Text>
                         <VStack space={0} alignItems="center">
-                            <Text fontSize="4xl" textAlign="center" lineHeight="xs" mb={2}>{label}</Text>
+                            <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={2}>{label}</Text>
                             <Text fontSize="xs" textAlign="center" mb={4}>{instructions}</Text>
                         </VStack>
                         <HStack space={2} alignItems="center">
@@ -72,9 +72,9 @@ const OTPInputModal = ({
                             />
                         </HStack>
                         <Button
-                            bg="yellow.500"
-                            _pressed={{ bg: "yellow.400" }}
-                            _loading={{ bg: "yellow.700" }}
+                            bg="base.500"
+                            _pressed={{ bg: "base.400" }}
+                            _loading={{ bg: "base.700" }}
                             isLoading={isLoading}
                             _text={{ color: "black.800" }}
                             disabled={otp == ''}

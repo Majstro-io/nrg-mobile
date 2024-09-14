@@ -2,6 +2,7 @@ import { Box, FavouriteIcon, HStack, IconButton, Image, Pressable, Text } from '
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserFavouriteActivity } from '../../store/slices/userPreferencesSlice';
+import { Dimensions } from 'react-native';
 
 const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBgColor }) => {
   const dispatch = useDispatch()
@@ -9,6 +10,9 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
 
   const [isFavourite, setIsFavourite] = useState(false);
 
+  const { width, height } = Dimensions.get('window');
+  const boxWidth = width * 0.48;
+  const boxHeight = height * 0.20;
 
   useEffect(() => {
     setIsFavourite(userPreferences?.favouriteIds?.some(favourite => favourite === activityId));
@@ -21,8 +25,8 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
       overflow="hidden"
       maxW="96"
       p="1"
-      width="175px"
-      height="150px"
+      width={`${boxWidth}px`}
+      height={`${boxHeight}px`}
       bg="white"
     >
       <Pressable
@@ -50,7 +54,7 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
             padding={2}
           >
             <HStack justifyContent="space-between" alignItems="center">
-              <Text fontSize="md" mb={2} flex={0.9}>
+              <Text fontSize="md" mb={2} flex={0.9} isTruncated>
                 {title}
               </Text>
               <IconButton

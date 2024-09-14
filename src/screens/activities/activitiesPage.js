@@ -18,7 +18,6 @@ const ActivitiesPage = () => {
   const dispatch = useDispatch()
 
   const userPreferences = useSelector((state) => state.userPreferences);
-  const favourites = useSelector((state) => state.userPreferences.favourites);
   const userData = useSelector((state) => state.userData.data);
 
   const [isOnlyFavourites, setIsOnlyFavourites] = useState(true);
@@ -139,7 +138,7 @@ const ActivitiesPage = () => {
                         key={activity?.id}
                         activityId={activity?.id}
                         title={activity?.name}
-                        hStackBgColor="blue.100"
+                        hStackBgColor="base.500"
                         description={activity?.description}
                         imageSource={activity?.icon}
                         onPress={() => navigation.navigate(navigationconstants.PAGES.activity, { id: activity?.id, activityName: activity?.name, image: activity?.icon, description: activity?.description })}

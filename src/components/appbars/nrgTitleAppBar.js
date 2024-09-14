@@ -8,17 +8,18 @@ const NrgTitleAppBar = ({ title, backNavigateTo }) => {
         <View style={{
             justifyContent: 'flex-start',
             alignItems: 'left',
+            backgroundColor: 'transparent'
         }}>
             <HStack justifyContent="left" alignItems="center" mx="2" mt={5} >
                 <IconButton
-                    icon={<ChevronLeftIcon color="black.500" />}
+                    icon={<ChevronLeftIcon color="black.800" />}
                     onPress={() => backNavigateTo ? navigation.navigate(backNavigateTo) : null}
                     _pressed={{
                         bgColor: "transparent",
                     }}
                     bgColor="transparent"
                 />
-                <Text size='md' mx="-1" color='black.500'>
+                <Text onPress={() => backNavigateTo ? navigation.navigate(backNavigateTo) : null} fontWeight={"bold"} size='md' color='black.800'>
                     {title}
                 </Text>
             </HStack>
