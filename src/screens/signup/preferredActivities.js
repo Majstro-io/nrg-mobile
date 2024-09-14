@@ -12,19 +12,15 @@ import activitiesService from "../../services/activitiesService";
 import log from "../../config/logger";
 import NrgHeader from "../../components/header/nrgHeader";
 
-import preferences from "../../data/updatedPreferences.json"
-
 const PreferredActivities = ({ route }) => {
     const { isRegistration } = route.params || false;
     const dispatch = useDispatch();
-    const userData = useSelector((state) => state.userData.data);
-
-    const favourites = preferences.favourites;
-    const favouriteActivityIds = new Set(favourites.map(fav => fav.id));
-
     const navigation = useNavigation();
-    const [isLoading, setIsLoading] = useState(false);
+    
+    const userData = useSelector((state) => state.userData.data);
+    const userPreferences = useSelector((state) => state.userPreferences);
 
+    const [isLoading, setIsLoading] = useState(false);
     const [activities, setActivities] = useState([]);
 
     const [errorModalVisible, setErrorModalVisible] = React.useState(false)
@@ -59,6 +55,20 @@ const PreferredActivities = ({ route }) => {
         });
     };
 
+    const updateUserPreferences = async () => {
+        const preferenceData = {
+            preferedActivities: userPreferences?.favouriteIds,
+            voice: userPreferences?.assistant,
+            theme: userPreferences?.theme
+        }
+        try {
+            const userPreferenceRequest = await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)
+            await Promise.all([userPreferenceRequest])
+        } catch (error) {
+            log.error("Error in updating user preferences from preferences page", error)
+        }
+    }
+
     useEffect(() => {
         fetchUserPreferences();
         getAllActivities();
@@ -71,6 +81,11 @@ const PreferredActivities = ({ route }) => {
         }
         return rows;
     };
+
+    const handleSavePreferences = async () => {
+        await updateUserPreferences();
+        navigation.navigate(navigationconstants.PAGES.interest, { isRegistration: isRegistration })
+    }
 
     const activityRows = splitActivitiesIntoRows();
 
@@ -96,7 +111,7 @@ const PreferredActivities = ({ route }) => {
                             mt={3}
                             marginBottom={10}
                             bgColor="black.800"
-                            onPress={() => navigation.navigate(navigationconstants.PAGES.preferences, { isRegistration: isRegistration })}
+                            onPress={handleSavePreferences}
                         >
                             Save Favourites
                         </Button>
@@ -109,7 +124,7 @@ const PreferredActivities = ({ route }) => {
                                                 key={activity?.id}
                                                 name={activity?.name}
                                                 imageSource={activity?.icon}
-                                                select={favouriteActivityIds.has(activity?.id)}
+                                                select={new Set(userPreferences?.favouriteIds)?.has(activity?.id) || false}
                                                 onPress={() => dispatch(addUserFavouriteActivity(activity?.id))}
                                             />
                                         ))}

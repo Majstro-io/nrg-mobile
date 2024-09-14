@@ -35,7 +35,7 @@ const UpdatePreferences = ({ route }) => {
 
   const updateUserPreferences = async () => {
     const preferenceData = {
-      preferedActivities: userPreferences?.favourites,
+      preferedActivities: userPreferences?.favouriteIds,
       voice: userPreferences?.assistant,
       theme: userPreferences?.theme
     }

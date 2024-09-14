@@ -68,7 +68,7 @@ const ActivitiesPage = () => {
       setIsLoading(true);
       const userPreferenceResponse = await userPreferencesService.getUserPreferenceData(userData?.id)
       dispatch(setPreferences(userPreferenceResponse.data))
-      if (!favourites || favourites.length === 0) {
+      if (!userPreferenceResponse?.data?.favoriteActivities || userPreferenceResponse?.data?.favoriteActivities.length === 0) {
         setErrorModalVisible(true);
         setErrorModalText("You don't have any favourites selected, please select favourite activities from preferences");
         setErrorModalTitle("No Favourites Selected");

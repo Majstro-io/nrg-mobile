@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Modal, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Input } from 'native-base';
-import DateTimePicker from 'react-native-ui-datepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import dayjs from 'dayjs';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -29,13 +29,8 @@ const DateInput = ({ label, onChange, value }) => {
         }
     };
 
-    const handleDatePick = (params) => {
-        const selectedDate = new Date(params.date);
-
-        const formattedDate = selectedDate.getFullYear() + '-' +
-            String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
-            String(selectedDate.getDate()).padStart(2, '0');
-
+    const handleDatePick = (selectedDate) => {
+        const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
         setDate(formattedDate);
         onChange(formattedDate);
         setIsPickerVisible(false);
@@ -44,7 +39,6 @@ const DateInput = ({ label, onChange, value }) => {
     return (
         <View >
             <TouchableOpacity onPressIn={() => setIsPickerVisible(true)} activeOpacity={1}>
-
                 <Input
                     placeholder={label}
                     maxLength={10}
@@ -52,18 +46,17 @@ const DateInput = ({ label, onChange, value }) => {
                     editable={false}
                 />
             </TouchableOpacity>
-            <Modal transparent visible={isPickerVisible} animationType="fade">
-                <View style={styles.overlay}>
-                    <View style={styles.datePickerContainer}>
-                        <DateTimePicker
-                            mode="single"
-                            value={date}
-                            onChange={handleDatePick}
-                            maximumDate={date}
-                        />
-                    </View>
-                </View>
-            </Modal>
+            <DateTimePickerModal
+                isVisible={isPickerVisible}
+                mode="date"
+                date={new Date(date)}
+                maximumDate={new Date()}
+                onConfirm={handleDatePick}
+                onCancel={() => setIsPickerVisible(false)}
+                textColor='#ff1111'
+                accentColor='#ff1111'
+                style={{ backgroundColor: '#ff1111' }}
+            />
         </View>
 
 

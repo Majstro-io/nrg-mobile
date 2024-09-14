@@ -57,7 +57,6 @@ const PersonalDetails = ({ route }) => {
 
     const registerNewUser = async () => {
         try {
-            console.log(userRegistrationData)
             const createdUser = (await userService.addNewUser(userRegistrationData)).data;
             dispatch(setUserData(createdUser))
             await saveDefaultUserPreferences(createdUser?.id)

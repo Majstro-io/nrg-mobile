@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, Input, } from "native-base";
@@ -33,7 +33,7 @@ const Preferences = ({ route }) => {
 
   const updateUserPreferences = async () => {
     const preferenceData = {
-      preferedActivities: userPreferences?.favourites,
+      preferedActivities: userPreferences?.favouriteIds,
       voice: userPreferences?.assistant,
       theme: userPreferences?.theme
     }
