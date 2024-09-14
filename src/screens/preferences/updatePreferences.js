@@ -20,6 +20,7 @@ const UpdatePreferences = ({ route }) => {
   const { setTheme } = useTheme();
 
   const userPreferences = useSelector((state) => state.userPreferences);
+  const userData = useSelector((state) => state.userData.data);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -42,7 +43,8 @@ const UpdatePreferences = ({ route }) => {
     setLoading(true)
     try {
       const userPreferenceRequest = userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)
-      const [userPreferenceResponse] = await Promise.all([userPreferenceRequest])
+      await Promise.all([userPreferenceRequest])
+      const userPreferenceResponse = await userPreferencesService.getUserPreferenceData(userData?.id)
       dispatch(setPreferences(userPreferenceResponse.data))
       navigation.navigate(navigationconstants.PAGES.activities)
     } catch (error) {

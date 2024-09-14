@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, HStack } from "native-base";
 
@@ -36,6 +36,10 @@ const UpdatePersonalDetails = () => {
         }
     }
 
+useEffect(()=>{
+    console.log(userData)
+
+},[])
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
             <ErrorModal
@@ -74,7 +78,7 @@ const UpdatePersonalDetails = () => {
                                 <DateInput
                                     label={"Date of Birth (YYYY-MM-DD)"}
                                     onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
-                                    value={new Date(userData?.dob)}
+                                    value={(userData?.dob)}
                                 />
                                 <Select
                                     isReadOnly

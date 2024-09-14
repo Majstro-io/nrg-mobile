@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, HStack, IconButton, Image, Text, VStack } from 'native-base';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useNavigationState } from "@react-navigation/native";
 
 import navigationconstants from '../../constants/navigationConstants';
 import footerImage from '../../resources/footer.png';
@@ -10,7 +10,6 @@ import profile from '../../resources/footerIcons/profile.png';
 import home from '../../resources/footerIcons/home.png';
 import preferences from '../../resources/footerIcons/preferences.png';
 import ComingSoonModal from '../modals/comingSoonModal';
-import { useNavigationState } from '@react-navigation/native';
 
 const Footer = () => {
     const navigation = useNavigation();
@@ -18,9 +17,6 @@ const Footer = () => {
 
     const [isComingSoonModalVisible, setIsComingSoonModalVisible] = React.useState(false);
 
-    useEffect(() => {
-        console.log(route.name)
-    }, [route])
 
     return (
         <>

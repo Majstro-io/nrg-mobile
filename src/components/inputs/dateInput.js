@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input } from 'native-base';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const DateInput = ({ label, onChange, value }) => {
-    const [date, setDate] = useState(dayjs());
+    const [date, setDate] = useState(value);
     const [isPickerVisible, setIsPickerVisible] = useState(false);
 
 
@@ -16,7 +16,7 @@ const DateInput = ({ label, onChange, value }) => {
         onChange(formattedDate);
         setIsPickerVisible(false);
     }
-
+    
     return (
         <View >
             <TouchableOpacity onPressIn={() => setIsPickerVisible(true)} activeOpacity={1}>
