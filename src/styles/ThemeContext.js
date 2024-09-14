@@ -14,6 +14,7 @@ const defaultTheme = extendTheme({
       500: '#7E7E7E',
       600: '#4A4A4A',
       700: '#2E2E2E',
+      750: '#151515',
       800: '#000000',
     },
     white: {

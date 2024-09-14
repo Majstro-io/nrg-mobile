@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, Progress, HStack } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, HStack } from "native-base";
 
 import userService from "../../services/userService";
 import log from "../../config/logger";
@@ -72,7 +72,7 @@ const UpdatePersonalDetails = () => {
                                     onChangeText={data => dispatch(updateUserDataField({ key: 'lastName', value: data }))}
                                 />
                                 <DateInput
-                                    label={"Date of Birth (DD/MM/YYYY)"}
+                                    label={"Date of Birth (YYYY-MM-DD)"}
                                     onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
                                     value={userData.dob}
                                 />

@@ -4,25 +4,33 @@ import audioFocusService from './audioFocusService';
 import log from '../config/logger';
 
 const playSound = async (audio, setSound) => {
-  await audioFocusService.requestAudioFocus();
+  try {
+    await audioFocusService.requestAudioFocus();
 
-  Sound.setCategory('Playback', true);
+    Sound.setCategory('Playback', true);
 
-  const newSound = new Sound(audio, Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      log.error('Failed to load the sound', error);
-      audioFocusService.abandonAudioFocus();
-      return;
-    }
-    newSound.play(success => {
-      if (success) {
+    const newSound = new Sound(audio, Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        log.error('Failed to load the sound', error);
         audioFocusService.abandonAudioFocus();
-      } else {
-        log.error('Failed to play the sound');
+        throw error
       }
+      newSound.play(success => {
+        if (success) {
+          audioFocusService.abandonAudioFocus();
+        } else {
+          log.error('Failed to play the sound');
+          audioFocusService.abandonAudioFocus();
+        }
+      });
     });
-  });
-  setSound(newSound);
+    newSound.release();
+    setSound(newSound);
+  } catch (error) {
+    log.error("Error in playing sound", error);
+    throw error;
+  }
+
 };
 
 const stopSound = (sound, setSound) => {

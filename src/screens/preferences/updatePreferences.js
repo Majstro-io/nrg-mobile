@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, Input, } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import navigationconstants from "../../constants/navigationConstants";
@@ -39,6 +39,7 @@ const UpdatePreferences = ({ route }) => {
       voice: userPreferences?.assistant,
       theme: userPreferences?.theme
     }
+    console.log(preferenceData)
     setLoading(true)
     try {
       const userPreferenceRequest = userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)

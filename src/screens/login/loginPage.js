@@ -46,7 +46,8 @@ const LoginPage = () => {
                     validated.data.accessToken,
                     validated.data.refreshToken
                 )
-                await fetchUserPreferences()
+                await fetchUserPreferences(userData?.id)
+                await authUtils.saveLoginData(userData?.id?.toString(), new Date().toString())
                 setOtpModalVisible(false)
                 navigation.dispatch(
                     CommonActions.reset({
@@ -68,9 +69,9 @@ const LoginPage = () => {
 
     }
 
-    const fetchUserPreferences = async () => {
+    const fetchUserPreferences = async (userId) => {
         try {
-            const userPreferences = await userPreferencesService.getUserPreferenceData(userData?.id)
+            const userPreferences = await userPreferencesService.getUserPreferenceData(userId)
             dispatch(setPreferences(userPreferences.data))
             setTheme(userPreferences.data?.theme);
         } catch (error) {
@@ -101,6 +102,40 @@ const LoginPage = () => {
         }
     }
 
+    // if previously logged in auto log in if available
+    const retrieveLoggedData = async () => {
+        setIsLoading(true);
+        try {
+            const logDetails = await authUtils.fetchLoginDataFromCache();
+
+            if (!logDetails || !logDetails.lastLoginTime || !logDetails.userId) {
+                throw new Error('Invalid login details');
+            }
+
+            const currentDate = new Date();
+            const lastLoginDate = new Date(logDetails.lastLoginTime);
+            const timeDifference = currentDate - lastLoginDate;
+            const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+            if (daysDifference < 7) {
+                const userData = await userService.getUserData(logDetails?.userId);
+                await fetchUserPreferences(logDetails?.userId)
+                dispatch(setUserData(userData.data))
+                log.info("Logged in using previous logged info")
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [{ name: navigationconstants.PAGES.activities }],
+                    })
+                );
+            }
+        } catch (error) {
+            log.error('Error retrieving logged data:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
@@ -116,6 +151,10 @@ const LoginPage = () => {
             keyboardDidHideListener.remove();
         };
     }, []);
+
+    useEffect(() => {
+       // retrieveLoggedData();
+    }, [])
 
     return (
         <View style={{ flex: 1 }}>

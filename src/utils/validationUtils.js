@@ -42,9 +42,15 @@ const validateEmail = (email) => {
     return /\S+@\S+\.\S+/.test(email);
 }
 
+const validateMobileWithCountryCode = (mobile) => {
+    const regex = /^\+\d{1,3}\d{7,14}$/;
+    return regex.test(mobile);
+}
+
 const validationUtils = {
     validateUserRegistrationDetails,
-    validateEmail
+    validateEmail,
+    validateMobileWithCountryCode
 }
 
 export default validationUtils;

@@ -56,7 +56,7 @@ const CreateAccount = () => {
     }
 
     useEffect(() => {
-        if (phoneNumber && validationUtils.validateEmail(email)) {
+        if (validationUtils.validateMobileWithCountryCode(phoneNumber) && validationUtils.validateEmail(email)) {
             setIsInputsValid(true);
         } else {
             setIsInputsValid(false);
@@ -140,7 +140,7 @@ const CreateAccount = () => {
                                     />
                                     <Input
                                         mx="10"
-                                        placeholder="Phone Number"
+                                        placeholder="Phone Number (+1xxxxxxxxx)"
                                         keyboardType="phone-pad"
                                         value={phoneNumber}
                                         onChangeText={text => setPhoneNumber(text)}

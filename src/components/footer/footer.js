@@ -37,7 +37,7 @@ const Footer = () => {
                     justifyContent="center"
                     alignItems="center"
                     space={7}
-                    mt={2}
+                    mt={3}
                 >
                     <VStack alignItems="center">
                         <IconButton
@@ -47,7 +47,7 @@ const Footer = () => {
                                     source={recentsIcon}
                                     alt="Recent"
                                     size="7"
-                                    tintColor={"black.750"}
+                                    tintColor={"black.800"}
                                 />
                             }
                             _pressed={{
@@ -56,7 +56,7 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => setIsComingSoonModalVisible(true)}
                         />
-                        <Text color={"black.750"} fontSize="xs">History</Text>
+                        <Text color={"black.800"} fontSize="xs">History</Text>
                     </VStack>
                     <VStack alignItems="center">
                         <IconButton
@@ -66,7 +66,7 @@ const Footer = () => {
                                     source={notificationIcon}
                                     alt="Notifications"
                                     size="7"
-                                    tintColor={"black.750"}
+                                    tintColor={"black.800"}
                                 />
                             }
                             _pressed={{
@@ -75,7 +75,7 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => setIsComingSoonModalVisible(true)}
                         />
-                        <Text color={"black.750"} fontSize="xs">Alerts</Text>
+                        <Text color={"black.800"} fontSize="xs">Alerts</Text>
                     </VStack>
                     <VStack alignItems="center" mb={5} space={2}>
                         <IconButton
@@ -85,7 +85,7 @@ const Footer = () => {
                                     source={home}
                                     alt="Home Icon"
                                     size="7"
-                                    tintColor={route.name == navigationconstants.PAGES.activities ? 'blue.400' : "black.750"}
+                                    tintColor={route.name == navigationconstants.PAGES.activities ? 'blue.400' : "black.800"}
                                 />
                             }
                             _pressed={{
@@ -94,7 +94,7 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => navigation.navigate(navigationconstants.PAGES.activities)}
                         />
-                        <Text color={route.name == navigationconstants.PAGES.activities ? 'blue.400' : "black.750"} fontSize="xs">Home</Text>
+                        <Text color={route.name == navigationconstants.PAGES.activities ? 'blue.400' : "black.800"} fontSize="xs">Home</Text>
                     </VStack>
                     <VStack alignItems="center">
                         <IconButton
@@ -104,7 +104,7 @@ const Footer = () => {
                                     source={preferences}
                                     alt="Preferences"
                                     size="7"
-                                    tintColor={route.name == navigationconstants.PAGES.preferences ? 'blue.400' : "black.750"}
+                                    tintColor={route.name == navigationconstants.PAGES.preferences ? 'blue.400' : "black.800"}
                                 />
                             }
                             _pressed={{
@@ -113,7 +113,7 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => navigation.navigate(navigationconstants.PAGES.preferences)}
                         />
-                        <Text color={route.name == navigationconstants.PAGES.preferences ? 'blue.400' : "black.750"} fontSize="xs">Settings</Text>
+                        <Text color={route.name == navigationconstants.PAGES.preferences ? 'blue.400' : "black.800"} fontSize="xs">Settings</Text>
                     </VStack>
                     <VStack alignItems="center">
                         <IconButton
@@ -123,7 +123,7 @@ const Footer = () => {
                                     source={profile}
                                     alt="Profile Icon"
                                     size="7"
-                                    tintColor={route.name == navigationconstants.PAGES.updatePersonalDetails ? 'blue.400' : "black.750"}
+                                    tintColor={route.name == navigationconstants.PAGES.updatePersonalDetails ? 'blue.400' : "black.800"}
                                 />
                             }
                             _pressed={{
@@ -132,7 +132,7 @@ const Footer = () => {
                             bgColor="transparent"
                             onPress={() => navigation.navigate(navigationconstants.PAGES.updatePersonalDetails)}
                         />
-                        <Text color={route.name == navigationconstants.PAGES.updatePersonalDetails ? 'blue.400' : "black.750"} fontSize="xs">Profile</Text>
+                        <Text color={route.name == navigationconstants.PAGES.updatePersonalDetails ? 'blue.400' : "black.800"} fontSize="xs">Profile</Text>
                     </VStack>
                 </HStack>
             </Box>

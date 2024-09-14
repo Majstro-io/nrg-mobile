@@ -44,6 +44,7 @@ const StartActivityPage = ({ route }) => {
     const currentQuotes = useRef([]);
     const currentVoice = useRef(userPreferences.assistant);
     const secondsToPlayNextQuote = useRef(0);
+    const failedAttempts = useRef(0);
 
     const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
@@ -99,6 +100,14 @@ const StartActivityPage = ({ route }) => {
                 setIsPlaying(false)
             }
         } catch (error) {
+            failedAttempts.current = failedAttempts.current + 1;
+
+            if (failedAttempts.current > 3) {
+                await handleStop();
+                failedAttempts.current = 0;
+                log.error('Stopped due to failed to play audio');
+            }
+
             log.error('Error requesting audio focus:', error);
         }
     };
@@ -301,7 +310,7 @@ const StartActivityPage = ({ route }) => {
                             {/* Display when BPM and km is tracked */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text> */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
-                            <Text fontSize="5xl" textAlign="left"  >{activityName}</Text>
+                            <Text fontSize="2xl" textAlign="center"  >{activityName}</Text>
                         </HStack>
                         <Box mt="24" alignItems="center">
                             <Heading fontSize="7xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >

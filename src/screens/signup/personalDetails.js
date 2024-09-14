@@ -38,7 +38,6 @@ const PersonalDetails = ({ route }) => {
 
 
     const saveDefaultUserPreferences = async (userId) => {
-        console.log(userId)
         try {
             const defaultUserPreferences = { ...defaultUserPreferencesData, profileId: userId }
             const userPrefs = await (userPreferencesService.addNewUserPreference(defaultUserPreferences))
@@ -52,12 +51,13 @@ const PersonalDetails = ({ route }) => {
         } catch (error) {
             setErrorModalMessage("An error occurred in configuring user preferences")
             setErrorModalVisible(true)
-            log.error("Error in creating user preferences for user", error)
+            log.error("Error in creating user preferences for user", error.response)
         }
     }
 
     const registerNewUser = async () => {
         try {
+            console.log(userRegistrationData)
             const createdUser = (await userService.addNewUser(userRegistrationData)).data;
             dispatch(setUserData(createdUser))
             await saveDefaultUserPreferences(createdUser?.id)
@@ -72,7 +72,7 @@ const PersonalDetails = ({ route }) => {
                 setErrorModalMessage("An error occurred in registration")
             }
             setErrorModalVisible(true)
-            log.error("Error in registering new user ", error)
+            log.error("Error in registering new user ", error.response.message)
         } finally {
             setIsLoading(false);
         }
@@ -91,6 +91,7 @@ const PersonalDetails = ({ route }) => {
             }
             setErrorModalVisible(true)
         }
+        setIsLoading(false)
 
     }
 
@@ -133,7 +134,7 @@ const PersonalDetails = ({ route }) => {
                                 onChangeText={data => setUserRegistrationData({ ...userRegistrationData, lastName: data })}
                             />
                             <DateInput
-                                label={"Date of Birth (DD/MM/YYYY)"}
+                                label={"Date of Birth (YYYY-MM-DD)"}
                                 onChange={data => setUserRegistrationData({ ...userRegistrationData, dob: data })}
                             />
                             <Select
