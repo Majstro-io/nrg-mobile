@@ -16,7 +16,7 @@ const PreferredActivities = ({ route }) => {
     const { isRegistration } = route.params || false;
     const dispatch = useDispatch();
     const navigation = useNavigation();
-    
+
     const userData = useSelector((state) => state.userData.data);
     const userPreferences = useSelector((state) => state.userPreferences);
 
@@ -62,10 +62,14 @@ const PreferredActivities = ({ route }) => {
             theme: userPreferences?.theme
         }
         try {
+            setIsLoading(true);
             const userPreferenceRequest = await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)
             await Promise.all([userPreferenceRequest])
         } catch (error) {
             log.error("Error in updating user preferences from preferences page", error)
+        } finally {
+            setIsLoading(false);
+
         }
     }
 
@@ -84,7 +88,7 @@ const PreferredActivities = ({ route }) => {
 
     const handleSavePreferences = async () => {
         await updateUserPreferences();
-        navigation.navigate(navigationconstants.PAGES.interest, { isRegistration: isRegistration })
+        navigation.navigate(navigationconstants.PAGES.setInitialPreferences, { isRegistration: isRegistration })
     }
 
     const activityRows = splitActivitiesIntoRows();

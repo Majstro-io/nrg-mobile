@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input } from 'native-base';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -9,25 +9,6 @@ const DateInput = ({ label, onChange, value }) => {
     const [date, setDate] = useState(dayjs());
     const [isPickerVisible, setIsPickerVisible] = useState(false);
 
-    useEffect(() => {
-        handleDateChange(value)
-    }, [])
-
-    const handleDateChange = (text) => {
-        if (text) {
-            // Format the input as YYYY-MM-DD
-            let formattedDate = text.replace(/\D/g, ''); // Remove non-numeric characters
-            if (formattedDate.length >= 4) {
-                formattedDate = `${formattedDate.slice(0, 4)}-${formattedDate.slice(4, 6)}`;
-            }
-            if (formattedDate.length > 6) {
-                formattedDate = `${formattedDate.slice(0, 7)}-${formattedDate.slice(6, 8)}`;
-            }
-
-            setDate(formattedDate);
-            onChange(formattedDate);
-        }
-    };
 
     const handleDatePick = (selectedDate) => {
         const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
@@ -53,9 +34,6 @@ const DateInput = ({ label, onChange, value }) => {
                 maximumDate={new Date()}
                 onConfirm={handleDatePick}
                 onCancel={() => setIsPickerVisible(false)}
-                textColor='#ff1111'
-                accentColor='#ff1111'
-                style={{ backgroundColor: '#ff1111' }}
             />
         </View>
 

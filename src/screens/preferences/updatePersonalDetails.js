@@ -74,7 +74,7 @@ const UpdatePersonalDetails = () => {
                                 <DateInput
                                     label={"Date of Birth (YYYY-MM-DD)"}
                                     onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
-                                    value={userData.dob}
+                                    value={new Date(userData?.dob)}
                                 />
                                 <Select
                                     isReadOnly
