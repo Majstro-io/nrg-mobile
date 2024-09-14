@@ -3,6 +3,7 @@ import userPrefs from "../../data/userPreferences.json"
 
 const initialState = {
   favourites: null,
+  favouriteIds: [],
   assistant: "MALE",
   theme: userPrefs.theme,
   id: null,
@@ -13,11 +14,11 @@ const userPreferencesSlice = createSlice({
   initialState,
   reducers: {
     addUserFavouriteActivity: (state, action) => {
-      const index = state.favourites.findIndex(favourite => favourite == action.payload)
+      const index = state.favouriteIds.findIndex(favourite => favourite == action.payload)
       if (index == -1) {
-        state.favourites.push(action.payload);
+        state.favouriteIds.push(action.payload);
       } else {
-        state.favourites.splice(index, 1);
+        state.favouriteIds.splice(index, 1);
       }
     },
     updateTheme: (state, action) => {
@@ -25,6 +26,7 @@ const userPreferencesSlice = createSlice({
     },
     setPreferences: (state, action) => {
       state.favourites = action.payload?.favoriteActivities || []
+      state.favouriteIds = action.payload?.favoriteActivities?.map(item => item.id) || []
       state.assistant = action.payload?.voice
       state.id = action.payload?.id
     },

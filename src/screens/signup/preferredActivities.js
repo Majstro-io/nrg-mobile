@@ -18,7 +18,6 @@ const PreferredActivities = ({ route }) => {
     const { isRegistration } = route.params || false;
     const dispatch = useDispatch();
     const userData = useSelector((state) => state.userData.data);
-    // const favourites = useSelector((state) => state.userPreferences.favourites);
 
     const favourites = preferences.favourites;
     const favouriteActivityIds = new Set(favourites.map(fav => fav.id));

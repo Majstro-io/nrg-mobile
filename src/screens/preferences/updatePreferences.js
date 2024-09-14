@@ -39,7 +39,6 @@ const UpdatePreferences = ({ route }) => {
       voice: userPreferences?.assistant,
       theme: userPreferences?.theme
     }
-    console.log(preferenceData)
     setLoading(true)
     try {
       const userPreferenceRequest = userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)

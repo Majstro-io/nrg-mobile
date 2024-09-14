@@ -1,14 +1,18 @@
 import { Box, FavouriteIcon, HStack, IconButton, Image, Pressable, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
-
-import preferences from "../../data/updatedPreferences.json"
+import { useDispatch, useSelector } from 'react-redux';
+import { addUserFavouriteActivity } from '../../store/slices/userPreferencesSlice';
 
 const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBgColor }) => {
+  const dispatch = useDispatch()
+  const userPreferences = useSelector((state) => state.userPreferences);
+
   const [isFavourite, setIsFavourite] = useState(false);
 
+
   useEffect(() => {
-    setIsFavourite(preferences.favourites.some(favourite => favourite.id === activityId));
-  },[])
+    setIsFavourite(userPreferences?.favouriteIds?.some(favourite => favourite === activityId));
+  }, [userPreferences?.favouriteIds])
 
   return (
     <Box
@@ -52,7 +56,7 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
               <IconButton
                 padding={2}
                 icon={<FavouriteIcon size="sm" />}
-                onPress={null}
+                onPress={() => dispatch(addUserFavouriteActivity(activityId))}
                 colorScheme={isFavourite ? "red" : "gray"}
                 flex={0.1}
               />

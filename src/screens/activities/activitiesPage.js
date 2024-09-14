@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView, View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,11 +10,16 @@ import log from '../../config/logger';
 import ErrorModal from '../../components/modals/errorModal';
 import Footer from '../../components/footer/footer';
 import LogOffButton from '../../components/modals/logoutConfirmation';
+import userPreferencesService from '../../services/userPreferencesService';
+import { setPreferences } from '../../store/slices/userPreferencesSlice';
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
 
+  const userPreferences = useSelector((state) => state.userPreferences);
   const favourites = useSelector((state) => state.userPreferences.favourites);
+  const userData = useSelector((state) => state.userData.data);
 
   const [isOnlyFavourites, setIsOnlyFavourites] = useState(true);
   const [activities, setActivities] = useState([]);
@@ -28,6 +33,21 @@ const ActivitiesPage = () => {
   const onFavouriteFilterPress = () => {
     setIsOnlyFavourites(!isOnlyFavourites);
   };
+
+  const updateUserPreferences = async () => {
+    const preferenceData = {
+      preferedActivities: userPreferences?.favouriteIds,
+      voice: userPreferences?.assistant,
+      theme: userPreferences?.theme
+    }
+    try {
+      const userPreferenceRequest = await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)
+      await Promise.all([userPreferenceRequest])
+    } catch (error) {
+      log.error("Error in updating user preferences from preferences page", error)
+    }
+  }
+
 
   const getAllActivities = async () => {
     setIsLoading(true);
@@ -44,15 +64,32 @@ const ActivitiesPage = () => {
   };
 
   const getAllFavouriteActivities = async () => {
-    if (!favourites || favourites.length === 0) {
+    try {
+      setIsLoading(true);
+      const userPreferenceResponse = await userPreferencesService.getUserPreferenceData(userData?.id)
+      dispatch(setPreferences(userPreferenceResponse.data))
+      if (!favourites || favourites.length === 0) {
+        setErrorModalVisible(true);
+        setErrorModalText("You don't have any favourites selected, please select favourite activities from preferences");
+        setErrorModalTitle("No Favourites Selected");
+        setIsOnlyFavourites(false);
+      } else {
+        setActivities(userPreferenceResponse?.data?.favoriteActivities)
+      }
+    } catch (error) {
       setErrorModalVisible(true);
-      setErrorModalText("You don't have any favourites selected, please select favourite activities from preferences");
-      setErrorModalTitle("No Favourites Selected");
-      setIsOnlyFavourites(false);
-    } else {
-      setActivities(favourites)
+      setErrorModalText("Failed to fetch favourite Activities");
+      setErrorModalTitle("Fetching Activities Failed");
+      log.error("Failed to fetch favourite activities", error);
+    } finally {
+      setIsLoading(false);
+
     }
   };
+
+  useEffect(() => {
+    updateUserPreferences();
+  }, [userPreferences?.favouriteIds])
 
   useEffect(() => {
     if (isOnlyFavourites) {
@@ -60,7 +97,7 @@ const ActivitiesPage = () => {
     } else {
       getAllActivities();
     }
-  }, [isOnlyFavourites, favourites]);
+  }, [isOnlyFavourites]);
 
   const splitActivitiesIntoRows = (activities) => {
     const rows = [];
