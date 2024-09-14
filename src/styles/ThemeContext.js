@@ -36,15 +36,15 @@ const defaultTheme = extendTheme({
       800: '#000000',
     },
     base: {
-      50: '#F9FBE7', // Very light lime green
-      100: '#F0F4C3', // Light lime green
-      200: '#E6EE9C', // Pale lime green
-      300: '#DCE775', // Light green
-      400: '#D4E157', // Lighter lime green
-      500: '#DDFF5F', // Midpoint vibrant lime green (reference color)
-      600: '#C4D600', // Slightly darker lime green
-      700: '#AABF00', // Medium-dark lime green
-      800: '#8F9D00', // Darker lime green
+      50:  '#F9FBE7', 
+      100: '#F0F4C3',
+      200: '#E6EE9C', 
+      300: '#DCE775', 
+      400: '#D4E157', 
+      500: '#DDFF5F', 
+      600: '#C4D600', 
+      700: '#AABF00', 
+      800: '#8F9D00', 
       900: '#6D7A00',
     },
     yellow: {

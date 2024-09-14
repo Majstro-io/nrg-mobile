@@ -15,9 +15,10 @@ const LogOffButton = () => {
         authUtils.revokeTokens();
         navigation.navigate(navigationconstants.PAGES.login);
     }
+
     return (
         <>
-            <Avatar source={profileImage} size="sm" />
+            <Avatar onTouchStart={() => navigation.navigate(navigationconstants.PAGES.updatePersonalDetails)} source={profileImage} size="sm" />
             <AlertModal
                 errorDescription={"Please confirm to log out"}
                 errorTitle={"Confirm Logout"}

@@ -16,6 +16,7 @@ import { useTheme } from "../../styles/ThemeContext";
 import authService from "../../services/authService";
 import OTPInputModal from "../../components/modals/OtpInputModal";
 import authUtils from "../../utils/authUtils";
+import { color } from "native-base/lib/typescript/theme/styled-system";
 
 const { width, height } = Dimensions.get('window');
 
@@ -199,6 +200,7 @@ const LoginPage = () => {
                                 />
                                 <Button
                                     bg="black.800"
+                                    _text={{ color: "base.500" }}
                                     isLoading={isLoading}
                                     onPress={loginUser}>
                                     Login

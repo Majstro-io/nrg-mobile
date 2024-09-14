@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
@@ -60,6 +60,28 @@ const UpdatePreferences = ({ route }) => {
   const handleOnDone = async () => {
     await updateUserPreferences();
   }
+  const fetchPreferences = async () => {
+
+    setLoading(true)
+    try {
+      const userPreferenceResponse = await userPreferencesService.getUserPreferenceData(userData?.id)
+      dispatch(setPreferences(userPreferenceResponse.data))
+    } catch (error) {
+      log.error("Error in fetching preferences", error)
+    } finally {
+      setLoading(false)
+
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        fetchPreferences();
+      };
+    }, [])
+  );
+
 
   return (
     <View style={{ flex: 1 }}>
@@ -122,6 +144,7 @@ const UpdatePreferences = ({ route }) => {
               <Button
                 mt={3}
                 width="72"
+                _text={{ color: "base.500" }}
                 bgColor="black.800"
                 isLoading={loading}
                 onPress={() => handleOnDone()}>

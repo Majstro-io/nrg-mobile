@@ -119,6 +119,7 @@ const Preferences = ({ route }) => {
                 mt={3}
                 width="72"
                 bgColor="black.800"
+                _text={{ color: "base.500" }}
                 isLoading={loading}
                 onPress={() => handleOnDone()}>
                 Done

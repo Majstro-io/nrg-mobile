@@ -36,10 +36,10 @@ const UpdatePersonalDetails = () => {
         }
     }
 
-useEffect(()=>{
-    console.log(userData)
+    useEffect(() => {
+        console.log(userData)
 
-},[])
+    }, [])
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
             <ErrorModal
@@ -58,7 +58,7 @@ useEffect(()=>{
                         <VStack space={2} alignItems="center"  >
 
                             <NrgHeader />
-                            <Text fontSize="3xl" color="black.800">Update profile</Text>
+                            <Text fontSize="3xl" color="black.800">Update Profile</Text>
                             <Text fontSize="sm" color="black.800" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
 
                             <VStack space={5} alignItems="center">
@@ -113,6 +113,7 @@ useEffect(()=>{
                                 <Button
                                     mt={3}
                                     width="72"
+                                    _text={{ color: "base.500" }}
                                     bgColor="black.800"
                                     isLoading={isLoading}
                                     onPress={updateUserData}>

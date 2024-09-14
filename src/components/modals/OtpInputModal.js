@@ -22,6 +22,12 @@ const OTPInputModal = ({
     const [keyboardHeight, setKeyboardHeight] = useState(0);
 
     useEffect(() => {
+        if (otp.length == 6) {
+            onConfirmPress();
+        }
+    }, [otp])
+
+    useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
             (e) => setKeyboardHeight(e.endCoordinates.height)

@@ -24,7 +24,7 @@ const ContactDetails = ({ route }) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [errorModalVisible, setErrorModalVisible] = React.useState(false)
     const [errorModalMessage, setErrorModalMessage] = React.useState("Please fill in all the details required to proceed with the registration")
-    
+
     const [userRegistrationData, setUserRegistrationData] = React.useState({
         firstName: null,
         lastName: null,
@@ -118,6 +118,7 @@ const ContactDetails = ({ route }) => {
 
                             <Button
                                 isLoading={isLoading}
+                                _text={{ color: "base.500" }}
                                 mt={3}
                                 width="1/4"
                                 onPress={() => registerUser()}>

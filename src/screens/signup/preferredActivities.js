@@ -115,6 +115,7 @@ const PreferredActivities = ({ route }) => {
                             mt={3}
                             marginBottom={10}
                             bgColor="black.800"
+                            _text={{ color: "base.500" }}
                             onPress={handleSavePreferences}
                         >
                             Save Favourites
