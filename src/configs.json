@@ -1,4 +1,4 @@
 {
-    "nrgBackendUrl":"http://ec2-34-226-141-126.compute-1.amazonaws.com:8080",
+    "nrgBackendUrl":"https://ht6l4csesf.execute-api.us-east-1.amazonaws.com",
     "nrgBackendVersion":"v1"
 }

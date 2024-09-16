@@ -102,13 +102,12 @@ const UpdatePreferences = ({ route }) => {
             <Text fontSize="3xl" color="black.800">Preferences</Text>
             <Text fontSize="sm" color="black.800" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
-              <Box w="72" mt={5}>
+              <Box mt={5}>
                 <Text fontSize="xs" color="black.800" mb={1}>Voice Preference</Text>
                 <Select
                   defaultValue={userPreferences.assistant}
                   selectedValue={userPreferences.assistant}
                   onValueChange={(value) => dispatch(setAssistantVoice(value))}
-                  width="72"
                   isReadOnly
                   placeholder="Select Voice Preference"
                   _selectedItem={{
@@ -127,7 +126,7 @@ const UpdatePreferences = ({ route }) => {
                 </Select>
               </Box>
 
-              <Box w="72">
+              {/* <Box>
                 <Text fontSize="xs" color="black.800" mb={1}>Theme Preference</Text>
                 <Select
                   selectedValue={userPreferences.theme}
@@ -140,7 +139,7 @@ const UpdatePreferences = ({ route }) => {
                 >
                   <Select.Item label="Default" value="default" />
                 </Select>
-              </Box>
+              </Box> */}
               <Button
                 mt={3}
                 width="72"

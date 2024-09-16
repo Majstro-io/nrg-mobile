@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dimensions, Keyboard } from 'react-native';
+import { Dimensions } from 'react-native';
 import { HttpStatusCode } from "axios";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { Image, Box, Button, Center, HStack, Input, ScrollView, Text, VStack, View, Link } from 'native-base';
@@ -16,7 +16,7 @@ import { useTheme } from "../../styles/ThemeContext";
 import authService from "../../services/authService";
 import OTPInputModal from "../../components/modals/OtpInputModal";
 import authUtils from "../../utils/authUtils";
-import { color } from "native-base/lib/typescript/theme/styled-system";
+import KeyboardAwareScrollComponent from "../../components/common/KeyboardAwareScrollComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,7 +28,6 @@ const LoginPage = () => {
     const userData = useSelector((state) => state.userData.data);
 
     const [mobile, setMobile] = React.useState(null);
-    const [keyboardHeight, setKeyboardHeight] = React.useState(0);
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [isOtpModalLoading, setIsOtpModalLoading] = React.useState(false);
@@ -138,107 +137,93 @@ const LoginPage = () => {
     }
 
     useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener(
-            'keyboardDidShow',
-            (e) => setKeyboardHeight(e.endCoordinates.height)
-        );
-        const keyboardDidHideListener = Keyboard.addListener(
-            'keyboardDidHide',
-            () => setKeyboardHeight(0)
-        );
-
-        return () => {
-            keyboardDidShowListener.remove();
-            keyboardDidHideListener.remove();
-        };
-    }, []);
-
-    useEffect(() => {
         // retrieveLoggedData();
     }, [])
 
     return (
-        <View style={{ flex: 1 }}>
-            <ErrorModal
-                errorDescription={errorModalText}
-                errorTitle={"Login Error"}
-                setVisible={setErrorModalVisible}
-                visible={errorModalVisible}
-            />
-            <ScrollView
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-            >
-                <Box position="relative" height={height}>
-                    <Image
-                        source={require('../../resources/login/login.jpeg')}
-                        size="100%"
-                        height={height / 1.8}
-                        position="absolute"
-                        zIndex={-1}
-                        alt="Login Image"
-                    />
-                    <Box
-                        top={keyboardHeight ? '20%' : '40%'}
-                        bg="white.100"
-                        borderRadius={45}
-                        width={width}
-                        height={height / 1.5}
-                    >
-                        <Center mt={5}>
-                            <VStack space={3} alignItems="center">
-                                <Text bold fontSize="2xl" >NRG Remix</Text>
-                                <VStack space={0} alignItems="center">
-                                    <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
+        <KeyboardAwareScrollComponent>
+            <View style={{ flex: 1 }}>
+                <ErrorModal
+                    errorDescription={errorModalText}
+                    errorTitle={"Login Error"}
+                    setVisible={setErrorModalVisible}
+                    visible={errorModalVisible}
+                />
+                <ScrollView
+                    scrollEnabled={false}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <Box position="relative" height={height}>
+                        <Image
+                            source={require('../../resources/login/login.jpeg')}
+                            size="100%"
+                            height={height / 1.8}
+                            position="absolute"
+                            zIndex={-1}
+                            alt="Login Image"
+                        />
+                        <Box
+                            top={'50%'}
+                            bg="white.100"
+                            borderRadius={45}
+                            width={width}
+                            height={height / 1.5}
+                        >
+                            <Center mt={5}>
+                                <VStack space={3} alignItems="center">
+                                    <Text bold fontSize="2xl" >NRG Remix</Text>
+                                    <VStack space={0} alignItems="center">
+                                        <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
+                                    </VStack>
+                                    <Input
+                                        mx="10"
+                                        placeholder="Phone number"
+                                        keyboardType="phone-pad"
+                                        value={mobile}
+                                        onChangeText={text => setMobile(text)}
+                                        onSubmitEditing={loginUser}
+                                    />
+                                    <Button
+                                        bg="black.800"
+                                        _text={{ color: "base.500" }}
+                                        isLoading={isLoading}
+                                        onPress={loginUser}>
+                                        Login
+                                    </Button>
+                                    <HStack space={2} alignItems="center" mt={5}>
+                                        <Text fontSize="md"  >Don't have an account?</Text>
+                                        <Link
+
+                                            isUnderlined={false}
+                                            onPress={() => navigation.navigate(navigationconstants.PAGES.createAccount)}>
+                                            Join now
+                                        </Link>
+                                    </HStack>
+
                                 </VStack>
-                                <Input
-                                    mx="10"
-                                    placeholder="Phone number"
-                                    keyboardType="phone-pad"
-                                    value={mobile}
-                                    onChangeText={text => setMobile(text)}
-                                />
-                                <Button
-                                    bg="black.800"
-                                    _text={{ color: "base.500" }}
-                                    isLoading={isLoading}
-                                    onPress={loginUser}>
-                                    Login
-                                </Button>
-                                <HStack space={2} alignItems="center" mt={5}>
-                                    <Text fontSize="md"  >Don't have an account?</Text>
-                                    <Link
+                            </Center>
+                        </Box>
 
-                                        isUnderlined={false}
-                                        onPress={() => navigation.navigate(navigationconstants.PAGES.createAccount)}>
-                                        Join now
-                                    </Link>
-                                </HStack>
-
-                            </VStack>
-                        </Center>
+                        {/* OTP Validation Modal TODO: refactor */}
+                        <OTPInputModal
+                            buttonText={"Login"}
+                            header={"NRG Remix"}
+                            label={`Enter OTP to ${'\n'}Validate your phone`}
+                            label1={"Don’t receive OTP?"}
+                            label2={"Send Again"}
+                            label3={"Don’t have an account?"}
+                            label4={"Join Now"}
+                            instructions={`Enter the OTP sent to ${mobile}`}
+                            confirmButtonText={"Verify and Login"}
+                            modalVisible={otpModalVisible}
+                            setModalVisible={setOtpModalVisible}
+                            onConfirm={validateUser}
+                            isLoading={isOtpModalLoading}
+                        />
                     </Box>
-
-                    {/* OTP Validation Modal TODO: refactor */}
-                    <OTPInputModal
-                        buttonText={"Login"}
-                        header={"NRG Remix"}
-                        label={`Enter OTP to ${'\n'}Validate your phone`}
-                        label1={"Don’t receive OTP?"}
-                        label2={"Send Again"}
-                        label3={"Don’t have an account?"}
-                        label4={"Join Now"}
-                        instructions={`Enter the OTP sent to ${mobile}`}
-                        confirmButtonText={"Verify and Login"}
-                        modalVisible={otpModalVisible}
-                        setModalVisible={setOtpModalVisible}
-                        onConfirm={validateUser}
-                        isLoading={isOtpModalLoading}
-                    />
-                </Box>
-            </ScrollView>
-        </View >
-
+                </ScrollView>
+            </View >
+        </KeyboardAwareScrollComponent>
     );
 };
 

@@ -38,5 +38,5 @@ const ApplicationContent = () => {
     </NavigationContainer>
   );
 };
-
+// ContactDetails not neing used
 export default ApplicationContent;

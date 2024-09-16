@@ -36,10 +36,7 @@ const UpdatePersonalDetails = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(userData)
 
-    }, [])
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
             <ErrorModal

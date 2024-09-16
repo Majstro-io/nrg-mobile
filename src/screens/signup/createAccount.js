@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, Box, Button, Center, HStack, Input, ScrollView, Text, VStack, View, IconButton, CloseIcon } from 'native-base';
+import { Image, Box, Button, Center, HStack, Input, Text, VStack, View, IconButton, CloseIcon } from 'native-base';
 import navigationconstants from "../../constants/navigationConstants";
-import { Dimensions, Keyboard } from 'react-native';
+import { Dimensions } from 'react-native';
 import OTPInputModal from "../../components/modals/OtpInputModal";
 import authService from "../../services/authService";
 import ErrorModal from "../../components/modals/errorModal";
 import validationUtils from "../../utils/validationUtils";
 import log from "../../config/logger";
+import KeyboardAwareScrollComponent from "../../components/common/KeyboardAwareScrollComponent";
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,12 +18,14 @@ const CreateAccount = () => {
     const [email, setEmail] = React.useState(null);
     const [phoneNumber, setPhoneNumber] = React.useState(null);
     const [isInputsValid, setIsInputsValid] = React.useState(false);
-    const [keyboardHeight, setKeyboardHeight] = React.useState(0);
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [otpModalVisible, setOtpModalVisible] = React.useState(false)
     const [errorModalVisible, setErrorModalVisible] = React.useState(false)
     const [errorModalText, setErrorModalText] = React.useState("We have encountered an error in registering you")
+
+    const emailTextField = useRef()
+    const phoneTextField = useRef()
 
     const procceedToRegistration = async (otp) => {
         setIsLoading(true)
@@ -42,8 +45,6 @@ const CreateAccount = () => {
         } finally {
             setIsLoading(false)
         }
-
-
     }
 
     const verifyUser = async () => {
@@ -63,23 +64,6 @@ const CreateAccount = () => {
         }
     }, [email, phoneNumber])
 
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener(
-            'keyboardDidShow',
-            (e) => setKeyboardHeight(e.endCoordinates.height)
-        );
-        const keyboardDidHideListener = Keyboard.addListener(
-            'keyboardDidHide',
-            () => setKeyboardHeight(0)
-        );
-
-        return () => {
-            keyboardDidShowListener.remove();
-            keyboardDidHideListener.remove();
-        };
-    }, []);
-
-
 
     return (
         <View style={{ flex: 1 }}>
@@ -89,10 +73,8 @@ const CreateAccount = () => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
-            <ScrollView
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-            >
+            <KeyboardAwareScrollComponent>
+
                 <Box position="relative" height={height}>
                     <Image
                         source={require('../../resources/loginPage.jpeg')}
@@ -103,7 +85,7 @@ const CreateAccount = () => {
                         alt="Create Account Image"
                     />
                     <Box
-                        top={keyboardHeight ? '20%' : '40%'}
+                        top={'40%'}
                         bg="white.100"
                         borderRadius={45}
                         width={width}
@@ -132,18 +114,22 @@ const CreateAccount = () => {
                                 </VStack>
                                 <VStack space={3} alignItems="center" >
                                     <Input
+                                        ref={emailTextField}
                                         mx="10"
                                         placeholder="Email Address"
                                         keyboardType="email-address"
                                         value={email}
                                         onChangeText={text => setEmail(text)}
+                                        onSubmitEditing={() => phoneTextField.current.focus()}
                                     />
                                     <Input
+                                        ref={phoneTextField}
                                         mx="10"
                                         placeholder="Phone Number (+1xxxxxxxxx)"
                                         keyboardType="phone-pad"
                                         value={phoneNumber}
                                         onChangeText={text => setPhoneNumber(text)}
+                                        onSubmitEditing={verifyUser}
                                     />
                                     <Button
                                         bg="base.500"
@@ -176,7 +162,7 @@ const CreateAccount = () => {
                         isLoading={isLoading}
                     />
                 </Box>
-            </ScrollView>
+            </KeyboardAwareScrollComponent>
         </View >
 
     );

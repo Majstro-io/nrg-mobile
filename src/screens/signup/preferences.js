@@ -101,7 +101,7 @@ const Preferences = ({ route }) => {
                 </Select>
               </Box>
 
-              <Box w="72">
+              {/* <Box w="72">
                 <Text fontSize="xs" color="black.800" mb={1}>Theme Preference</Text>
                 <Select
                   selectedValue={userPreferences.theme}
@@ -114,7 +114,7 @@ const Preferences = ({ route }) => {
                 >
                   <Select.Item label="Default" value="default" />
                 </Select>
-              </Box>
+              </Box> */}
               <Button
                 mt={3}
                 width="72"

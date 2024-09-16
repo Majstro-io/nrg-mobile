@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, HStack, IconButton, Image, Text, VStack } from 'native-base';
-import { useNavigation, useRoute, useNavigationState } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import navigationconstants from '../../constants/navigationConstants';
 import footerImage from '../../resources/footer.png';
@@ -21,7 +21,7 @@ const Footer = () => {
     return (
         <>
             <ComingSoonModal setVisible={setIsComingSoonModalVisible} visible={isComingSoonModalVisible} />
-            <Box >
+            <Box safeAreaBottom bg="transparent" >
                 <Image
                     source={footerImage}
                     alt="Footer Image"
