@@ -8,13 +8,14 @@ import authService from "../../services/authService";
 import ErrorModal from "../../components/modals/errorModal";
 import validationUtils from "../../utils/validationUtils";
 import log from "../../config/logger";
-import KeyboardAwareScrollComponent from "../../components/common/KeyboardAwareScrollComponent";
+import useKeyboard from "../../hooks/useKeyboard";
 
 const { width, height } = Dimensions.get('window');
 
 const CreateAccount = () => {
     const navigation = useNavigation();
-
+    const isKeyboardVisible = useKeyboard();
+    ``
     const [email, setEmail] = React.useState(null);
     const [phoneNumber, setPhoneNumber] = React.useState(null);
     const [isInputsValid, setIsInputsValid] = React.useState(false);
@@ -73,96 +74,94 @@ const CreateAccount = () => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
-            <KeyboardAwareScrollComponent>
 
-                <Box position="relative" height={height}>
-                    <Image
-                        source={require('../../resources/loginPage.jpeg')}
-                        size="100%"
-                        height="550"
-                        position="absolute"
-                        zIndex={-1}
-                        alt="Create Account Image"
-                    />
-                    <Box
-                        top={'40%'}
-                        bg="white.100"
-                        borderRadius={45}
-                        width={width}
-                        height={height / 1.5}
-                    >
-                        <HStack justifyContent="flex-end" alignItems="center" mt={2} mx={4}  >
-                            <IconButton
-                                icon={<CloseIcon color="black.500" />}
-                                onPress={() => navigation.navigate(navigationconstants.PAGES.login)}
-                                _pressed={{
-                                    bgColor: "transparent",
-                                }}
-                                bgColor="transparent"
-                            />
-                        </HStack>
-                        <Center>
-                            <VStack space={2} alignItems="center">
-                                <Text bold fontSize="2xl" >NRG Remix</Text>
-                                <VStack space={0} alignItems="center">
-                                    <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
-                                    <Text fontSize="sm" textAlign="center" lineHeight="xs" mb={4}>
-                                        We will send you the
-                                        <Text fontWeight="bold"> 5 digit</Text>
-                                        <Text> verification code</Text>
-                                    </Text>
-                                </VStack>
-                                <VStack space={3} alignItems="center" >
-                                    <Input
-                                        ref={emailTextField}
-                                        mx="10"
-                                        placeholder="Email Address"
-                                        keyboardType="email-address"
-                                        value={email}
-                                        onChangeText={text => setEmail(text)}
-                                        onSubmitEditing={() => phoneTextField.current.focus()}
-                                    />
-                                    <Input
-                                        ref={phoneTextField}
-                                        mx="10"
-                                        placeholder="Phone Number (+1xxxxxxxxx)"
-                                        keyboardType="phone-pad"
-                                        value={phoneNumber}
-                                        onChangeText={text => setPhoneNumber(text)}
-                                        onSubmitEditing={verifyUser}
-                                    />
-                                    <Button
-                                        bg="base.500"
-                                        _pressed={{ bg: "base.400" }}
-                                        _loading={{ bg: "base.700" }}
-                                        _text={{ color: "black.800" }}
-                                        onPress={verifyUser}
-                                    >
-                                        Register
-                                    </Button>
-                                </VStack>
+            <Box position="relative" height={height}>
+                <Image
+                    source={require('../../resources/loginPage.jpeg')}
+                    size="100%"
+                    height="550"
+                    position="absolute"
+                    zIndex={-1}
+                    alt="Create Account Image"
+                />
+                <Box
+                    top={isKeyboardVisible ? '15%' : '50%'}
+                    bg="white.100"
+                    borderRadius={45}
+                    width={width}
+                    height={height / 1.5}
+                >
+                    <HStack justifyContent="flex-end" alignItems="center" mt={2} mx={4}  >
+                        <IconButton
+                            icon={<CloseIcon color="black.500" />}
+                            onPress={() => navigation.navigate(navigationconstants.PAGES.login)}
+                            _pressed={{
+                                bgColor: "transparent",
+                            }}
+                            bgColor="transparent"
+                        />
+                    </HStack>
+                    <Center>
+                        <VStack space={2} alignItems="center">
+                            <Text bold fontSize="2xl" >NRG Remix</Text>
+                            <VStack space={0} alignItems="center">
+                                <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
+                                <Text fontSize="sm" textAlign="center" lineHeight="xs" mb={4}>
+                                    We will send you the
+                                    <Text fontWeight="bold"> 5 digit</Text>
+                                    <Text> verification code</Text>
+                                </Text>
                             </VStack>
-                        </Center>
-                    </Box>
-
-                    {/* OTP Validation Modal TODO: refactor */}
-                    <OTPInputModal
-                        buttonText={"Login"}
-                        header={"NRG Remix"}
-                        label={`Enter OTP to ${'\n'}Validate your phone`}
-                        label1={"Don’t receive OTP?"}
-                        label2={"Send Again"}
-                        label3={"Don’t have an account?"}
-                        label4={"Join Now"}
-                        instructions={`Enter the OTP sent to ${phoneNumber}`}
-                        confirmButtonText={"Verify"}
-                        modalVisible={otpModalVisible}
-                        setModalVisible={setOtpModalVisible}
-                        onConfirm={procceedToRegistration}
-                        isLoading={isLoading}
-                    />
+                            <VStack space={3} alignItems="center" >
+                                <Input
+                                    ref={emailTextField}
+                                    mx="10"
+                                    placeholder="Email Address"
+                                    keyboardType="email-address"
+                                    value={email}
+                                    onChangeText={text => setEmail(text)}
+                                    onSubmitEditing={() => phoneTextField.current.focus()}
+                                />
+                                <Input
+                                    ref={phoneTextField}
+                                    mx="10"
+                                    placeholder="Phone Number (+1xxxxxxxxx)"
+                                    keyboardType="phone-pad"
+                                    value={phoneNumber}
+                                    onChangeText={text => setPhoneNumber(text)}
+                                    onSubmitEditing={verifyUser}
+                                />
+                                <Button
+                                    bg="base.500"
+                                    _pressed={{ bg: "base.400" }}
+                                    _loading={{ bg: "base.700" }}
+                                    _text={{ color: "black.800" }}
+                                    onPress={verifyUser}
+                                >
+                                    Register
+                                </Button>
+                            </VStack>
+                        </VStack>
+                    </Center>
                 </Box>
-            </KeyboardAwareScrollComponent>
+
+                {/* OTP Validation Modal TODO: refactor */}
+                <OTPInputModal
+                    buttonText={"Login"}
+                    header={"NRG Remix"}
+                    label={`Enter OTP to ${'\n'}Validate your phone`}
+                    label1={"Don’t receive OTP?"}
+                    label2={"Send Again"}
+                    label3={"Don’t have an account?"}
+                    label4={"Join Now"}
+                    instructions={`Enter the OTP sent to ${phoneNumber}`}
+                    confirmButtonText={"Verify"}
+                    modalVisible={otpModalVisible}
+                    setModalVisible={setOtpModalVisible}
+                    onConfirm={procceedToRegistration}
+                    isLoading={isLoading}
+                />
+            </Box>
         </View >
 
     );

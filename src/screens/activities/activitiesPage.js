@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ScrollView, View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton } from 'native-base';
+import { View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
 import ActivityCard from '../../components/activityCard/activityCard';
@@ -12,6 +12,7 @@ import Footer from '../../components/footer/footer';
 import LogOffButton from '../../components/modals/logoutConfirmation';
 import userPreferencesService from '../../services/userPreferencesService';
 import { setPreferences } from '../../store/slices/userPreferencesSlice';
+import { FlatList } from 'react-native-gesture-handler';
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
@@ -86,27 +87,39 @@ const ActivitiesPage = () => {
     }
   };
 
+  const fetchActivities = async () => {
+    if (isOnlyFavourites) {
+      await getAllFavouriteActivities();
+    } else {
+      await getAllActivities();
+    }
+  }
+
   useEffect(() => {
     updateUserPreferences();
   }, [userPreferences?.favouriteIds])
 
   useEffect(() => {
-    if (isOnlyFavourites) {
-      getAllFavouriteActivities();
-    } else {
-      getAllActivities();
-    }
+    fetchActivities();
   }, [isOnlyFavourites]);
 
-  const splitActivitiesIntoRows = (activities) => {
-    const rows = [];
-    for (let i = 0; i < activities.length; i += 2) {
-      rows.push({ activities: activities.slice(i, i + 2), id: i });
-    }
-    return rows;
-  };
+  const renderItem = ({ item }) => (
+    <ActivityCard
+      key={item?.id}
+      activityId={item?.id}
+      title={item?.name}
+      hStackBgColor="base.500"
+      description={item?.description}
+      imageSource={item?.icon}
+      onPress={() => navigation.navigate(navigationconstants.PAGES.activity, {
+        id: item?.id,
+        activityName: item?.name,
+        image: item?.icon,
+        description: item?.description,
+      })}
+    />
+  );
 
-  const activityRows = splitActivitiesIntoRows(activities);
 
   return (
     <View style={{ flex: 1 }}>
@@ -117,40 +130,34 @@ const ActivitiesPage = () => {
         visible={errorModalVisible}
       />
 
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Box flex={1} padding={4}>
-          <VStack space={1} flex={1}>
+      <Box flex={1} padding={4}>
+        <VStack space={1} flex={1}>
 
-            <HStack space={5} justifyContent="space-between" alignItems="center" mt={5}>
-              <Text bold fontSize="2xl" flex={1}>NRG Remix</Text>
-              <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "red" : "gray"} />
+          <HStack space={5} justifyContent="space-between" alignItems="center" mt={5}>
+            <Text bold fontSize="2xl" flex={1}>NRG Remix</Text>
+            <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "red" : "gray"} />
 
-              <LogOffButton />
-            </HStack>
+            <LogOffButton />
+          </HStack>
 
-            <VStack space={4} alignItems="center" flex={1}>
-              <Text fontSize="4xl" >Activities</Text>
-              {isLoading ? <Spinner size={'lg'} /> :
-                activityRows.map((row) => (
-                  <HStack key={row?.id} space={1}>
-                    {row?.activities?.map(activity => (
-                      <ActivityCard
-                        key={activity?.id}
-                        activityId={activity?.id}
-                        title={activity?.name}
-                        hStackBgColor="base.500"
-                        description={activity?.description}
-                        imageSource={activity?.icon}
-                        onPress={() => navigation.navigate(navigationconstants.PAGES.activity, { id: activity?.id, activityName: activity?.name, image: activity?.icon, description: activity?.description })}
-                      />
-                    ))}
-                  </HStack>
-                ))
-              }
-            </VStack>
+          <VStack space={4} alignItems="center" flex={1}>
+            <Text fontSize="4xl" >Activities</Text>
+            {isLoading ? (
+              <Spinner size="lg" />
+            ) : (
+              <FlatList
+                data={activities}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={renderItem}
+                numColumns={2}
+                columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 10 }}
+                contentContainerStyle={{ paddingBottom: 50 }}
+                onScrollEndDrag={fetchActivities}
+              />
+            )}
           </VStack>
-        </Box>
-      </ScrollView>
+        </VStack>
+      </Box>
       <Footer />
     </View>
   );
