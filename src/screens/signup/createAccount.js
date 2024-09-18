@@ -9,13 +9,13 @@ import ErrorModal from "../../components/modals/errorModal";
 import validationUtils from "../../utils/validationUtils";
 import log from "../../config/logger";
 import useKeyboard from "../../hooks/useKeyboard";
+import NrgHeader from "../../components/header/nrgHeader";
 
 const { width, height } = Dimensions.get('window');
 
 const CreateAccount = () => {
     const navigation = useNavigation();
     const isKeyboardVisible = useKeyboard();
-    ``
     const [email, setEmail] = React.useState(null);
     const [phoneNumber, setPhoneNumber] = React.useState(null);
     const [isInputsValid, setIsInputsValid] = React.useState(false);
@@ -77,9 +77,9 @@ const CreateAccount = () => {
 
             <Box position="relative" height={height}>
                 <Image
-                    source={require('../../resources/loginPage.jpeg')}
+                    source={require('../../resources/login/login.jpeg')}
                     size="100%"
-                    height="550"
+                    height={height / 1.8}
                     position="absolute"
                     zIndex={-1}
                     alt="Create Account Image"
@@ -103,7 +103,7 @@ const CreateAccount = () => {
                     </HStack>
                     <Center>
                         <VStack space={2} alignItems="center">
-                            <Text bold fontSize="2xl" >NRG Remix</Text>
+                            <NrgHeader marginTop="0" />
                             <VStack space={0} alignItems="center">
                                 <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
                                 <Text fontSize="sm" textAlign="center" lineHeight="xs" mb={4}>

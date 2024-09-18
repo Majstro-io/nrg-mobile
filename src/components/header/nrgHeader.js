@@ -1,8 +1,18 @@
-import { Text } from "native-base";
+import { Center, Image, Text } from "native-base";
+import { Dimensions } from "react-native";
+const { width, height } = Dimensions.get('window');
 
-const NrgHeader = () => {
+const NrgHeader = ({ marginTop = '5%' }) => {
     return (
-        <Text bold fontSize="2xl" color="black.800" mb={3}>NRG Remix</Text>
+        <Center marginTop={marginTop}>
+            <Image
+                source={require("../../resources/logo/nrglogo.png")}
+                alt="NRG Remix Logo"
+                width={width / 2}
+                height={height / 30}
+                mb={3}
+            />
+        </Center>
     )
 }
 

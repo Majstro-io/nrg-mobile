@@ -1,18 +1,19 @@
 import { Box, FavouriteIcon, HStack, IconButton, Image, Pressable, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUserFavouriteActivity } from '../../store/slices/userPreferencesSlice';
 import { Dimensions } from 'react-native';
 
-const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBgColor }) => {
+import { addUserFavouriteActivity } from '../../store/slices/userPreferencesSlice';
+
+const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBgColor, cardWidth = 0.45, cardHeight = 0.20 }) => {
   const dispatch = useDispatch()
   const userPreferences = useSelector((state) => state.userPreferences);
 
   const [isFavourite, setIsFavourite] = useState(false);
 
   const { width, height } = Dimensions.get('window');
-  const boxWidth = width * 0.48;
-  const boxHeight = height * 0.20;
+  const boxWidth = width * cardWidth;
+  const boxHeight = height * cardHeight;
 
   useEffect(() => {
     setIsFavourite(userPreferences?.favouriteIds?.some(favourite => favourite === activityId));
@@ -23,7 +24,6 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
       mb={1}
       rounded="2xl"
       overflow="hidden"
-      maxW="96"
       p="1"
       width={`${boxWidth}px`}
       height={`${boxHeight}px`}
@@ -44,7 +44,7 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
             source={{ uri: imageSource }}
             alt="Activity Image"
             style={{ width: '100%', height: '100%' }}
-            resizeMode="cover"
+            resizeMode="contain"
           />
           <Box
             position="absolute"

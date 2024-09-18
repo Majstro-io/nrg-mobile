@@ -47,13 +47,13 @@ const UpdatePersonalDetails = () => {
             />
             <View style={{ flex: 1 }}>
 
-                <ScrollView scrollEnabled={true} contentContainerStyle={{ flexGrow: 1 }}>
-                    <HStack justifyContent="flex-end" alignItems="center" mt={5} mx={2} flex={1}>
-
-                    </HStack>
+                <ScrollView
+                    scrollEnabled={true}
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    keyboardShouldPersistTaps='handled'
+                >
                     <Center>
                         <VStack space={2} alignItems="center"  >
-
                             <NrgHeader />
                             <Text fontSize="3xl" color="black.800">Update Profile</Text>
                             <Text fontSize="sm" color="black.800" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>

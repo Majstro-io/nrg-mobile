@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton } from 'native-base';
+import { View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton, Image } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
 import ActivityCard from '../../components/activityCard/activityCard';
@@ -12,7 +12,7 @@ import Footer from '../../components/footer/footer';
 import LogOffButton from '../../components/modals/logoutConfirmation';
 import userPreferencesService from '../../services/userPreferencesService';
 import { setPreferences } from '../../store/slices/userPreferencesSlice';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native';
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
@@ -29,6 +29,9 @@ const ActivitiesPage = () => {
   const [errorModalTitle, setErrorModalTitle] = React.useState("Fetching Activities Failed");
 
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const activityCardWidth = 0.45;
+  const activityCardHeight = 0.20;
 
   const onFavouriteFilterPress = () => {
     setIsOnlyFavourites(!isOnlyFavourites);
@@ -106,6 +109,8 @@ const ActivitiesPage = () => {
   const renderItem = ({ item }) => (
     <ActivityCard
       key={item?.id}
+      cardWidth={activityCardWidth}
+      cardHeight={activityCardHeight}
       activityId={item?.id}
       title={item?.name}
       hStackBgColor="base.500"
@@ -133,11 +138,20 @@ const ActivitiesPage = () => {
       <Box flex={1} padding={4}>
         <VStack space={1} flex={1}>
 
-          <HStack space={5} justifyContent="space-between" alignItems="center" mt={5}>
-            <Text bold fontSize="2xl" flex={1}>NRG Remix</Text>
-            <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "red" : "gray"} />
+          {/* Activities page top header */}
+          <HStack space={5} justifyContent="space-between" alignItems="center" mt={3}>
+            <Image
+              source={require("../../resources/logo/nrglogo.png")}
+              alt="NRG Remix Logo"
+              mb={3}
+              height={'100%'}
+              width={'40%'}
+            />
+            <HStack space={5} justifyContent="space-between" alignItems="center">
+              <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "red" : "gray"} />
+              <LogOffButton />
+            </HStack>
 
-            <LogOffButton />
           </HStack>
 
           <VStack space={4} alignItems="center" flex={1}>
@@ -152,7 +166,8 @@ const ActivitiesPage = () => {
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 10 }}
                 contentContainerStyle={{ paddingBottom: 50 }}
-                onScrollEndDrag={fetchActivities}
+                onRefresh={fetchActivities}
+                refreshing={isLoading}
               />
             )}
           </VStack>

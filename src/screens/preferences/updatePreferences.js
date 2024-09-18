@@ -91,10 +91,10 @@ const UpdatePreferences = ({ route }) => {
         setVisible={setErrorModalVisible}
         visible={errorModalVisible}
       />
-      <ScrollView scrollEnabled={false}>
-        <HStack justifyContent="flex-end" alignItems="center" mt={5} mx={2} flex={1}>
-
-        </HStack>
+      <ScrollView
+        scrollEnabled={false}
+        keyboardShouldPersistTaps='handled'
+      >
         <Center>
           <VStack space={2} alignItems="center">
 

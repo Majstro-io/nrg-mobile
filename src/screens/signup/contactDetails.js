@@ -87,7 +87,11 @@ const ContactDetails = ({ route }) => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps='handled'
+
+            >
                 <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.personalDetails} title={"Contact Details"} />
 
                 <View style={signupStyles.registerInputContainer}>

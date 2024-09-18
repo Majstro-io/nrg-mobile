@@ -17,6 +17,7 @@ import authService from "../../services/authService";
 import OTPInputModal from "../../components/modals/OtpInputModal";
 import authUtils from "../../utils/authUtils";
 import useKeyboard from "../../hooks/useKeyboard";
+import NrgHeader from "../../components/header/nrgHeader";
 
 const { width, height } = Dimensions.get('window');
 
@@ -150,6 +151,7 @@ const LoginPage = () => {
                 visible={errorModalVisible}
             />
             <ScrollView
+                keyboardShouldPersistTaps='handled'
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
             >
@@ -171,7 +173,7 @@ const LoginPage = () => {
                     >
                         <Center mt={5}>
                             <VStack space={3} alignItems="center">
-                                <Text bold fontSize="2xl" >NRG Remix</Text>
+                                <NrgHeader marginTop="0" />
                                 <VStack space={0} alignItems="center">
                                     <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
                                 </VStack>
