@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, HStack } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, HStack, FormControl } from "native-base";
 
 import userService from "../../services/userService";
 import log from "../../config/logger";
@@ -8,7 +8,7 @@ import ErrorModal from "../../components/modals/errorModal";
 import { setUserData, updateUserDataField } from "../../store/slices/userSlice";
 import DateInput from "../../components/inputs/dateInput";
 import NrgHeader from "../../components/header/nrgHeader";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import navigationconstants from "../../constants/navigationConstants";
 import Footer from "../../components/footer/footer";
 
@@ -36,6 +36,25 @@ const UpdatePersonalDetails = () => {
         }
     }
 
+    const fetchUserData = async () => {
+        try {
+            const userDetails = await userService.getUserData(userData.id);
+            dispatch(setUserData(userDetails.data))
+        } catch (error) {
+            log.error("failed to fetch user details", error)
+            setErrorModalMessage("Failed to fetch user preferences")
+            setErrorModalVisible(true)
+        }
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                fetchUserData();
+            };
+        }, [])
+    );
+
 
     return (
         <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -58,54 +77,74 @@ const UpdatePersonalDetails = () => {
                             <Text fontSize="3xl" color="black.800">Update Profile</Text>
                             <Text fontSize="sm" color="black.800" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
 
-                            <VStack space={5} alignItems="center">
-                                <Input
-                                    mt={8}
-                                    width="72"
-                                    placeholder="First Name"
-                                    value={userData.firstName}
-                                    onChangeText={data => dispatch(updateUserDataField({ key: 'firstName', value: data }))}
-                                />
-                                <Input
-                                    width="72"
-                                    placeholder="Last Name"
-                                    value={userData.lastName}
-                                    onChangeText={data => dispatch(updateUserDataField({ key: 'lastName', value: data }))}
-                                />
-                                <DateInput
-                                    label={"Date of Birth (YYYY-MM-DD)"}
-                                    onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
-                                    value={(userData?.dob)}
-                                />
-                                <Select
-                                    isReadOnly
-                                    selectedValue={userData.gender}
-                                    onValueChange={data => dispatch(updateUserDataField({ key: 'gender', value: data }))}
-                                    width="72"
-                                    placeholder="Gender"
-                                    _selectedItem={{
-                                        endIcon: <CheckIcon size="5" />
-                                    }}
-                                >
-                                    <Select.Item label="Male" value="MALE" />
-                                    <Select.Item label="Female" value="FEMALE" />
-                                    <Select.Item label="Other" value="OTHER" />
-                                </Select>
+                            <VStack space={1} alignItems="center">
+                                <FormControl>
+                                    <FormControl.Label>First Name</FormControl.Label>
+                                    <Input
+                                        width="72"
+                                        placeholder="First Name"
+                                        value={userData.firstName}
+                                        onChangeText={data => dispatch(updateUserDataField({ key: 'firstName', value: data }))}
+                                    />
+                                </FormControl>
 
-                                <Input
-                                    width="72"
-                                    placeholder="Weight (kg)"
-                                    keyboardType="numeric"
-                                    value={userData.weight}
-                                    onChangeText={data => dispatch(updateUserDataField({ key: 'weight', value: data }))}
-                                />
-                                <Input
-                                    width="72"
-                                    placeholder="Height (cm)"
-                                    keyboardType="numeric"
-                                    value={userData.height}
-                                    onChangeText={data => dispatch(updateUserDataField({ key: 'height', value: data }))}
-                                />
+                                <FormControl>
+                                    <FormControl.Label>Last Name</FormControl.Label>
+                                    <Input
+                                        width="72"
+                                        placeholder="Last Name"
+                                        value={userData.lastName}
+                                        onChangeText={data => dispatch(updateUserDataField({ key: 'lastName', value: data }))}
+                                    />
+                                </FormControl>
+
+                                <FormControl>
+                                    <FormControl.Label>Date of Birth (YYYY-MM-DD)</FormControl.Label>
+                                    <DateInput
+                                        onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
+                                        value={userData?.dob}
+                                    />
+                                </FormControl>
+
+                                <FormControl>
+                                    <FormControl.Label>Gender</FormControl.Label>
+                                    <Select
+                                        isReadOnly
+                                        selectedValue={userData.gender}
+                                        onValueChange={data => dispatch(updateUserDataField({ key: 'gender', value: data }))}
+                                        width="72"
+                                        placeholder="Select Gender"
+                                        _selectedItem={{
+                                            endIcon: <CheckIcon size="5" />
+                                        }}
+                                    >
+                                        <Select.Item label="Male" value="MALE" />
+                                        <Select.Item label="Female" value="FEMALE" />
+                                        <Select.Item label="Other" value="OTHER" />
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl>
+                                    <FormControl.Label>Weight (kg)</FormControl.Label>
+                                    <Input
+                                        width="72"
+                                        placeholder="Weight (kg)"
+                                        keyboardType="numeric"
+                                        value={userData.weight}
+                                        onChangeText={data => dispatch(updateUserDataField({ key: 'weight', value: data }))}
+                                    />
+                                </FormControl>
+
+                                <FormControl>
+                                    <FormControl.Label>Height (cm)</FormControl.Label>
+                                    <Input
+                                        width="72"
+                                        placeholder="Height (cm)"
+                                        keyboardType="numeric"
+                                        value={userData.height}
+                                        onChangeText={data => dispatch(updateUserDataField({ key: 'height', value: data }))}
+                                    />
+                                </FormControl>
 
                                 <Button
                                     mt={3}
@@ -113,7 +152,8 @@ const UpdatePersonalDetails = () => {
                                     _text={{ color: "base.500" }}
                                     bgColor="black.800"
                                     isLoading={isLoading}
-                                    onPress={updateUserData}>
+                                    onPress={updateUserData}
+                                >
                                     Save
                                 </Button>
                             </VStack>

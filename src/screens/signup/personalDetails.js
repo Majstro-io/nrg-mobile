@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { HttpStatusCode } from "axios";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, Progress, HStack } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, Progress, HStack, FormControl } from "native-base";
 
 import navigationconstants from "../../constants/navigationConstants";
 import validationUtils from "../../utils/validationUtils";
@@ -107,7 +107,10 @@ const PersonalDetails = ({ route }) => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
-            <ScrollView scrollEnabled={false}>
+            <ScrollView
+                scrollEnabled={true}
+                keyboardShouldPersistTaps='handled'
+            >
                 <HStack justifyContent="flex-end" alignItems="center" mt={5} mx={2} flex={1}>
 
                 </HStack>
@@ -118,53 +121,75 @@ const PersonalDetails = ({ route }) => {
                         <Text fontSize="3xl" color="black.800">Add profile info</Text>
                         <Text fontSize="sm" color="black.800" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
 
-                        <VStack space={5} alignItems="center">
-                            <Input
-                                mt={8}
-                                width="72"
-                                placeholder="First Name"
-                                value={userRegistrationData.firstName}
-                                onChangeText={data => setUserRegistrationData({ ...userRegistrationData, firstName: data })}
-                            />
-                            <Input
-                                width="72"
-                                placeholder="Last Name"
-                                value={userRegistrationData.lastName}
-                                onChangeText={data => setUserRegistrationData({ ...userRegistrationData, lastName: data })}
-                            />
-                            <DateInput
-                                label={"Date of Birth (YYYY-MM-DD)"}
-                                onChange={data => setUserRegistrationData({ ...userRegistrationData, dob: data })}
-                            />
-                            <Select
-                                isReadOnly
-                                selectedValue={userRegistrationData.gender}
-                                onValueChange={gender => setUserRegistrationData({ ...userRegistrationData, gender: gender })}
-                                width="72"
-                                placeholder="Gender"
-                                _selectedItem={{
-                                    endIcon: <CheckIcon size="5" />
-                                }}
-                            >
-                                <Select.Item label="Male" value="MALE" />
-                                <Select.Item label="Female" value="FEMALE" />
-                                <Select.Item label="Other" value="OTHER" />
-                            </Select>
+                        <VStack space={1} alignItems="center">
+                            <FormControl>
+                                <FormControl.Label>First Name</FormControl.Label>
+                                <Input
+                                    width="72"
+                                    placeholder="First Name"
+                                    value={userRegistrationData.firstName}
+                                    onChangeText={data => setUserRegistrationData({ ...userRegistrationData, firstName: data })}
+                                />
+                            </FormControl>
 
-                            <Input
-                                width="72"
-                                placeholder="Weight (kg)"
-                                keyboardType="numeric"
-                                value={userRegistrationData.weight}
-                                onChangeText={data => setUserRegistrationData({ ...userRegistrationData, weight: data })}
-                            />
-                            <Input
-                                width="72"
-                                placeholder="Height (cm)"
-                                keyboardType="numeric"
-                                value={userRegistrationData.height}
-                                onChangeText={data => setUserRegistrationData({ ...userRegistrationData, height: data })}
-                            />
+                            <FormControl>
+                                <FormControl.Label>Last Name</FormControl.Label>
+                                <Input
+                                    width="72"
+                                    placeholder="Last Name"
+                                    value={userRegistrationData.lastName}
+                                    onChangeText={data => setUserRegistrationData({ ...userRegistrationData, lastName: data })}
+                                />
+                            </FormControl>
+
+                            <FormControl>
+                                <FormControl.Label>Date of Birth (YYYY-MM-DD)</FormControl.Label>
+                                <DateInput
+                                    onChange={data => setUserRegistrationData({ ...userRegistrationData, dob: data })}
+                                    value={userRegistrationData.dob}
+                                    label={"Date of birth"}
+                                />
+                            </FormControl>
+
+                            <FormControl>
+                                <FormControl.Label>Gender</FormControl.Label>
+                                <Select
+                                    isReadOnly
+                                    selectedValue={userRegistrationData.gender}
+                                    onValueChange={gender => setUserRegistrationData({ ...userRegistrationData, gender: gender })}
+                                    width="72"
+                                    placeholder="Select Gender"
+                                    _selectedItem={{
+                                        endIcon: <CheckIcon size="5" />
+                                    }}
+                                >
+                                    <Select.Item label="Male" value="MALE" />
+                                    <Select.Item label="Female" value="FEMALE" />
+                                    <Select.Item label="Other" value="OTHER" />
+                                </Select>
+                            </FormControl>
+
+                            <FormControl>
+                                <FormControl.Label>Weight (kg)</FormControl.Label>
+                                <Input
+                                    width="72"
+                                    placeholder="Weight (kg)"
+                                    keyboardType="numeric"
+                                    value={userRegistrationData.weight}
+                                    onChangeText={data => setUserRegistrationData({ ...userRegistrationData, weight: data })}
+                                />
+                            </FormControl>
+
+                            <FormControl>
+                                <FormControl.Label>Height (cm)</FormControl.Label>
+                                <Input
+                                    width="72"
+                                    placeholder="Height (cm)"
+                                    keyboardType="numeric"
+                                    value={userRegistrationData.height}
+                                    onChangeText={data => setUserRegistrationData({ ...userRegistrationData, height: data })}
+                                />
+                            </FormControl>
 
                             <Button
                                 mt={3}

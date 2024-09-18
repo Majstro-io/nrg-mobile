@@ -27,7 +27,7 @@ const PreferredActivities = ({ route }) => {
     const [errorModalText, setErrorModalText] = React.useState("We have encountered an error in fetching user preferences")
     const [errorModalTitle, setErrorModalTitle] = React.useState("Fetching Activities Failed")
 
-    const fetchUserPreferences = () => {
+    const fetchUserPreferences = async () => {
         setIsLoading(true)
         userPreferencesService.getUserPreferenceData(userData?.id).then(res => {
             dispatch(setPreferences(res.data))
@@ -65,6 +65,7 @@ const PreferredActivities = ({ route }) => {
             setIsLoading(true);
             const userPreferenceRequest = await userPreferencesService.updateUserPreference(userPreferences?.id, preferenceData)
             await Promise.all([userPreferenceRequest])
+            await fetchUserPreferences();
         } catch (error) {
             log.error("Error in updating user preferences from preferences page", error)
         } finally {

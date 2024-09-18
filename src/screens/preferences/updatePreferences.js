@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, FormControl, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import navigationconstants from "../../constants/navigationConstants";
@@ -61,7 +61,6 @@ const UpdatePreferences = ({ route }) => {
     await updateUserPreferences();
   }
   const fetchPreferences = async () => {
-
     setLoading(true)
     try {
       const userPreferenceResponse = await userPreferencesService.getUserPreferenceData(userData?.id)
@@ -103,27 +102,31 @@ const UpdatePreferences = ({ route }) => {
             <Text fontSize="sm" color="black.800" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
               <Box mt={5}>
-                <Text fontSize="xs" color="black.800" mb={1}>Voice Preference</Text>
-                <Select
-                  defaultValue={userPreferences.assistant}
-                  selectedValue={userPreferences.assistant}
-                  onValueChange={(value) => dispatch(setAssistantVoice(value))}
-                  isReadOnly
-                  placeholder="Select Voice Preference"
-                  _selectedItem={{
-                    endIcon: <CheckIcon size="5" />,
-                  }}
-                  _placeholder={{
-                    color: "gray.400",
-                  }}
-
-                >{assistantOptions.content.assistants.map(assistant => {
-                  return <Select.Item
-                    label={assistant?.name}
-                    value={assistant?.id}
-                    key={assistant?.id} />
-                })}
-                </Select>
+                <FormControl>
+                  <FormControl.Label>Voice Preference</FormControl.Label>
+                  <Select
+                    defaultValue={userPreferences.assistant}
+                    selectedValue={userPreferences.assistant}
+                    onValueChange={(value) => dispatch(setAssistantVoice(value))}
+                    isReadOnly
+                    placeholder="Select Voice Preference"
+                    _selectedItem={{
+                      endIcon: <CheckIcon size="5" />,
+                    }}
+                    _placeholder={{
+                      color: "gray.400",
+                    }}
+                    width="72"
+                  >
+                    {assistantOptions.content.assistants.map(assistant => (
+                      <Select.Item
+                        label={assistant?.name}
+                        value={assistant?.id}
+                        key={assistant?.id}
+                      />
+                    ))}
+                  </Select>
+                </FormControl>
               </Box>
 
               {/* <Box>

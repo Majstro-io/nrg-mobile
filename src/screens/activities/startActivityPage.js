@@ -1,6 +1,6 @@
 import { AppState } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Alert, Box, Center, Heading, HStack, IconButton, Image, PresenceTransition, ScrollView, Text, View, VStack } from "native-base";
+import { Box, Center, Heading, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import BackgroundService from 'react-native-background-actions';
@@ -20,7 +20,6 @@ import muted from "../../resources/playerIcons/muted.png";
 import unmuted from "../../resources/playerIcons/unmuted.png";
 import pause from "../../resources/playerIcons/pause.png";
 import ErrorModal from "../../components/modals/errorModal";
-import RoundButton from "../../components/inputs/roundButton";
 import RoundIconButton from "../../components/inputs/roundIconButton";
 
 const StartActivityPage = ({ route }) => {
@@ -34,10 +33,11 @@ const StartActivityPage = ({ route }) => {
     const [sound, setSound] = useState(null);
     const [scheduleList, setScheduleList] = useState(null)
     const [appState, setAppState] = useState(AppState.currentState);
-    const [showPauseAlert, setShowPauseAlert] = useState(false);
     const [muteIcon, setMuteIcon] = useState(unmuted);
 
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+    const [errorModalTitle, setErrorModalTitle] = useState("No Quotes for this Activity")
+    const [errorModalText, setErrorModalText] = useState("This Activity do not have any quotes configured")
 
     const playerStateRef = useRef(playerState);
     const currentTrack = useRef(0);
@@ -50,12 +50,6 @@ const StartActivityPage = ({ route }) => {
 
     const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
-    const ShowPauseAlert = async () => {
-        setShowPauseAlert(true);
-        setTimeout(() => {
-            setShowPauseAlert(false);
-        }, 5000);
-    };
 
     const handleMute = () => {
         isMuted.current = !isMuted.current;
@@ -69,7 +63,9 @@ const StartActivityPage = ({ route }) => {
     const handleStart = () => {
         setNotificationTrigger();
         setPlayerState(playerConstants.PLAYER_STATES.playing)
+        audioManagerService.clearAllSounds();
         currentTrack.current = 0;
+        failedAttempts.current = 0;
         secondsToPlayNextQuote.current = 0;
     }
 
@@ -79,7 +75,8 @@ const StartActivityPage = ({ route }) => {
         setSound(null);
         currentTrack.current = 0;
         secondsToPlayNextQuote.current = 0;
-        setTimer(0);
+        setIsPlaying(false)
+        audioManagerService.clearAllSounds();
     }
 
     const handlePauseResume = async () => {
@@ -88,29 +85,35 @@ const StartActivityPage = ({ route }) => {
 
     };
 
-    const handleNavigate = async () => {
-        navigation.navigate(navigationconstants.PAGES.pause, { id, activityName, image, description, timer })
+    const handleNavigateToPauseScreen = async () => {
         handlePauseResume();
-        setShowPauseAlert(false);
+        navigation.navigate(navigationconstants.PAGES.pause, { id, activityName, image, description, timer })
     }
 
     const playAudio = async (soundPath) => {
         try {
             if (!isPlaying) {
                 setIsPlaying(true)
-                await audioManagerService.playSound(soundPath, setSound)
+                const isSuccessfullyPlayed = await audioManagerService.playSound(soundPath, setSound)
                 setIsPlaying(false)
+
+                if (!isSuccessfullyPlayed) {
+                    failedAttempts.current = failedAttempts.current + 1;
+                }
             }
         } catch (error) {
             failedAttempts.current = failedAttempts.current + 1;
-
+            log.error('Error requesting audio focus:', error);
+        } finally {
             if (failedAttempts.current > 3) {
-                await handleStop();
+                audioManagerService.clearAllSounds();
+                await handleNavigateToPauseScreen();
                 failedAttempts.current = 0;
                 log.error('Stopped due to failed to play audio');
+                setErrorModalText("Failed to play quotes for this activity")
+                setErrorModalTitle("Failed to play quotes")
+                setIsErrorModalVisible(true);
             }
-
-            log.error('Error requesting audio focus:', error);
         }
     };
 
@@ -167,7 +170,6 @@ const StartActivityPage = ({ route }) => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', async (e) => {
-            setShowPauseAlert(false);
             await handleStop();
         });
         return () => {
@@ -181,6 +183,8 @@ const StartActivityPage = ({ route }) => {
                 currentQuotes.current = (scheduleList[currentSchedule.current]?.quoates)
                 handleStart();
             } else {
+                setErrorModalText("This Activity do not have any quotes configured")
+                setErrorModalTitle("No Quotes for this Activity")
                 setIsErrorModalVisible(true)
             }
         }
@@ -296,8 +300,8 @@ const StartActivityPage = ({ route }) => {
 
         <View style={{ flex: 1 }} bg="base.400" >
             <ErrorModal
-                errorDescription={"This Activity do not have any quotes configured"}
-                errorTitle={"No Quotes for this Activity"}
+                errorDescription={errorModalText}
+                errorTitle={errorModalTitle}
                 setVisible={setIsErrorModalVisible}
                 visible={isErrorModalVisible}
             />
@@ -335,7 +339,7 @@ const StartActivityPage = ({ route }) => {
                         </Box>
 
 
-                        <VStack space={5} alignItems="center" mt="20">
+                        <VStack alignItems="center" mt="20">
                             <HStack justifyContent="space-between" alignItems="center">
                                 <Box flex={1} />
                                 <RoundIconButton
@@ -350,41 +354,19 @@ const StartActivityPage = ({ route }) => {
                                     onPress={handleMute}
                                 />
                                 <Box flex={1} />
-                                <VStack space={3}>
-                                    {/* <PresenceTransition
-                                        visible={showPauseAlert}
-                                        initial={{
-                                            opacity: 0,
-                                            scale: 0
-                                        }}
-                                        animate={{
-                                            opacity: 1,
-                                            scale: 1,
-                                            transition: {
-                                                duration: 250
-                                            }
-                                        }}
-                                    >
-                                        <Center w="100%" mt="1">
-                                            <Alert bgColor="black.50" justifyContent="center" w="100%" borderRadius={25} p={4}>
-                                                <Text fontSize="sm" textAlign="center">Hold to pause</Text>
-                                            </Alert>
-                                        </Center>
-                                    </PresenceTransition> */}
-                                    <RoundIconButton
-                                        icon={{
-                                            as: Image,
-                                            source: pause,
-                                            alt: "Pause",
-                                            size: "70%",
-                                        }}
-                                        color={"black.800"}
-                                        size={0.35}
-                                        onPress={handleNavigate}
-                                        _pressed={{ bgColor: "black.100" }}
-                                    />
+                                <RoundIconButton
+                                    icon={{
+                                        as: Image,
+                                        source: pause,
+                                        alt: "Pause",
+                                        size: "70%",
+                                    }}
+                                    color={"black.800"}
+                                    size={0.35}
+                                    onPress={handleNavigateToPauseScreen}
+                                    _pressed={{ bgColor: "black.100" }}
+                                />
 
-                                </VStack>
                                 <Box flex={4} />
                             </HStack>
                         </VStack>
