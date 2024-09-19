@@ -40,7 +40,7 @@ const PauseActivityPage = ({ route }) => {
                     />
                     <Box
                         top={300}
-                        bg="base.50"
+                        bg="background.200"
                         borderRadius={45}
                         width={width}
                         height={height / 1.5}
@@ -107,8 +107,8 @@ const PauseActivityPage = ({ route }) => {
                                             alt: "resume",
                                             size: "100%",
                                         }}
-                                        _pressed={{ bgColor: "base.500" }}
-                                        color={"base.500"}
+                                        _pressed={{ bgColor: "base.1000" }}
+                                        color={"base.1000"}
                                         size={0.25}
                                         _text={{ fontSize: '4xl' }}
                                         onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}

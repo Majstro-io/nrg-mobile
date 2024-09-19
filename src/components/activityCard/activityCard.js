@@ -44,7 +44,7 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
             source={{ uri: imageSource }}
             alt="Activity Image"
             style={{ width: '100%', height: '100%' }}
-            resizeMode="contain"
+            resizeMode="cover"
           />
           <Box
             position="absolute"
@@ -54,7 +54,7 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
             padding={2}
           >
             <HStack justifyContent="space-between" alignItems="center">
-              <Text fontSize="md" mb={2} flex={0.9} isTruncated>
+              <Text color={'text.600'} fontSize="md" mb={2} flex={0.9} isTruncated>
                 {title}
               </Text>
               <IconButton

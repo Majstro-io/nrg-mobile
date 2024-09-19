@@ -117,9 +117,9 @@ const PersonalDetails = ({ route }) => {
                 <Center>
                     <VStack space={2} alignItems="center"  >
 
-                        <Text bold fontSize="2xl" color="black.800" mb={3}>NRG Remix</Text>
-                        <Text fontSize="3xl" color="black.800">Add profile info</Text>
-                        <Text fontSize="sm" color="black.800" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
+                        <Text bold fontSize="2xl"  mb={3}>NRG Remix</Text>
+                        <Text fontSize="3xl" >Add profile info</Text>
+                        <Text fontSize="sm"textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
 
                         <VStack space={1} alignItems="center">
                             <FormControl>

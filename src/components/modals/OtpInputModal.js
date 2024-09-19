@@ -57,7 +57,7 @@ const OTPInputModal = ({
         <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
             <Box
                 top={keyboardHeight ? '20%' : '40%'}
-                bg="#FFFFFF"
+                bg="background.200"
                 borderRadius={45}
                 width={width}
                 height={height}
@@ -75,14 +75,16 @@ const OTPInputModal = ({
                                 handleTextChange={handleCellTextChange}
                                 containerStyle={{ marginBottom: 20 }}
                                 inputCount={6}
+                                textInputStyle={{
+                                    color: 'inputFont.300',      
+                                    borderBottomColor: 'base.1000',  
+                                  }}
                             />
                         </HStack>
                         <Button
-                            bg="base.500"
-                            _pressed={{ bg: "base.400" }}
-                            _loading={{ bg: "base.700" }}
+                            bg="black.800"
                             isLoading={isLoading}
-                            _text={{ color: "black.800" }}
+                            _text={{ color: "buttonFont.400" }}
                             disabled={otp == ''}
                             onPress={onConfirmPress}>
                             {confirmButtonText}

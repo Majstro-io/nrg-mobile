@@ -1,4 +1,4 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import ActivitiesPage from '../screens/activities/activitiesPage';
@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 const ApplicationContent = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={navigationconstants.PAGES.login}>
+      <Stack.Navigator initialRouteName={navigationconstants.PAGES.login} screenOptions={{...TransitionPresets.ModalFadeTransition}}>
         <Stack.Screen options={{ headerShown: false, headerTitle: "Activities" }} name={navigationconstants.PAGES.activities} component={ActivitiesPage} />
         <Stack.Screen options={{ headerShown: false, headerTitle: "Update Preferences" }} name={navigationconstants.PAGES.preferences} component={UpdatePreferences} />
         <Stack.Screen options={{ headerShown: false, headerTitle: "Login" }} name={navigationconstants.PAGES.login} component={LoginPage} />

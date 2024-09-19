@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, FormControl, } from "native-base";
@@ -11,7 +11,7 @@ import log from "../../config/logger";
 import ErrorModal from "../../components/modals/errorModal";
 import assistantOptions from "../../data/assistantOptions.json"
 import NrgHeader from "../../components/header/nrgHeader";
-import Footer from "../../components/footer/footer";
+import BottomNavigator from "../../components/footer/bottomNavigation";
 
 const UpdatePreferences = ({ route }) => {
   const { isRegistration } = route.params || false;
@@ -98,8 +98,8 @@ const UpdatePreferences = ({ route }) => {
           <VStack space={2} alignItems="center">
 
             <NrgHeader />
-            <Text fontSize="3xl" color="black.800">Preferences</Text>
-            <Text fontSize="sm" color="black.800" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
+            <Text fontSize="3xl" >Preferences</Text>
+            <Text fontSize="sm" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
               <Box mt={5}>
                 <FormControl>
@@ -183,7 +183,8 @@ const UpdatePreferences = ({ route }) => {
           </VStack>
         </Center>
       </ScrollView>
-      <Footer />
+      <BottomNavigator />
+
     </View>
   );
 };

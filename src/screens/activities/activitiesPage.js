@@ -13,6 +13,7 @@ import LogOffButton from '../../components/modals/logoutConfirmation';
 import userPreferencesService from '../../services/userPreferencesService';
 import { setPreferences } from '../../store/slices/userPreferencesSlice';
 import { FlatList } from 'react-native';
+import BottomNavigator from '../../components/footer/bottomNavigation';
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
@@ -113,7 +114,7 @@ const ActivitiesPage = () => {
       cardHeight={activityCardHeight}
       activityId={item?.id}
       title={item?.name}
-      hStackBgColor="base.500"
+      hStackBgColor="base.1000"
       description={item?.description}
       imageSource={item?.icon}
       onPress={() => navigation.navigate(navigationconstants.PAGES.activity, {
@@ -164,16 +165,18 @@ const ActivitiesPage = () => {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
                 numColumns={2}
-                columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 10 }}
+                columnWrapperStyle={{ justifyContent: 'space-between' }}
                 contentContainerStyle={{ paddingBottom: 50 }}
                 onRefresh={fetchActivities}
                 refreshing={isLoading}
+                showsVerticalScrollIndicator={false}
               />
             )}
           </VStack>
         </VStack>
+
       </Box>
-      <Footer />
+      <BottomNavigator />
     </View>
   );
 };

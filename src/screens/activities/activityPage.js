@@ -6,6 +6,7 @@ import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
 import Footer from "../../components/footer/footer";
 import RoundButton from '../../components/inputs/roundButton';
+import BottomNavigator from '../../components/footer/bottomNavigation';
 
 const ActivityPage = ({ route }) => {
     const navigation = useNavigation();
@@ -32,7 +33,7 @@ const ActivityPage = ({ route }) => {
                     />
                     <Box
                         top={250}
-                        bg="base.50"
+                        bg="background.200"
                         borderTopRadius={45}
                         width={width}
                         height={height}
@@ -44,7 +45,7 @@ const ActivityPage = ({ route }) => {
                                     <Text mb={2} fontSize="sm" textAlign="center" lineHeight="xs">{description}</Text>
                                     <HStack justifyContent="center" alignItems="center" >
                                         <RoundButton
-                                            color={"base.500"}
+                                            color={"base.1000"}
                                             size={0.3}
                                             onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
                                             text={"Start"}
@@ -56,9 +57,7 @@ const ActivityPage = ({ route }) => {
                     </Box>
                 </Box>
             </ScrollView>
-            <View bg="base.50">
-                <Footer />
-            </View>
+            <BottomNavigator />
         </View>
     );
 };

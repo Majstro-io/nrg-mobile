@@ -25,8 +25,8 @@ const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                         <Button
                             width="100%"
                             bgColor="transparent"
+                            borderWidth={0}
                             variant="outline"
-                            borderRadius={0}
                             _text={{ color: 'red.500', fontSize: 'md' }}
                             onPress={onConfirmAction}>
                             Ok

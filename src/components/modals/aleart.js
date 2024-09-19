@@ -23,6 +23,7 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                             bgColor="transparent"
                             variant="outline"
                             borderRadius={0}
+                            borderWidth={0}
                             _text={{ color: 'red.500', fontSize: 'md' }}
                             onPress={handleConfirm}>
                             Yes
@@ -32,6 +33,7 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                             bgColor="transparent"
                             variant="outline"
                             borderRadius={0}
+                            borderWidth={0}
                             _text={{ color: 'blue.500', fontSize: 'md' }}
                             onPress={() => setVisible(false)}>
                             No

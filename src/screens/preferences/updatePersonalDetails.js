@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, HStack, FormControl } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, FormControl } from "native-base";
 
 import userService from "../../services/userService";
 import log from "../../config/logger";
@@ -10,7 +10,7 @@ import DateInput from "../../components/inputs/dateInput";
 import NrgHeader from "../../components/header/nrgHeader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import navigationconstants from "../../constants/navigationConstants";
-import Footer from "../../components/footer/footer";
+import BottomNavigator from "../../components/footer/bottomNavigation";
 
 const UpdatePersonalDetails = () => {
     const dispatch = useDispatch();
@@ -74,8 +74,8 @@ const UpdatePersonalDetails = () => {
                     <Center>
                         <VStack space={2} alignItems="center"  >
                             <NrgHeader />
-                            <Text fontSize="3xl" color="black.800">Update Profile</Text>
-                            <Text fontSize="sm" color="black.800" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
+                            <Text fontSize="3xl" >Update Profile</Text>
+                            <Text fontSize="sm" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
 
                             <VStack space={1} alignItems="center">
                                 <FormControl>
@@ -124,7 +124,7 @@ const UpdatePersonalDetails = () => {
                                     </Select>
                                 </FormControl>
 
-                                <FormControl>
+                                {/* <FormControl>
                                     <FormControl.Label>Weight (kg)</FormControl.Label>
                                     <Input
                                         width="72"
@@ -144,7 +144,7 @@ const UpdatePersonalDetails = () => {
                                         value={userData.height}
                                         onChangeText={data => dispatch(updateUserDataField({ key: 'height', value: data }))}
                                     />
-                                </FormControl>
+                                </FormControl> */}
 
                                 <Button
                                     mt={3}
@@ -162,9 +162,8 @@ const UpdatePersonalDetails = () => {
                     </Center>
                 </ScrollView>
             </View>
-            <View style={{ flex: 0.15 }}>
-                <Footer />
-            </View>
+            <BottomNavigator />
+
         </View>
     );
 };

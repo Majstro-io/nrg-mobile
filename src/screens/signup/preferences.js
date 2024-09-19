@@ -86,8 +86,8 @@ const Preferences = ({ route }) => {
           <VStack space={2} alignItems="center">
 
             <NrgHeader />
-            <Text fontSize="3xl" color="black.800">Preferences</Text>
-            <Text fontSize="sm" color="black.800" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
+            <Text fontSize="3xl">Preferences</Text>
+            <Text fontSize="sm" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
               <Box w="72" mt={5}>
                 <FormControl>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dimensions } from 'react-native';
 import { HttpStatusCode } from "axios";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { Image, Box, Button, Center, HStack, Input, ScrollView, Text, VStack, View, Link } from 'native-base';
+import { Image, Box, Button, Center, HStack, Input, ScrollView, Text, VStack, View, Link, Heading } from 'native-base';
 
 import navigationconstants from "../../constants/navigationConstants";
 import userService from "../../services/userService";
@@ -18,6 +18,7 @@ import OTPInputModal from "../../components/modals/OtpInputModal";
 import authUtils from "../../utils/authUtils";
 import useKeyboard from "../../hooks/useKeyboard";
 import NrgHeader from "../../components/header/nrgHeader";
+import BottomNavigator from "../../components/footer/bottomNavigation";
 
 const { width, height } = Dimensions.get('window');
 
@@ -166,7 +167,7 @@ const LoginPage = () => {
                     />
                     <Box
                         top={isKeyboardVisible ? '40%' : '50%'}
-                        bg="white.100"
+                        bg="background.200"
                         borderRadius={45}
                         width={width}
                         height={height / 1.5}
@@ -175,7 +176,9 @@ const LoginPage = () => {
                             <VStack space={3} alignItems="center">
                                 <NrgHeader marginTop="0" />
                                 <VStack space={0} alignItems="center">
-                                    <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Discover a Healthier {'\n'} Stronger you</Text>
+                                    <Heading fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>
+                                        Discover a Healthier {'\n'} Stronger you
+                                    </Heading>
                                 </VStack>
                                 <Input
                                     mx="10"
@@ -223,6 +226,7 @@ const LoginPage = () => {
                         isLoading={isOtpModalLoading}
                     />
                 </Box>
+
             </ScrollView>
         </View >
     );

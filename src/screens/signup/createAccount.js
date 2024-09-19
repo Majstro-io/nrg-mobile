@@ -86,7 +86,7 @@ const CreateAccount = () => {
                 />
                 <Box
                     top={isKeyboardVisible ? '15%' : '50%'}
-                    bg="white.100"
+                    bg="background.200"
                     borderRadius={45}
                     width={width}
                     height={height / 1.5}
@@ -132,10 +132,8 @@ const CreateAccount = () => {
                                     onSubmitEditing={verifyUser}
                                 />
                                 <Button
-                                    bg="base.500"
-                                    _pressed={{ bg: "base.400" }}
-                                    _loading={{ bg: "base.700" }}
-                                    _text={{ color: "black.800" }}
+                                    bg="black.800"
+                                    _text={{ color: "buttonFont.400" }}
                                     onPress={verifyUser}
                                 >
                                     Register

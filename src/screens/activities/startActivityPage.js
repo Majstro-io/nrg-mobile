@@ -38,6 +38,7 @@ const StartActivityPage = ({ route }) => {
     const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
     const [errorModalTitle, setErrorModalTitle] = useState("No Quotes for this Activity")
     const [errorModalText, setErrorModalText] = useState("This Activity do not have any quotes configured")
+    const [errorModalOnConfirm, setErrorModalOnConfirm] = useState(null)
 
     const playerStateRef = useRef(playerState);
     const currentTrack = useRef(0);
@@ -107,11 +108,12 @@ const StartActivityPage = ({ route }) => {
         } finally {
             if (failedAttempts.current > 3) {
                 audioManagerService.clearAllSounds();
-                await handleNavigateToPauseScreen();
                 failedAttempts.current = 0;
                 log.error('Stopped due to failed to play audio');
+                await handlePauseResume();
                 setErrorModalText("Failed to play quotes for this activity")
                 setErrorModalTitle("Failed to play quotes")
+                setErrorModalOnConfirm(() => navigation.navigate(navigationconstants.PAGES.activity, { id, activityName, image, description }))
                 setIsErrorModalVisible(true);
             }
         }
@@ -185,6 +187,7 @@ const StartActivityPage = ({ route }) => {
             } else {
                 setErrorModalText("This Activity do not have any quotes configured")
                 setErrorModalTitle("No Quotes for this Activity")
+                setErrorModalOnConfirm(null)
                 setIsErrorModalVisible(true)
             }
         }
@@ -304,6 +307,7 @@ const StartActivityPage = ({ route }) => {
                 errorTitle={errorModalTitle}
                 setVisible={setIsErrorModalVisible}
                 visible={isErrorModalVisible}
+                onConfirm={errorModalOnConfirm}
             />
 
             <ScrollView
@@ -316,10 +320,10 @@ const StartActivityPage = ({ route }) => {
                             {/* Display when BPM and km is tracked */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text> */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
-                            <Text fontSize="3xl" textAlign="center"  >{activityName}</Text>
+                            <Text color={'heading.900'} fontSize="3xl" textAlign="center"  >{activityName}</Text>
                         </HStack>
                         <Box mt="24" alignItems="center">
-                            <Heading fontSize="6xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
+                            <Heading color={'heading.900'} fontSize="6xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
                             {/* display when total time for activity is tracked, TODO: move this to a component */}
                             {/* <Progress
                                 width="72"

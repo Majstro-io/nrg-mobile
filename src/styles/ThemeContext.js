@@ -17,6 +17,25 @@ const defaultTheme = extendTheme({
       750: '#151515',
       800: '#000000',
     },
+    inputFont: {
+      300: '#B1B1B1',
+    },
+    text: {
+      100: '#ffffff',
+      300: '#B1B1B1',
+      600: '#2D2D35'
+    },
+    heading: {
+      100: '#ffffff',
+      900: '#151515'
+    },
+    buttonFont: {
+      400: '#D4E157'
+    },
+    background: {
+      100: '#0F1511',
+      200: '#2D2D35'
+    },
     white: {
       100: '#FFFFFF',
       200: '#F8F8F8',
@@ -36,16 +55,17 @@ const defaultTheme = extendTheme({
       800: '#000000',
     },
     base: {
-      50:  '#F9FBE7', 
+      50: '#F9FBE7',
       100: '#F0F4C3',
-      200: '#E6EE9C', 
-      300: '#DCE775', 
-      400: '#D4E157', 
-      500: '#DDFF5F', 
-      600: '#C4D600', 
-      700: '#AABF00', 
-      800: '#8F9D00', 
+      200: '#E6EE9C',
+      300: '#DCE775',
+      400: '#D4E157',
+      500: '#DDFF5F',
+      600: '#C4D600',
+      700: '#AABF00',
+      800: '#8F9D00',
       900: '#6D7A00',
+      1000: '#99FE00'
     },
     yellow: {
       50: '#FFF8E1',
@@ -93,31 +113,31 @@ const defaultTheme = extendTheme({
   components: {
     View: {
       baseStyle: {
-        bg: 'white.100',
+        bg: 'background.200',
       },
     },
     Modal: {
       baseStyle: {
-        borderColor: 'white.300',
-        bg: 'white.900',
+        borderColor: 'background.200',
+        bg: 'transparent',
       }
     },
     ModalHeader: {
       baseStyle: {
         color: 'white.100',
-        bg: 'white.100',
-        borderColor: 'white.300'
+        bg: 'background.200',
+        borderColor: 'background.200'
       }
     },
     ModalContent: {
       baseStyle: {
-        bg: 'white.100',
+        bg: 'background.200',
       }
     },
     ModalFooter: {
       baseStyle: {
-        borderColor: 'white.300',
-        bg: 'white.100',
+        borderColor: 'background.200',
+        bg: 'background.200',
       }
     },
     Pressable: {
@@ -138,7 +158,7 @@ const defaultTheme = extendTheme({
 
     Text: {
       baseStyle: {
-        color: 'black.800',
+        color: 'text.100',
       },
       defaultProps: {
         size: 'md',
@@ -161,7 +181,7 @@ const defaultTheme = extendTheme({
     },
     Heading: {
       baseStyle: {
-        color: 'black.800',
+        color: 'heading.100',
       },
       defaultProps: {
         size: 'md',
@@ -192,11 +212,11 @@ const defaultTheme = extendTheme({
     },
     Input: {
       baseStyle: {
-        color: 'black.800',
+        color: 'inputFont.300',
         borderColor: 'black.300',
         _focus: {
-          borderColor: "black.800",
-          backgroundColor: "black.50",
+          borderColor: "black.300",
+          backgroundColor: "background.200",
         },
         width: '72',
         borderRadius: '15'
@@ -204,8 +224,8 @@ const defaultTheme = extendTheme({
     },
     Select: {
       baseStyle: {
-        color: 'black.800',
-        bg: 'white.100',
+        color: 'inputFont.300',
+        bg: 'background.200',
       },
     },
     IconButton: {
@@ -219,13 +239,21 @@ const defaultTheme = extendTheme({
     },
     Button: {
       baseStyle: {
-        bgColor: 'black.800',
+        bg: 'black.800',
         borderRadius: 25,
         width: "72",
         _loading: {
           bg: 'black.800',
-
-        }
+        },
+        _text: {
+          color: 'buttonFont.500',
+        },
+        _pressed: {
+          bg: 'black.600',
+        },
+        _hover: {
+          bg: 'black.700',
+        },
       },
     },
     Link: {

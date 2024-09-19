@@ -110,8 +110,8 @@ const PreferredActivities = ({ route }) => {
                     <VStack space={2} alignItems="center"  >
 
                         <NrgHeader actionButtonText={"Done"} />
-                        <Text fontSize="3xl" color="black.800">Select your interest</Text>
-                        <Text fontSize="sm" color="black.800" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
+                        <Text fontSize="3xl">Select your interest</Text>
+                        <Text fontSize="sm" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
                         <Button
                             mt={3}
                             marginBottom={10}
