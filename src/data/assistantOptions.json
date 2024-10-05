@@ -1,0 +1,8 @@
+{
+  "content": {
+    "assistants": [
+      {"name": "Male", "id": "MALE"},
+      {"name": "Female", "id": "FEMALE"}
+    ]
+  }
+}

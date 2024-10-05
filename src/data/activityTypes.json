@@ -1,0 +1,7 @@
+{
+  "content": [
+    {"id": "1", "value": "RUNNING", "icon": "https://nrg-test-resources.s3.amazonaws.com/images/Running.png", "name": "Running"},
+    {"id": "2", "value": "DRIVING", "icon": "https://nrg-test-resources.s3.amazonaws.com/images/Cycling.png", "name": "Driving"},
+    {"id": "3", "value": "WALKIING", "icon": "https://nrg-test-resources.s3.amazonaws.com/images/Walking.png", "name": "Walking"}
+  ]
+}
