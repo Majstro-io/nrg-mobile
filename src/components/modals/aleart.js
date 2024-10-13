@@ -14,8 +14,8 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
             <Modal.Content>
                 <VStack space={4}>
                     <Box padding={4}>
-                        <Text mb={5} fontSize="xl" textAlign="center" bold>{errorTitle || "Error"}</Text>
-                        <Text fontSize="lg" textAlign="center">{errorDescription}</Text>
+                        <Text mb={3} fontSize="lg" textAlign="center" bold>{errorTitle || "Error"}</Text>
+                        <Text fontSize="md" textAlign="center">{errorDescription}</Text>
                     </Box>
                     <HStack>
                         <Button
@@ -34,7 +34,7 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                             variant="outline"
                             borderRadius={0}
                             borderWidth={0}
-                            _text={{ color: 'blue.500', fontSize: 'md' }}
+                            _text={{ color: 'base.500', fontSize: 'md' }}
                             onPress={() => setVisible(false)}>
                             No
                         </Button>

@@ -54,14 +54,14 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
             padding={2}
           >
             <HStack justifyContent="space-between" alignItems="center">
-              <Text color={'text.600'} fontSize="md" mb={2} flex={0.9} isTruncated>
+              <Text color={'text.100'} fontSize="md" mb={2} flex={0.9} isTruncated>
                 {title}
               </Text>
               <IconButton
                 padding={2}
                 icon={<FavouriteIcon size="sm" />}
                 onPress={() => dispatch(addUserFavouriteActivity(activityId))}
-                colorScheme={isFavourite ? "red" : "gray"}
+                colorScheme={isFavourite ? "base" : "gray"}
                 flex={0.1}
               />
             </HStack>

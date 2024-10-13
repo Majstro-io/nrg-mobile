@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, FormControl } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, FormControl, KeyboardAvoidingView } from "native-base";
 
 import userService from "../../services/userService";
 import log from "../../config/logger";
@@ -64,15 +64,14 @@ const UpdatePersonalDetails = () => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
-            <View style={{ flex: 1 }}>
-
+ 
                 <ScrollView
                     scrollEnabled={true}
                     contentContainerStyle={{ flexGrow: 1 }}
                     keyboardShouldPersistTaps='handled'
                 >
                     <Center>
-                        <VStack space={2} alignItems="center"  >
+                        <VStack space={2} alignItems="center" mt={10}>
                             <NrgHeader />
                             <Text fontSize="3xl" >Update Profile</Text>
                             <Text fontSize="sm" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
@@ -149,21 +148,18 @@ const UpdatePersonalDetails = () => {
                                 <Button
                                     mt={3}
                                     width="72"
-                                    _text={{ color: "base.500" }}
-                                    bgColor="black.800"
+                                    _text={{ color: "text.100" }}
+                                    bgColor="primary.750"
                                     isLoading={isLoading}
                                     onPress={updateUserData}
                                 >
-                                    Save
+                                    SAVE
                                 </Button>
                             </VStack>
-
                         </VStack>
                     </Center>
                 </ScrollView>
-            </View>
-            <BottomNavigator />
-
+             <BottomNavigator />
         </View>
     );
 };

@@ -14,6 +14,7 @@ import userPreferencesService from '../../services/userPreferencesService';
 import { setPreferences } from '../../store/slices/userPreferencesSlice';
 import { FlatList } from 'react-native';
 import BottomNavigator from '../../components/footer/bottomNavigation';
+import colorConstants from '../../constants/colorConstants';
 
 const ActivitiesPage = () => {
   const navigation = useNavigation();
@@ -114,7 +115,7 @@ const ActivitiesPage = () => {
       cardHeight={activityCardHeight}
       activityId={item?.id}
       title={item?.name}
-      hStackBgColor="base.1000"
+      hStackBgColor={colorConstants.card}
       description={item?.description}
       imageSource={item?.icon}
       onPress={() => navigation.navigate(navigationconstants.PAGES.activity, {
@@ -136,7 +137,7 @@ const ActivitiesPage = () => {
         visible={errorModalVisible}
       />
 
-      <Box flex={1} padding={4}>
+      <Box flex={1} padding={4} mb={10}>
         <VStack space={1} flex={1}>
 
           {/* Activities page top header */}
@@ -149,7 +150,7 @@ const ActivitiesPage = () => {
               width={'40%'}
             />
             <HStack space={5} justifyContent="space-between" alignItems="center">
-              <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "red" : "gray"} />
+              <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "base" : "gray"} />
               <LogOffButton />
             </HStack>
 

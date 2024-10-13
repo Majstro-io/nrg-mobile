@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 import navigationconstants from "../../constants/navigationConstants";
-import Footer from "../../components/footer/footer";
 import RoundButton from '../../components/inputs/roundButton';
 import BottomNavigator from '../../components/footer/bottomNavigation';
 
@@ -20,7 +19,7 @@ const ActivityPage = ({ route }) => {
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
             >
-                <Box position="relative" height={height}>
+                <Box position="relative" minHeight={height}>
                     <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"back"} />
                     <Image
                         source={{ uri: image }}
@@ -35,17 +34,17 @@ const ActivityPage = ({ route }) => {
                         top={250}
                         bg="background.200"
                         borderTopRadius={45}
-                        width={width}
-                        height={height}
+                        minWidth={width}
+                        minHeight={height}
                     >
                         <Center padding={10}>
                             <VStack space={5} alignItems="center">
-                                <Text fontSize="2xl" >{activityName}</Text>
+                                <Text fontSize="3xl" textAlign="center" >{activityName}</Text>
                                 <VStack space={5} alignItems="center">
-                                    <Text mb={2} fontSize="sm" textAlign="center" lineHeight="xs">{description}</Text>
+                                    <Text mb={2} fontSize="md" textAlign="center" lineHeight="xs">{description}</Text>
                                     <HStack justifyContent="center" alignItems="center" >
                                         <RoundButton
-                                            color={"base.1000"}
+                                            color={"base.500"}
                                             size={0.3}
                                             onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
                                             text={"Start"}

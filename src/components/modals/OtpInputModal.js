@@ -2,6 +2,7 @@ import { Box, Button, Center, HStack, Link, Modal, Text, VStack, } from "native-
 import { useState, useEffect } from "react";
 import { Dimensions, Keyboard } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
+import colorConstants from "../../constants/colorConstants";
 const { width, height } = Dimensions.get('window');
 
 const OTPInputModal = ({
@@ -56,7 +57,7 @@ const OTPInputModal = ({
     return (
         <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)}>
             <Box
-                top={keyboardHeight ? '20%' : '40%'}
+                top={keyboardHeight ? '15%' : '40%'}
                 bg="background.200"
                 borderRadius={45}
                 width={width}
@@ -76,9 +77,11 @@ const OTPInputModal = ({
                                 containerStyle={{ marginBottom: 20 }}
                                 inputCount={6}
                                 textInputStyle={{
-                                    color: 'inputFont.300',      
-                                    borderBottomColor: 'base.1000',  
-                                  }}
+                                    color: 'inputFont.300',
+                                    borderBottomColor: 'base.1000',
+
+                                }}
+                                tintColor={colorConstants.base}
                             />
                         </HStack>
                         <Button

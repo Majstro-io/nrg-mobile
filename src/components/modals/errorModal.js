@@ -12,17 +12,18 @@ const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
     return (
         <Modal size="lg" isOpen={visible} onClose={() => setVisible(false)}>
             <Modal.Content>
-                <VStack space={2}>
+                <VStack space={0}>
                     <Box p={4}>
-                        <Text mb={5} fontSize="xl" textAlign="center" bold>
+                        <Text mb={3} fontSize="lg" textAlign="center">
                             {errorTitle || "Error"}
                         </Text>
-                        <Text fontSize="lg" textAlign="center">
+                        <Text fontSize="md" textAlign="center">
                             {errorDescription}
                         </Text>
                     </Box>
                     <HStack justifyContent="center">
                         <Button
+                            mb="2"
                             width="100%"
                             bgColor="transparent"
                             borderWidth={0}

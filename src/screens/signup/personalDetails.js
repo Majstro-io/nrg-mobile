@@ -117,9 +117,9 @@ const PersonalDetails = ({ route }) => {
                 <Center>
                     <VStack space={2} alignItems="center"  >
 
-                        <Text bold fontSize="2xl"  mb={3}>NRG Remix</Text>
+                        <Text bold fontSize="2xl" mb={3}>NRG Remix</Text>
                         <Text fontSize="3xl" >Add profile info</Text>
-                        <Text fontSize="sm"textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
+                        <Text fontSize="sm" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
 
                         <VStack space={1} alignItems="center">
                             <FormControl>
@@ -193,19 +193,20 @@ const PersonalDetails = ({ route }) => {
 
                             <Button
                                 mt={3}
-                                width="72"
-                                bgColor="black.800"
-                                _text={{ color: "base.500" }}
                                 isLoading={isLoading}
-                                onPress={registerUser}>
-                                Next
+                                onPress={registerUser}
+                                _text={{ color: "text.100" }}
+                                bgColor="primary.750"
+                            >
+                                NEXT
                             </Button>
                             <HStack space={2}>
                                 <Progress
                                     mt={5}
                                     width="10"
                                     value={100}
-                                    colorScheme="blue"
+                                    colorScheme="base"
+                                    bgColor="base.500"
                                     size="sm"
                                 />
                                 <Progress
@@ -223,7 +224,7 @@ const PersonalDetails = ({ route }) => {
                                     size="sm"
                                 />
                             </HStack>
-                            <Text fontSize="xs" color="black.800" textAlign="center" mt="-2"> 2 more steps</Text>
+                            <Text fontSize="xs" textAlign="center" mt="2"> 2 more steps</Text>
                         </VStack>
 
                     </VStack>

@@ -95,8 +95,7 @@ const UpdatePreferences = ({ route }) => {
         keyboardShouldPersistTaps='handled'
       >
         <Center>
-          <VStack space={2} alignItems="center">
-
+          <VStack space={2} alignItems="center" mt={10}>
             <NrgHeader />
             <Text fontSize="3xl" >Preferences</Text>
             <Text fontSize="sm" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
@@ -146,11 +145,11 @@ const UpdatePreferences = ({ route }) => {
               <Button
                 mt={3}
                 width="72"
-                _text={{ color: "base.500" }}
-                bgColor="black.800"
+                _text={{ color: "text.100" }}
+                bgColor="primary.750"
                 isLoading={loading}
                 onPress={() => handleOnDone()}>
-                Done
+                DONE
               </Button>
 
               {isRegistration && <>

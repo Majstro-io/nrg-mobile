@@ -115,11 +115,11 @@ const PreferredActivities = ({ route }) => {
                         <Button
                             mt={3}
                             marginBottom={10}
-                            bgColor="black.800"
-                            _text={{ color: "base.500" }}
+                            _text={{ color: "text.100" }}
+                            bgColor="primary.750"
                             onPress={handleSavePreferences}
                         >
-                            Save Favourites
+                            SAVE FAVOURITES
                         </Button>
                         <VStack space={5} alignItems="center" mt={2}>
                             {isLoading ? <Spinner size={'lg'} /> :
@@ -143,14 +143,16 @@ const PreferredActivities = ({ route }) => {
                                         mt={5}
                                         width="10"
                                         value={100}
-                                        colorScheme="blue"
+                                        colorScheme="base"
+                                        bgColor="base.500"
                                         size="sm"
                                     />
                                     <Progress
                                         mt={5}
                                         width="10"
                                         value={100}
-                                        colorScheme="blue"
+                                        colorScheme="base"
+                                        bgColor="base.500"
                                         size="sm"
                                     />
                                     <Progress
@@ -161,7 +163,7 @@ const PreferredActivities = ({ route }) => {
                                         size="sm"
                                     />
                                 </HStack>
-                                <Text fontSize="xs" color="black.800" textAlign="center" mt="-2">1 more step</Text>
+                                <Text fontSize="xs" textAlign="center" mt="2">1 more step</Text>
                             </>}
                         </VStack>
 

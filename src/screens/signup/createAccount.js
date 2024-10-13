@@ -132,11 +132,9 @@ const CreateAccount = () => {
                                     onSubmitEditing={verifyUser}
                                 />
                                 <Button
-                                    bg="black.800"
-                                    _text={{ color: "buttonFont.400" }}
                                     onPress={verifyUser}
                                 >
-                                    Register
+                                    REGISTER
                                 </Button>
                             </VStack>
                         </VStack>

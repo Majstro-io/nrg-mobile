@@ -79,12 +79,8 @@ const Preferences = ({ route }) => {
         visible={errorModalVisible}
       />
       <ScrollView scrollEnabled={false}>
-        <HStack justifyContent="flex-end" alignItems="center" mt={5} mx={2} flex={1}>
-
-        </HStack>
         <Center>
           <VStack space={2} alignItems="center">
-
             <NrgHeader />
             <Text fontSize="3xl">Preferences</Text>
             <Text fontSize="sm" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
@@ -133,12 +129,12 @@ const Preferences = ({ route }) => {
               </Box> */}
               <Button
                 mt={3}
-                width="72"
-                bgColor="black.800"
-                _text={{ color: "base.500" }}
                 isLoading={loading}
-                onPress={() => handleOnDone()}>
-                Done
+                onPress={() => handleOnDone()}
+                _text={{ color: "text.100" }}
+                bgColor="primary.750"
+              >
+                DONE
               </Button>
 
 
@@ -147,25 +143,28 @@ const Preferences = ({ route }) => {
                   mt={5}
                   width="10"
                   value={100}
-                  colorScheme="blue"
+                  colorScheme="base"
+                  bgColor="base.500"
                   size="sm"
                 />
                 <Progress
                   mt={5}
                   width="10"
                   value={100}
-                  colorScheme="blue"
+                  colorScheme="base"
+                  bgColor="base.500"
                   size="sm"
                 />
                 <Progress
                   mt={5}
                   width="10"
                   value={100}
-                  colorScheme="blue"
+                  colorScheme="base"
+                  bgColor="base.500"
                   size="sm"
                 />
               </HStack>
-              <Text fontSize="xs" color="black.800" textAlign="center" mt="-2"> Final step </Text>
+              <Text fontSize="xs" textAlign="center" mt="2"> Final step </Text>
 
             </VStack>
           </VStack>
