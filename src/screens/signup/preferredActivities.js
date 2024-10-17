@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, VStack, Center, Text, Progress, HStack, Spinner, Button } from "native-base";
+import { ScrollView, View, VStack, Center, Text, Progress, HStack, Spinner, Button, Heading } from "native-base";
 
 import navigationconstants from "../../constants/navigationConstants";
 import InterestCard from "../../components/interestsCard/interestCard";
@@ -110,16 +110,14 @@ const PreferredActivities = ({ route }) => {
                     <VStack space={2} alignItems="center"  >
 
                         <NrgHeader actionButtonText={"Done"} />
-                        <Text fontSize="3xl">Select your interest</Text>
-                        <Text fontSize="sm" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
+                        <Heading fontSize="4xl">Select your interest</Heading>
+                        <Text fontSize="md" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
                         <Button
                             mt={3}
                             marginBottom={10}
-                            bgColor="black.800"
-                            _text={{ color: "base.500" }}
                             onPress={handleSavePreferences}
                         >
-                            Save Favourites
+                            SAVE FAVOURITES
                         </Button>
                         <VStack space={5} alignItems="center" mt={2}>
                             {isLoading ? <Spinner size={'lg'} /> :
@@ -143,14 +141,16 @@ const PreferredActivities = ({ route }) => {
                                         mt={5}
                                         width="10"
                                         value={100}
-                                        colorScheme="blue"
+                                        colorScheme="base"
+                                        bgColor="base.500"
                                         size="sm"
                                     />
                                     <Progress
                                         mt={5}
                                         width="10"
                                         value={100}
-                                        colorScheme="blue"
+                                        colorScheme="base"
+                                        bgColor="base.500"
                                         size="sm"
                                     />
                                     <Progress
@@ -161,7 +161,7 @@ const PreferredActivities = ({ route }) => {
                                         size="sm"
                                     />
                                 </HStack>
-                                <Text fontSize="xs" color="black.800" textAlign="center" mt="-2">1 more step</Text>
+                                <Text fontSize="xs" textAlign="center" mt="2">1 more step</Text>
                             </>}
                         </VStack>
 

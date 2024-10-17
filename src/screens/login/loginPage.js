@@ -172,11 +172,11 @@ const LoginPage = () => {
                         width={width}
                         height={height / 1.5}
                     >
-                        <Center mt={5}>
+                        <Center mt={10}>
                             <VStack space={3} alignItems="center">
                                 <NrgHeader marginTop="0" />
                                 <VStack space={0} alignItems="center">
-                                    <Heading fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>
+                                    <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>
                                         Discover a Healthier {'\n'} Stronger you
                                     </Heading>
                                 </VStack>
@@ -184,21 +184,18 @@ const LoginPage = () => {
                                     mx="10"
                                     placeholder="Phone number"
                                     keyboardType="phone-pad"
-                                    value={mobile}
+                                    tintColor={"green"}
                                     onChangeText={text => setMobile(text)}
                                     onSubmitEditing={loginUser}
                                 />
                                 <Button
-                                    bg="black.800"
-                                    _text={{ color: "base.500" }}
                                     isLoading={isLoading}
                                     onPress={loginUser}>
-                                    Login
+                                    LOGIN
                                 </Button>
                                 <HStack space={2} alignItems="center" mt={5}>
-                                    <Text fontSize="md"  >Don't have an account?</Text>
+                                    <Text fontSize="md">Don't have an account?</Text>
                                     <Link
-
                                         isUnderlined={false}
                                         onPress={() => navigation.navigate(navigationconstants.PAGES.createAccount)}>
                                         Join now
@@ -219,7 +216,7 @@ const LoginPage = () => {
                         label3={"Don’t have an account?"}
                         label4={"Join Now"}
                         instructions={`Enter the OTP sent to ${mobile}`}
-                        confirmButtonText={"Verify and Login"}
+                        confirmButtonText={"VERIFY AND LOGIN"}
                         modalVisible={otpModalVisible}
                         setModalVisible={setOtpModalVisible}
                         onConfirm={validateUser}

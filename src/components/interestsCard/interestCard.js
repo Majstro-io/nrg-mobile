@@ -13,7 +13,7 @@ const InterestCard = ({ name, imageSource, onPress, select }) => {
       bg="white"
       borderRadius={15}
       borderWidth={select ? 3 : 0}
-      borderColor={select ? "blue.500" : "transparent"}
+      borderColor={select ? "base.500" : "transparent"}
       position="relative"
       bgColor={select ? "black.50" : "transparent"}
     >
@@ -89,7 +89,7 @@ const InterestCard = ({ name, imageSource, onPress, select }) => {
           right="2"
           zIndex="4"
         >
-          <CheckCircleIcon size="6" color="blue.500" />
+          <CheckCircleIcon size="6" color="base.500" />
         </Box>
       )}
         </Box>

@@ -122,11 +122,10 @@ const ContactDetails = ({ route }) => {
 
                             <Button
                                 isLoading={isLoading}
-                                _text={{ color: "base.500" }}
                                 mt={3}
                                 width="1/4"
                                 onPress={() => registerUser()}>
-                                Sign Up
+                                SIGN UP
                             </Button>
 
                             <Image

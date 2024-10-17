@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Modal, Text, VStack } from "native-base";
+import { Box, Button, Heading, HStack, Modal, Text, VStack } from "native-base";
 
 const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfirm }) => {
 
@@ -13,11 +13,11 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
         <Modal size="lg" isOpen={visible} onClose={() => setVisible(false)}>
             <Modal.Content>
                 <VStack space={4}>
-                    <Box padding={4}>
-                        <Text mb={5} fontSize="xl" textAlign="center" bold>{errorTitle || "Error"}</Text>
-                        <Text fontSize="lg" textAlign="center">{errorDescription}</Text>
+                    <Box padding={5}>
+                        <Heading mb={3} fontSize="2xl" textAlign="center" bold>{errorTitle || "Error"}</Heading>
+                        <Text fontSize="md" textAlign="center">{errorDescription}</Text>
                     </Box>
-                    <HStack>
+                    <HStack mb={2}>
                         <Button
                             width="1/2"
                             bgColor="transparent"
@@ -26,7 +26,7 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                             borderWidth={0}
                             _text={{ color: 'red.500', fontSize: 'md' }}
                             onPress={handleConfirm}>
-                            Yes
+                            YES
                         </Button>
                         <Button
                             width="1/2"
@@ -34,9 +34,9 @@ const AlertModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                             variant="outline"
                             borderRadius={0}
                             borderWidth={0}
-                            _text={{ color: 'blue.500', fontSize: 'md' }}
+                            _text={{ color: 'base.500', fontSize: 'md' }}
                             onPress={() => setVisible(false)}>
-                            No
+                            NO
                         </Button>
                     </HStack>
                 </VStack>

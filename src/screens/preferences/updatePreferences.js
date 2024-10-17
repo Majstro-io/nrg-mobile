@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, FormControl, } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, FormControl, Heading, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import navigationconstants from "../../constants/navigationConstants";
@@ -95,11 +95,10 @@ const UpdatePreferences = ({ route }) => {
         keyboardShouldPersistTaps='handled'
       >
         <Center>
-          <VStack space={2} alignItems="center">
-
+          <VStack space={2} alignItems="center" mt={10}>
             <NrgHeader />
-            <Text fontSize="3xl" >Preferences</Text>
-            <Text fontSize="sm" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
+            <Heading fontSize="4xl" >Preferences</Heading>
+            <Text fontSize="md" textAlign="center">Update preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
               <Box mt={5}>
                 <FormControl>
@@ -146,11 +145,9 @@ const UpdatePreferences = ({ route }) => {
               <Button
                 mt={3}
                 width="72"
-                _text={{ color: "base.500" }}
-                bgColor="black.800"
                 isLoading={loading}
                 onPress={() => handleOnDone()}>
-                Done
+                DONE
               </Button>
 
               {isRegistration && <>

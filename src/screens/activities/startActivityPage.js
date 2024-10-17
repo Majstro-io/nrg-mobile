@@ -315,12 +315,12 @@ const StartActivityPage = ({ route }) => {
                 showsVerticalScrollIndicator={false}
             >
                 <Center padding={10}>
-                    <VStack space={2} alignItems="center">
+                    <VStack space={5} alignItems="center">
                         <HStack space={"48"} justifyContent="space-between" alignItems="center" mt="3">
                             {/* Display when BPM and km is tracked */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text> */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
-                            <Text color={'heading.900'} fontSize="3xl" textAlign="center"  >{activityName}</Text>
+                            <Heading color={'heading.900'} fontSize="4xl" textAlign="center"  >{activityName}</Heading>
                         </HStack>
                         <Box mt="24" alignItems="center">
                             <Heading color={'heading.900'} fontSize="6xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >

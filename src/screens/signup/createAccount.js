@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, Box, Button, Center, HStack, Input, Text, VStack, View, IconButton, CloseIcon } from 'native-base';
+import { Image, Box, Button, Center, HStack, Input, Text, VStack, View, IconButton, CloseIcon, Heading } from 'native-base';
 import navigationconstants from "../../constants/navigationConstants";
 import { Dimensions } from 'react-native';
 import OTPInputModal from "../../components/modals/OtpInputModal";
@@ -105,8 +105,8 @@ const CreateAccount = () => {
                         <VStack space={2} alignItems="center">
                             <NrgHeader marginTop="0" />
                             <VStack space={0} alignItems="center">
-                                <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Text>
-                                <Text fontSize="sm" textAlign="center" lineHeight="xs" mb={4}>
+                                <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Heading>
+                                <Text fontSize="md" textAlign="center" lineHeight="xs" mb={4}>
                                     We will send you the
                                     <Text fontWeight="bold"> 5 digit</Text>
                                     <Text> verification code</Text>
@@ -132,11 +132,9 @@ const CreateAccount = () => {
                                     onSubmitEditing={verifyUser}
                                 />
                                 <Button
-                                    bg="black.800"
-                                    _text={{ color: "buttonFont.400" }}
                                     onPress={verifyUser}
                                 >
-                                    Register
+                                    REGISTER
                                 </Button>
                             </VStack>
                         </VStack>
@@ -146,14 +144,13 @@ const CreateAccount = () => {
                 {/* OTP Validation Modal TODO: refactor */}
                 <OTPInputModal
                     buttonText={"Login"}
-                    header={"NRG Remix"}
                     label={`Enter OTP to ${'\n'}Validate your phone`}
                     label1={"Don’t receive OTP?"}
                     label2={"Send Again"}
                     label3={"Don’t have an account?"}
                     label4={"Join Now"}
                     instructions={`Enter the OTP sent to ${phoneNumber}`}
-                    confirmButtonText={"Verify"}
+                    confirmButtonText={"CONFRIM"}
                     modalVisible={otpModalVisible}
                     setModalVisible={setOtpModalVisible}
                     onConfirm={procceedToRegistration}

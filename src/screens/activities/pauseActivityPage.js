@@ -96,7 +96,7 @@ const PauseActivityPage = ({ route }) => {
                                         }}
                                         _pressed={{ bgColor: "black.800" }}
                                         color={"black.800"}
-                                        size={0.2}
+                                        size={0.3}
                                         _text={{ fontSize: '4xl' }}
                                         onPress={() => setIsErrorModalVisible(true)}
                                     />
@@ -108,8 +108,8 @@ const PauseActivityPage = ({ route }) => {
                                             size: "100%",
                                         }}
                                         _pressed={{ bgColor: "base.1000" }}
-                                        color={"base.1000"}
-                                        size={0.25}
+                                        color={"base.500"}
+                                        size={0.3}
                                         _text={{ fontSize: '4xl' }}
                                         onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
                                     />
