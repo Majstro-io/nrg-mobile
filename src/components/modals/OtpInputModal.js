@@ -1,12 +1,12 @@
-import { Box, Button, Center, HStack, Link, Modal, Text, VStack, } from "native-base";
+import { Box, Button, Center, Heading, HStack, Link, Modal, Text, VStack, } from "native-base";
 import { useState, useEffect } from "react";
 import { Dimensions, Keyboard } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
 import colorConstants from "../../constants/colorConstants";
+import NrgHeader from "../header/nrgHeader";
 const { width, height } = Dimensions.get('window');
 
 const OTPInputModal = ({
-    header,
     label1,
     label2,
     label3,
@@ -66,10 +66,10 @@ const OTPInputModal = ({
             >
                 <Center>
                     <VStack space={2} alignItems="center">
-                        <Text bold fontSize="2xl"  >{header}</Text>
+                     <NrgHeader marginTop="5" />
                         <VStack space={0} alignItems="center">
-                            <Text fontSize="3xl" textAlign="center" lineHeight="xs" mb={2}>{label}</Text>
-                            <Text fontSize="xs" textAlign="center" mb={4}>{instructions}</Text>
+                            <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={2}>{label}</Heading>
+                            <Text fontSize="md" textAlign="center" mb={4} lineHeight="xs">{instructions}</Text>
                         </VStack>
                         <HStack space={2} alignItems="center">
                             <OTPTextView
@@ -77,22 +77,19 @@ const OTPInputModal = ({
                                 containerStyle={{ marginBottom: 20 }}
                                 inputCount={6}
                                 textInputStyle={{
-                                    color: 'inputFont.300',
-                                    borderBottomColor: 'base.1000',
-
+                                    color: 'text.100',
+                                    borderBottomColor: 'base.1000',  
                                 }}
                                 tintColor={colorConstants.base}
                             />
                         </HStack>
                         <Button
-                            bg="black.800"
                             isLoading={isLoading}
-                            _text={{ color: "buttonFont.400" }}
                             disabled={otp == ''}
                             onPress={onConfirmPress}>
                             {confirmButtonText}
                         </Button>
-                        <HStack space={2} alignItems="center">
+                        <HStack space={2} alignItems="center" mt={1}>
                             <Text fontSize="xs" >{label1}</Text>
                             <Link
                                 _text={{
@@ -103,7 +100,7 @@ const OTPInputModal = ({
                                 {label2}
                             </Link>
                         </HStack>
-                        <HStack space={2} alignItems="center" mt={5}>
+                        <HStack space={2} alignItems="center" mt={8}>
                             <Text fontSize="md">{label3}</Text>
                             <Link
                                 _text={{

@@ -19,7 +19,7 @@ const NrgTitleAppBar = ({ title, backNavigateTo }) => {
                     }}
                     bgColor="transparent"
                 />
-                <Text onPress={() => backNavigateTo ? navigation.navigate(backNavigateTo) : null} fontWeight={"bold"} size='md' color='black.800'>
+                <Text onPress={() => backNavigateTo ? navigation.navigate(backNavigateTo) : null} fontStyle={"bold"} size='md' color='black.800'>
                     {title}
                 </Text>
             </HStack>

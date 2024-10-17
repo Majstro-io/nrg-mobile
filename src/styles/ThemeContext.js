@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useMemo } from 'react';
-import { extendTheme, NativeBaseProvider } from 'native-base';
+import { CheckIcon, extendTheme, NativeBaseProvider } from 'native-base';
 import { useSelector } from 'react-redux';
 
 const defaultTheme = extendTheme({
@@ -122,22 +122,56 @@ const defaultTheme = extendTheme({
     Rajdhani: {
       100: {
         normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
         bold: 'Rajdhani-Bold'
       },
       200: {
         normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
         bold: 'Rajdhani-Bold'
       },
       300: {
         normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
         bold: 'Rajdhani-Bold'
       },
       400: {
         normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
         bold: 'Rajdhani-Bold'
       },
       500: {
         normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
+        bold: 'Rajdhani-Bold'
+      },
+      600: {
+        normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
+        bold: 'Rajdhani-Bold'
+      },
+      700: {
+        normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
+        bold: 'Rajdhani-Bold'
+      },
+      800: {
+        normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
+        bold: 'Rajdhani-Bold'
+      },
+      900: {
+        normal: 'Rajdhani-Regular',
+        medium: 'Rajdhani-Medium',
+        semi_bold: 'Rajdhani-SemiBold',
         bold: 'Rajdhani-Bold'
       },
     },
@@ -159,7 +193,7 @@ const defaultTheme = extendTheme({
   components: {
     View: {
       baseStyle: {
-        bg: 'background.100',
+        bg: 'background.200',
       },
     },
     Modal: {
@@ -226,10 +260,10 @@ const defaultTheme = extendTheme({
     },
 
     Heading: {
-      defaultProps: {
+      baseStyle: {
         color: 'text.100',
         fontFamily: 'heading',
-        fontStyle: 'bold'
+        fontStyle: 'semi_bold',
       },
       sizes: {
         xl: {
@@ -256,24 +290,38 @@ const defaultTheme = extendTheme({
     },
 
     Input: {
-      baseStyle: {
+      defaultProps: {
         color: 'text.100',
         borderColor: 'black.300',
         _focus: {
           borderColor: "black.300",
-          backgroundColor: "background.200",
+          backgroundColor: "black.800",
         },
         _input: {
           cursorColor: 'base.500',
           selectionColor: 'base.500'
+        },
+        _autfill: {
+          backgroundColor: 'transparent'
         },
         width: '72',
         borderRadius: '15',
       },
     },
     Select: {
-      baseStyle: {
-        color: 'text.100',
+        baseStyle: {
+          _selectedItem: {
+            bg: 'background.500',  
+            endIcon: <CheckIcon size="5" />,
+          },
+          color: 'text.100',
+          _item: {
+            bg: 'base.200',  
+            color: 'text.100',
+            _pressed: {
+              bg: 'base.100',  
+            },
+          },
       },
     },
     IconButton: {
@@ -295,6 +343,9 @@ const defaultTheme = extendTheme({
           bg: 'black.850',
         },
         _text: {
+          fontFamily: 'heading',
+          fontStyle: 'bold',
+          letterSpacing: 1, 
           color: 'base.500',
         },
         _pressed: {
@@ -323,6 +374,8 @@ const ThemeContext = createContext();
 const customFonts = {
   'Rajdhani-Regular': require("../../assets/fonts/Rajdhani-Regular.ttf"),
   'Rajdhani-Bold': require("../../assets/fonts/Rajdhani-Bold.ttf"),
+  'Rajdhani-Medium': require("../../assets/fonts/Rajdhani-Medium.ttf"),
+  'Rajdhani-SemiBold': require("../../assets/fonts/Rajdhani-SemiBold.ttf"),
 };
 
 export const ThemeProvider = ({ children }) => {

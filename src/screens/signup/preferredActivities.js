@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, VStack, Center, Text, Progress, HStack, Spinner, Button } from "native-base";
+import { ScrollView, View, VStack, Center, Text, Progress, HStack, Spinner, Button, Heading } from "native-base";
 
 import navigationconstants from "../../constants/navigationConstants";
 import InterestCard from "../../components/interestsCard/interestCard";
@@ -110,13 +110,11 @@ const PreferredActivities = ({ route }) => {
                     <VStack space={2} alignItems="center"  >
 
                         <NrgHeader actionButtonText={"Done"} />
-                        <Text fontSize="3xl">Select your interest</Text>
-                        <Text fontSize="sm" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
+                        <Heading fontSize="4xl">Select your interest</Heading>
+                        <Text fontSize="md" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
                         <Button
                             mt={3}
                             marginBottom={10}
-                            _text={{ color: "text.100" }}
-                            bgColor="primary.750"
                             onPress={handleSavePreferences}
                         >
                             SAVE FAVOURITES

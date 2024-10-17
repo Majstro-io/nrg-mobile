@@ -54,7 +54,7 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
             padding={2}
           >
             <HStack justifyContent="space-between" alignItems="center">
-              <Text color={'text.100'} fontSize="md" mb={2} flex={0.9} isTruncated>
+              <Text color={'text.100'} fontStyle={'medium'} fontSize="md" mb={2} flex={0.9} isTruncated>
                 {title}
               </Text>
               <IconButton

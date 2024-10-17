@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton, Image } from 'native-base';
+import { View, Spinner, Box, VStack, HStack, Text, FavouriteIcon, IconButton, Image, Heading } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 
 import ActivityCard from '../../components/activityCard/activityCard';
@@ -156,8 +156,8 @@ const ActivitiesPage = () => {
 
           </HStack>
 
-          <VStack space={4} alignItems="center" flex={1}>
-            <Text fontSize="4xl" >Activities</Text>
+          <VStack space={5} alignItems="center" flex={1}>
+            <Heading fontSize="4xl" >Activities</Heading>
             {isLoading ? (
               <Spinner size="lg" />
             ) : (

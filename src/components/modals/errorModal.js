@@ -1,4 +1,4 @@
-import { Button, Modal, Text, VStack, HStack, Box } from "native-base";
+import { Button, Modal, Text, VStack, HStack, Box, Heading } from "native-base";
 
 const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible, onConfirm }) => {
 
@@ -14,9 +14,9 @@ const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
             <Modal.Content>
                 <VStack space={0}>
                     <Box p={4}>
-                        <Text mb={3} fontSize="lg" textAlign="center">
+                        <Heading mb={3} fontSize="2xl" textAlign="center">
                             {errorTitle || "Error"}
-                        </Text>
+                        </Heading>
                         <Text fontSize="md" textAlign="center">
                             {errorDescription}
                         </Text>
@@ -30,7 +30,7 @@ const ErrorModal = ({ errorTitle, errorDescription, visible, setVisible, onConfi
                             variant="outline"
                             _text={{ color: 'red.500', fontSize: 'md' }}
                             onPress={onConfirmAction}>
-                            Ok
+                            OK
                         </Button>
                     </HStack>
                 </VStack>

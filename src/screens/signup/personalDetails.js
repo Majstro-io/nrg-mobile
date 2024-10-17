@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { HttpStatusCode } from "axios";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, Progress, HStack, FormControl } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, Progress, HStack, FormControl, Heading } from "native-base";
 
 import navigationconstants from "../../constants/navigationConstants";
 import validationUtils from "../../utils/validationUtils";
@@ -14,6 +14,7 @@ import { setUserData } from "../../store/slices/userSlice";
 import userPreferencesService from "../../services/userPreferencesService";
 import defaultUserPreferencesData from "../../data/defaultUserPreferences.json"
 import DateInput from "../../components/inputs/dateInput";
+import NrgHeader from "../../components/header/nrgHeader";
 
 const PersonalDetails = ({ route }) => {
     const { email, mobileNo } = route.params;
@@ -116,11 +117,9 @@ const PersonalDetails = ({ route }) => {
                 </HStack>
                 <Center>
                     <VStack space={2} alignItems="center"  >
-
-                        <Text bold fontSize="2xl" mb={3}>NRG Remix</Text>
-                        <Text fontSize="3xl" >Add profile info</Text>
-                        <Text fontSize="sm" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
-
+                    <NrgHeader marginTop="5" />
+                        <Heading fontSize="4xl" >Add profile info</Heading>
+                        <Text fontSize="md" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
                         <VStack space={1} alignItems="center">
                             <FormControl>
                                 <FormControl.Label>First Name</FormControl.Label>
@@ -195,8 +194,6 @@ const PersonalDetails = ({ route }) => {
                                 mt={3}
                                 isLoading={isLoading}
                                 onPress={registerUser}
-                                _text={{ color: "text.100" }}
-                                bgColor="primary.750"
                             >
                                 NEXT
                             </Button>

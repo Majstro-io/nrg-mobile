@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { Box, Center, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
+import { Box, Center, Heading, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
@@ -20,7 +20,7 @@ const ActivityPage = ({ route }) => {
                 showsVerticalScrollIndicator={false}
             >
                 <Box position="relative" minHeight={height}>
-                    <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"back"} />
+                    <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"BACK"} />
                     <Image
                         source={{ uri: image }}
                         size="100%"
@@ -39,15 +39,15 @@ const ActivityPage = ({ route }) => {
                     >
                         <Center padding={10}>
                             <VStack space={5} alignItems="center">
-                                <Text fontSize="3xl" textAlign="center" >{activityName}</Text>
+                                <Heading fontSize="4xl" textAlign="center" >{activityName}</Heading>
                                 <VStack space={5} alignItems="center">
-                                    <Text mb={2} fontSize="md" textAlign="center" lineHeight="xs">{description}</Text>
+                                    <Text mb={2} fontSize="md" letterSpacing={0.8} textAlign="center" lineHeight="xs">{description}</Text>
                                     <HStack justifyContent="center" alignItems="center" >
                                         <RoundButton
                                             color={"base.500"}
                                             size={0.3}
                                             onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
-                                            text={"Start"}
+                                            text={"START"}
                                         />
                                     </HStack>
                                 </VStack>

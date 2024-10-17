@@ -176,9 +176,9 @@ const LoginPage = () => {
                             <VStack space={3} alignItems="center">
                                 <NrgHeader marginTop="0" />
                                 <VStack space={0} alignItems="center">
-                                    <Text fontSize="4xl" fontStyle={'normal'} textAlign="center" lineHeight="xs" mb={4}>
+                                    <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>
                                         Discover a Healthier {'\n'} Stronger you
-                                    </Text>
+                                    </Heading>
                                 </VStack>
                                 <Input
                                     mx="10"
@@ -216,7 +216,7 @@ const LoginPage = () => {
                         label3={"Don’t have an account?"}
                         label4={"Join Now"}
                         instructions={`Enter the OTP sent to ${mobile}`}
-                        confirmButtonText={"Verify and Login"}
+                        confirmButtonText={"VERIFY AND LOGIN"}
                         modalVisible={otpModalVisible}
                         setModalVisible={setOtpModalVisible}
                         onConfirm={validateUser}

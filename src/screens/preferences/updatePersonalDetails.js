@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, FormControl, KeyboardAvoidingView } from "native-base";
+import { ScrollView, View, Button, CheckIcon, Input, Select, VStack, Center, Text, FormControl, KeyboardAvoidingView, Heading } from "native-base";
 
 import userService from "../../services/userService";
 import log from "../../config/logger";
@@ -73,8 +73,8 @@ const UpdatePersonalDetails = () => {
                     <Center>
                         <VStack space={2} alignItems="center" mt={10}>
                             <NrgHeader />
-                            <Text fontSize="3xl" >Update Profile</Text>
-                            <Text fontSize="sm" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
+                            <Heading fontSize="4xl" >Update Profile</Heading>
+                            <Text fontSize="md" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
 
                             <VStack space={1} alignItems="center">
                                 <FormControl>
@@ -148,8 +148,6 @@ const UpdatePersonalDetails = () => {
                                 <Button
                                     mt={3}
                                     width="72"
-                                    _text={{ color: "text.100" }}
-                                    bgColor="primary.750"
                                     isLoading={isLoading}
                                     onPress={updateUserData}
                                 >
