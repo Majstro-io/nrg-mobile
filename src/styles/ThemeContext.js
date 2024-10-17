@@ -311,12 +311,12 @@ const defaultTheme = extendTheme({
     Select: {
         baseStyle: {
           _selectedItem: {
-            bg: 'background.500',  
+            bg: 'base.200',  
             endIcon: <CheckIcon size="5" />,
           },
           color: 'text.100',
           _item: {
-            bg: 'base.200',  
+            bg: 'background.500',  
             color: 'text.100',
             _pressed: {
               bg: 'base.100',  

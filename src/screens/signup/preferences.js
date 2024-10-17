@@ -132,12 +132,12 @@ const Preferences = ({ route }) => {
                 isLoading={loading}
                 onPress={() => handleOnDone()}
                 _text={{ color: "text.100" }}
-                bgColor="primary.750"
               >
                 DONE
               </Button>
 
 
+              {/* TODO: refactor to component */}
               <HStack space={2}>
                 <Progress
                   mt={5}
