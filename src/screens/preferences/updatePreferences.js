@@ -12,6 +12,7 @@ import ErrorModal from "../../components/modals/errorModal";
 import assistantOptions from "../../data/assistantOptions.json"
 import NrgHeader from "../../components/header/nrgHeader";
 import BottomNavigator from "../../components/footer/bottomNavigation";
+import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 
 const UpdatePreferences = ({ route }) => {
   const { isRegistration } = route.params || false;
@@ -94,6 +95,7 @@ const UpdatePreferences = ({ route }) => {
         scrollEnabled={false}
         keyboardShouldPersistTaps='handled'
       >
+      <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"BACK"} fontColor={"text.100"} iconColor={"primary.100"} />
         <Center>
           <VStack space={2} alignItems="center" mt={10}>
             <NrgHeader />
@@ -111,9 +113,6 @@ const UpdatePreferences = ({ route }) => {
                     placeholder="Select Voice Preference"
                     _selectedItem={{
                       endIcon: <CheckIcon size="5" />,
-                    }}
-                    _placeholder={{
-                      color: "gray.400",
                     }}
                     width="72"
                   >
@@ -147,7 +146,7 @@ const UpdatePreferences = ({ route }) => {
                 width="72"
                 isLoading={loading}
                 onPress={() => handleOnDone()}>
-                DONE
+                UPDATE
               </Button>
 
               {isRegistration && <>
@@ -180,8 +179,6 @@ const UpdatePreferences = ({ route }) => {
           </VStack>
         </Center>
       </ScrollView>
-      <BottomNavigator />
-
     </View>
   );
 };

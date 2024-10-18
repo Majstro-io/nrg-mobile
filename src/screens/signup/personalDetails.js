@@ -104,7 +104,7 @@ const PersonalDetails = ({ route }) => {
         <View style={{ flex: 1 }}>
             <ErrorModal
                 errorDescription={errorModalMessage}
-                errorTitle={"Fill all the fields"}
+                errorTitle={"Error"}
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
@@ -118,11 +118,11 @@ const PersonalDetails = ({ route }) => {
                 <Center>
                     <VStack space={2} alignItems="center"  >
                     <NrgHeader marginTop="5" />
-                        <Heading fontSize="4xl" >Add profile info</Heading>
+                        <Heading fontSize="4xl" >Add Profile Info</Heading>
                         <Text fontSize="md" textAlign="center">Add profile information to get a personalized {'\n'}experience</Text>
                         <VStack space={1} alignItems="center">
                             <FormControl>
-                                <FormControl.Label>First Name</FormControl.Label>
+                                <FormControl.Label _text={{ color: "text.100" }}>First Name</FormControl.Label>
                                 <Input
                                     width="72"
                                     placeholder="First Name"
@@ -132,7 +132,7 @@ const PersonalDetails = ({ route }) => {
                             </FormControl>
 
                             <FormControl>
-                                <FormControl.Label>Last Name</FormControl.Label>
+                                <FormControl.Label _text={{ color: "text.100" }}>Last Name</FormControl.Label>
                                 <Input
                                     width="72"
                                     placeholder="Last Name"
@@ -142,7 +142,7 @@ const PersonalDetails = ({ route }) => {
                             </FormControl>
 
                             <FormControl>
-                                <FormControl.Label>Date of Birth (YYYY-MM-DD)</FormControl.Label>
+                                <FormControl.Label _text={{ color: "text.100" }}>Date of Birth (YYYY-MM-DD)</FormControl.Label>
                                 <DateInput
                                     onChange={data => setUserRegistrationData({ ...userRegistrationData, dob: data })}
                                     value={userRegistrationData.dob}
@@ -151,25 +151,22 @@ const PersonalDetails = ({ route }) => {
                             </FormControl>
 
                             <FormControl>
-                                <FormControl.Label>Gender</FormControl.Label>
+                                <FormControl.Label _text={{ color: "text.100" }}>Gender</FormControl.Label>
                                 <Select
                                     isReadOnly
                                     selectedValue={userRegistrationData.gender}
                                     onValueChange={gender => setUserRegistrationData({ ...userRegistrationData, gender: gender })}
                                     width="72"
                                     placeholder="Select Gender"
-                                    _selectedItem={{
-                                        endIcon: <CheckIcon size="5" />
-                                    }}
                                 >
-                                    <Select.Item label="Male" value="MALE" />
-                                    <Select.Item label="Female" value="FEMALE" />
-                                    <Select.Item label="Other" value="OTHER" />
+                                    <Select.Item _text={{ color: "text.100" }} label="Male" value="MALE" />
+                                    <Select.Item _text={{ color: "text.100" }}label="Female" value="FEMALE" />
+                                    <Select.Item _text={{ color: "text.100" }} label="Other" value="OTHER" />
                                 </Select>
                             </FormControl>
 
                             <FormControl>
-                                <FormControl.Label>Weight (kg)</FormControl.Label>
+                                <FormControl.Label _text={{ color: "text.100" }}>Weight (kg)</FormControl.Label>
                                 <Input
                                     width="72"
                                     placeholder="Weight (kg)"
@@ -180,7 +177,7 @@ const PersonalDetails = ({ route }) => {
                             </FormControl>
 
                             <FormControl>
-                                <FormControl.Label>Height (cm)</FormControl.Label>
+                                <FormControl.Label _text={{ color: "text.100" }}>Height (cm)</FormControl.Label>
                                 <Input
                                     width="72"
                                     placeholder="Height (cm)"

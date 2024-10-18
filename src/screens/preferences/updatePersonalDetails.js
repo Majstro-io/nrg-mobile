@@ -11,6 +11,7 @@ import NrgHeader from "../../components/header/nrgHeader";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import navigationconstants from "../../constants/navigationConstants";
 import BottomNavigator from "../../components/footer/bottomNavigation";
+import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
 
 const UpdatePersonalDetails = () => {
     const dispatch = useDispatch();
@@ -64,66 +65,64 @@ const UpdatePersonalDetails = () => {
                 setVisible={setErrorModalVisible}
                 visible={errorModalVisible}
             />
- 
-                <ScrollView
-                    scrollEnabled={true}
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    keyboardShouldPersistTaps='handled'
-                >
-                    <Center>
-                        <VStack space={2} alignItems="center" mt={10}>
-                            <NrgHeader />
-                            <Heading fontSize="4xl" >Update Profile</Heading>
-                            <Text fontSize="md" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
 
-                            <VStack space={1} alignItems="center">
-                                <FormControl>
-                                    <FormControl.Label>First Name</FormControl.Label>
-                                    <Input
-                                        width="72"
-                                        placeholder="First Name"
-                                        value={userData.firstName}
-                                        onChangeText={data => dispatch(updateUserDataField({ key: 'firstName', value: data }))}
-                                    />
-                                </FormControl>
+            <ScrollView
+                scrollEnabled={true}
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps='handled'
+            >
+                <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"BACK"} fontColor={"text.100"} iconColor={"primary.100"} />
+                <Center>
+                    <VStack space={2} alignItems="center" mt={10}>
+                        <NrgHeader />
+                        <Heading fontSize="4xl" >Update Profile</Heading>
+                        <Text fontSize="md" textAlign="center">Update profile information to get a personalized {'\n'}experience</Text>
 
-                                <FormControl>
-                                    <FormControl.Label>Last Name</FormControl.Label>
-                                    <Input
-                                        width="72"
-                                        placeholder="Last Name"
-                                        value={userData.lastName}
-                                        onChangeText={data => dispatch(updateUserDataField({ key: 'lastName', value: data }))}
-                                    />
-                                </FormControl>
+                        <VStack space={1} alignItems="center">
+                            <FormControl>
+                                <FormControl.Label _text={{ color: "text.100" }}>First Name</FormControl.Label>
+                                <Input
+                                    width="72"
+                                    placeholder="First Name"
+                                    value={userData.firstName}
+                                    onChangeText={data => dispatch(updateUserDataField({ key: 'firstName', value: data }))}
+                                />
+                            </FormControl>
 
-                                <FormControl>
-                                    <FormControl.Label>Date of Birth (YYYY-MM-DD)</FormControl.Label>
-                                    <DateInput
-                                        onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
-                                        value={userData?.dob}
-                                    />
-                                </FormControl>
+                            <FormControl>
+                                <FormControl.Label _text={{ color: "text.100" }}>Last Name</FormControl.Label>
+                                <Input
+                                    width="72"
+                                    placeholder="Last Name"
+                                    value={userData.lastName}
+                                    onChangeText={data => dispatch(updateUserDataField({ key: 'lastName', value: data }))}
+                                />
+                            </FormControl>
 
-                                <FormControl>
-                                    <FormControl.Label>Gender</FormControl.Label>
-                                    <Select
-                                        isReadOnly
-                                        selectedValue={userData.gender}
-                                        onValueChange={data => dispatch(updateUserDataField({ key: 'gender', value: data }))}
-                                        width="72"
-                                        placeholder="Select Gender"
-                                        _selectedItem={{
-                                            endIcon: <CheckIcon size="5" />
-                                        }}
-                                    >
-                                        <Select.Item label="Male" value="MALE" />
-                                        <Select.Item label="Female" value="FEMALE" />
-                                        <Select.Item label="Other" value="OTHER" />
-                                    </Select>
-                                </FormControl>
+                            <FormControl>
+                                <FormControl.Label _text={{ color: "text.100" }}>Date of Birth (YYYY-MM-DD)</FormControl.Label>
+                                <DateInput
+                                    onChange={data => dispatch(updateUserDataField({ key: 'dob', value: data }))}
+                                    value={userData?.dob}
+                                />
+                            </FormControl>
 
-                                {/* <FormControl>
+                            <FormControl>
+                                <FormControl.Label _text={{ color: "text.100" }}>Gender</FormControl.Label>
+                                <Select
+                                    isReadOnly
+                                    selectedValue={userData.gender}
+                                    onValueChange={data => dispatch(updateUserDataField({ key: 'gender', value: data }))}
+                                    width="72"
+                                    placeholder="Select Gender"
+                                >
+                                    <Select.Item _text={{ color: "text.100" }} label="Male" value="MALE" />
+                                    <Select.Item _text={{ color: "text.100" }} label="Female" value="FEMALE" />
+                                    <Select.Item _text={{ color: "text.100" }} label="Other" value="OTHER" />
+                                </Select>
+                            </FormControl>
+
+                            {/* <FormControl>
                                     <FormControl.Label>Weight (kg)</FormControl.Label>
                                     <Input
                                         width="72"
@@ -145,19 +144,18 @@ const UpdatePersonalDetails = () => {
                                     />
                                 </FormControl> */}
 
-                                <Button
-                                    mt={3}
-                                    width="72"
-                                    isLoading={isLoading}
-                                    onPress={updateUserData}
-                                >
-                                    SAVE
-                                </Button>
-                            </VStack>
+                            <Button
+                                mt={3}
+                                width="72"
+                                isLoading={isLoading}
+                                onPress={updateUserData}
+                            >
+                                UPDATE
+                            </Button>
                         </VStack>
-                    </Center>
-                </ScrollView>
-             <BottomNavigator />
+                    </VStack>
+                </Center>
+            </ScrollView>
         </View>
     );
 };

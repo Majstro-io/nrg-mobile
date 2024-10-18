@@ -18,7 +18,6 @@ import OTPInputModal from "../../components/modals/OtpInputModal";
 import authUtils from "../../utils/authUtils";
 import useKeyboard from "../../hooks/useKeyboard";
 import NrgHeader from "../../components/header/nrgHeader";
-import BottomNavigator from "../../components/footer/bottomNavigation";
 
 const { width, height } = Dimensions.get('window');
 
@@ -177,7 +176,7 @@ const LoginPage = () => {
                                 <NrgHeader marginTop="0" />
                                 <VStack space={0} alignItems="center">
                                     <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>
-                                        Discover a Healthier {'\n'} Stronger you
+                                        Discover a Healthier {'\n'} Stronger You
                                     </Heading>
                                 </VStack>
                                 <Input

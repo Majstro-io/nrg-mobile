@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, Input, FormControl, } from "native-base";
+import { ScrollView, View, Button, Center, CheckIcon, Select, VStack, Text, Box, Progress, HStack, Input, FormControl, Heading, } from "native-base";
 
 import { useTheme } from "../../styles/ThemeContext";
 import navigationconstants from "../../constants/navigationConstants";
@@ -80,30 +80,25 @@ const Preferences = ({ route }) => {
       />
       <ScrollView scrollEnabled={false}>
         <Center>
-          <VStack space={2} alignItems="center">
+          <VStack space={2} alignItems="center" mt={5} mx={2} flex={1}>
             <NrgHeader />
-            <Text fontSize="3xl">Preferences</Text>
+            <Heading fontSize="4xl" >Preferences</Heading>
             <Text fontSize="sm" textAlign="center">Add preferences to get a personalized experience {'\n'} during your activity.</Text>
             <VStack space={5} alignItems="center">
               <Box w="72" mt={5}>
                 <FormControl>
-                  <FormControl.Label>Voice Preference</FormControl.Label>
+                  <FormControl.Label _text={{ color: "text.100" }}>Voice Preference</FormControl.Label>
                   <Select
                     defaultValue={userPreferences.assistant}
                     selectedValue={userPreferences.assistant}
                     onValueChange={(value) => dispatch(setAssistantVoice(value))}
                     isReadOnly
                     placeholder="Select Voice Preference"
-                    _selectedItem={{
-                      endIcon: <CheckIcon size="5" />,
-                    }}
-                    _placeholder={{
-                      color: "gray.400",
-                    }}
                     width="72"
                   >
                     {assistantOptions.content.assistants.map(assistant => (
                       <Select.Item
+                        _text={{ color: "text.100" }}
                         label={assistant?.name}
                         value={assistant?.id}
                         key={assistant?.id}
@@ -131,7 +126,6 @@ const Preferences = ({ route }) => {
                 mt={3}
                 isLoading={loading}
                 onPress={() => handleOnDone()}
-                _text={{ color: "text.100" }}
               >
                 DONE
               </Button>

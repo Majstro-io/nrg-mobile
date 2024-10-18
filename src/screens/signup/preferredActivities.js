@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView, View, VStack, Center, Text, Progress, HStack, Spinner, Button, Heading } from "native-base";
+import { ScrollView, View, VStack, Center, Text, Progress, HStack, Spinner, Button, Heading, Box } from "native-base";
+import { Dimensions } from 'react-native';
 
 import navigationconstants from "../../constants/navigationConstants";
 import InterestCard from "../../components/interestsCard/interestCard";
@@ -13,6 +14,7 @@ import log from "../../config/logger";
 import NrgHeader from "../../components/header/nrgHeader";
 
 const PreferredActivities = ({ route }) => {
+    const { width, height } = Dimensions.get('window');
     const { isRegistration } = route.params || false;
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -103,38 +105,47 @@ const PreferredActivities = ({ route }) => {
                 visible={errorModalVisible}
             />
             <ScrollView scrollEnabled={true}>
-                <HStack justifyContent="flex-end" alignItems="center" mt={5} mx={2} flex={1}>
 
-                </HStack>
                 <Center>
-                    <VStack space={2} alignItems="center"  >
+                    <VStack space={2} alignItems="center" mt={5} mx={2} flex={1} >
 
                         <NrgHeader actionButtonText={"Done"} />
-                        <Heading fontSize="4xl">Select your interest</Heading>
+                        <Heading fontSize="4xl">Select Your Interest</Heading>
                         <Text fontSize="md" textAlign="center">Add preferences to get a personalized experience{`\n`}during your activity.</Text>
-                        <Button
-                            mt={3}
-                            marginBottom={10}
-                            onPress={handleSavePreferences}
-                        >
-                            SAVE FAVOURITES
-                        </Button>
-                        <VStack space={5} alignItems="center" mt={2}>
-                            {isLoading ? <Spinner size={'lg'} /> :
-                                activityRows.map((row) => (
-                                    <HStack key={row?.id} space={2}>
-                                        {row?.activities?.map(activity => (
-                                            <InterestCard
-                                                key={activity?.id}
-                                                name={activity?.name}
-                                                imageSource={activity?.icon}
-                                                select={new Set(userPreferences?.favouriteIds)?.has(activity?.id) || false}
-                                                onPress={() => dispatch(addUserFavouriteActivity(activity?.id))}
-                                            />
-                                        ))}
-                                    </HStack>
-                                ))
-                            }
+
+                        <VStack space={3} alignItems="center" mt={2}>
+                            <Box >
+                                {isLoading ? (
+                                    <Spinner size={'lg'} />
+                                ) : (
+                                    <Box height={height/2} overflow="hidden">
+                                        <ScrollView showsVerticalScrollIndicator={true} persistentScrollbar={true}>
+                                            {activityRows.map((row) => (
+                                                <HStack key={row?.id} space={2} mb={4}>
+                                                    {row?.activities?.map((activity) => (
+                                                        <InterestCard
+                                                            key={activity?.id}
+                                                            name={activity?.name}
+                                                            imageSource={activity?.icon}
+                                                            select={new Set(userPreferences?.favouriteIds)?.has(activity?.id) || false}
+                                                            onPress={() => dispatch(addUserFavouriteActivity(activity?.id))}
+                                                        />
+                                                    ))}
+                                                </HStack>
+                                            ))}
+                                        </ScrollView>
+                                    </Box>
+                                )}
+                            </Box>
+
+
+                            <Button
+                                onPress={handleSavePreferences}
+                            >
+                                SAVE FAVOURITES
+                            </Button>
+
+                            {/* TODO: move to component */}
                             {isRegistration && <>
                                 <HStack space={2}>
                                     <Progress

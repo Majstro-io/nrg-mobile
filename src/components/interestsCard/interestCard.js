@@ -15,7 +15,7 @@ const InterestCard = ({ name, imageSource, onPress, select }) => {
       borderWidth={select ? 3 : 0}
       borderColor={select ? "base.500" : "transparent"}
       position="relative"
-      bgColor={select ? "black.50" : "transparent"}
+      bgColor={"transparent"}
     >
       <Pressable
         rounded="2xl"
@@ -31,7 +31,7 @@ const InterestCard = ({ name, imageSource, onPress, select }) => {
           <Image
             source={blackFade}
             alt="Black Fade"
-            style={{ width: '100%', height: '100%', opacity: select ? 0.2 : 1 }}  
+            style={{ width: '100%', height: '100%' }}
             resizeMode="stretch"
             position="absolute"
             top={0}
@@ -39,11 +39,10 @@ const InterestCard = ({ name, imageSource, onPress, select }) => {
             zIndex={1}
           />
 
-          {/* Main image */}
           <Image
             source={{ uri: imageSource }}
             alt="Activity Image"
-            style={{ width: '100%', height: '100%', opacity: select ? 0.2 : 1 }} 
+            style={{ width: '100%', height: '100%' }}
             resizeMode="cover"
             position="absolute"
             top={0}
@@ -59,39 +58,28 @@ const InterestCard = ({ name, imageSource, onPress, select }) => {
               width="100%"
               height="100%"
               bgColor="black"
-              opacity={0.3} 
+              opacity={0.3}
               zIndex={2}
             />
           )}
 
-      <Box
-        position="absolute"
-        bottom="0"
-        width="100%"
-        zIndex={3}
-      >
-        <HStack
-          space={4}
-          justifyContent="space-between"
-          alignItems="center"
-          padding={2}
-        >
-          <Text fontSize="md" mb={2} mx={1} color={select ? "black.800" : "black.10"}>
-            {name}
-          </Text>
-        </HStack>
-      </Box>
-
-      {select && (
-        <Box
-          position="absolute"
-          top="2"
-          right="2"
-          zIndex="4"
-        >
-          <CheckCircleIcon size="6" color="base.500" />
-        </Box>
-      )}
+          <Box
+            position="absolute"
+            bottom="0"
+            width="100%"
+            zIndex={3}
+          >
+            <HStack
+              space={4}
+              justifyContent="space-between"
+              alignItems="center"
+              padding={2}
+            >
+              <Text fontSize="md" mb={2} mx={1} color={"text.100"}>
+                {name}
+              </Text>
+            </HStack>
+          </Box>
         </Box>
       </Pressable>
     </Box>

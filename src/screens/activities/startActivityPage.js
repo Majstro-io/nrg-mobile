@@ -301,7 +301,7 @@ const StartActivityPage = ({ route }) => {
 
     return (
 
-        <View style={{ flex: 1 }} bg="base.400" >
+        <View style={{ flex: 1 }} bg="base.500" >
             <ErrorModal
                 errorDescription={errorModalText}
                 errorTitle={errorModalTitle}
@@ -320,10 +320,10 @@ const StartActivityPage = ({ route }) => {
                             {/* Display when BPM and km is tracked */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}BPM</Text> */}
                             {/* <Text fontSize="xl" textAlign="center"  >- -{`\n`}Km</Text> */}
-                            <Heading color={'heading.900'} fontSize="4xl" textAlign="center"  >{activityName}</Heading>
+                            <Heading color={'text.900'} fontSize="4xl" textAlign="center"  >{activityName}</Heading>
                         </HStack>
                         <Box mt="24" alignItems="center">
-                            <Heading color={'heading.900'} fontSize="6xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
+                            <Heading color={'text.900'} fontSize="7xl" mb="2">{conversionUtils.formatTime(timer)}</Heading >
                             {/* display when total time for activity is tracked, TODO: move this to a component */}
                             {/* <Progress
                                 width="72"

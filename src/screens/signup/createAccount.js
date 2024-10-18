@@ -105,7 +105,7 @@ const CreateAccount = () => {
                         <VStack space={2} alignItems="center">
                             <NrgHeader marginTop="0" />
                             <VStack space={0} alignItems="center">
-                                <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Create an account</Heading>
+                                <Heading fontSize="4xl" textAlign="center" lineHeight="xs" mb={4}>Create an Account</Heading>
                                 <Text fontSize="md" textAlign="center" lineHeight="xs" mb={4}>
                                     We will send you the
                                     <Text fontWeight="bold"> 5 digit</Text>
@@ -144,13 +144,13 @@ const CreateAccount = () => {
                 {/* OTP Validation Modal TODO: refactor */}
                 <OTPInputModal
                     buttonText={"Login"}
-                    label={`Enter OTP to ${'\n'}Validate your phone`}
+                    label={`Enter OTP to ${'\n'}Validate Your Phone`}
                     label1={"Don’t receive OTP?"}
                     label2={"Send Again"}
-                    label3={"Don’t have an account?"}
+                    label3={"Don’t Have an Account?"}
                     label4={"Join Now"}
                     instructions={`Enter the OTP sent to ${phoneNumber}`}
-                    confirmButtonText={"CONFRIM"}
+                    confirmButtonText={"VERIFY"}
                     modalVisible={otpModalVisible}
                     setModalVisible={setOtpModalVisible}
                     onConfirm={procceedToRegistration}

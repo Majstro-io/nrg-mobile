@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import { Box, Center, Heading, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
+import { Box, Button, Center, Heading, HStack, Image, ScrollView, Text, View, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 import NrgTitleAppBar from "../../components/appbars/nrgTitleAppBar";
@@ -19,44 +19,45 @@ const ActivityPage = ({ route }) => {
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
             >
-                <Box position="relative" minHeight={height}>
-                    <NrgTitleAppBar backNavigateTo={navigationconstants.PAGES.activities} title={"BACK"} />
-                    <Image
-                        source={{ uri: image }}
-                        size="100%"
-                        height="60%"
-                        width="100%"
-                        position="absolute"
-                        zIndex={-1}
-                        alt="Activity Image"
-                    />
-                    <Box
-                        top={250}
-                        bg="background.200"
-                        borderTopRadius={45}
-                        minWidth={width}
-                        minHeight={height}
-                    >
-                        <Center padding={10}>
-                            <VStack space={5} alignItems="center">
-                                <Heading fontSize="4xl" textAlign="center" >{activityName}</Heading>
-                                <VStack space={5} alignItems="center">
-                                    <Text mb={2} fontSize="md" letterSpacing={0.8} textAlign="center" lineHeight="xs">{description}</Text>
-                                    <HStack justifyContent="center" alignItems="center" >
-                                        <RoundButton
-                                            color={"base.500"}
-                                            size={0.3}
-                                            onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
-                                            text={"START"}
-                                        />
-                                    </HStack>
-                                </VStack>
+                <Box position="relative" minHeight={height} flex={1}>
+                    <VStack flex={1} space={4} padding={5} bg="gray.900">
+                        <Box borderRadius="xl" p={0}>
+                            <NrgTitleAppBar
+                                backNavigateTo={navigationconstants.PAGES.activities}
+                                title={"BACK"}
+                                iconColor={'primary.100'}
+                                fontColor={"text.100"}
+                                position="absolute"
+                            />
+                        </Box>
+                        <Box bg="gray.800" borderRadius="xl" overflow="hidden" position="relative" height={200}>
+                            <Image
+                                source={{ uri: image }}
+                                alt="Activity Image"
+                                height="100%"
+                                width="100%"
+                                resizeMode="cover"
+                                position="absolute"
+                                zIndex={-1}
+                            />
+                        </Box>
+                        <Box bg="gray.800" borderRadius="lg" p={5} flex={0.5}>
+                            <VStack space={3} alignItems="center" flex={1}>
+                                <Heading fontSize="3xl" textAlign="center">{activityName}</Heading>
+                                <Text  mb={2} fontSize="md" letterSpacing={0.8} textAlign="center" lineHeight="xs">{description}</Text>
+                                <Box flex={0.8} />
+                                <RoundButton
+                                    color={"base.500"}
+                                    size={0.3}
+                                    onPress={() => navigation.navigate(navigationconstants.PAGES.start, { id, activityName, image, description })}
+                                    text={"START"}
+                                />
                             </VStack>
-                        </Center>
-                    </Box>
+                        </Box>
+                        
+                    </VStack>
                 </Box>
             </ScrollView>
-            <BottomNavigator />
         </View>
     );
 };

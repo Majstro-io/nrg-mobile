@@ -18,7 +18,7 @@ const NrgActivitiesAppBar = ({ onFavouriteToggle, isFavourite }) => {
                     <IconButton
                         icon={<FavouriteIcon />}
                     />
-                    <Switch onTrackColor={"primary.700"} value={isFavourite} onToggle={onFavouriteToggle} size="sm" />
+                    <Switch onTrackColor={"black.700"} value={isFavourite} onToggle={onFavouriteToggle} size="sm" />
                 </HStack>
             </HStack>
         </View>

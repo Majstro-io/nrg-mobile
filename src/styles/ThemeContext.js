@@ -1,9 +1,48 @@
 import React, { createContext, useState, useContext, useMemo } from 'react';
-import { CheckIcon, extendTheme, NativeBaseProvider } from 'native-base';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import { useSelector } from 'react-redux';
 
 const defaultTheme = extendTheme({
   colors: {
+    primary: {
+      100: '#FFFFFF',
+      200: '#DEDEE2',
+      300: '#C8C8CE',
+      400: '#B2B2BA',
+      500: '#9D9DA6',
+      600: '#868690',
+      700: '#5E5E66',
+      800: '#3F3F47',
+      900: '#1B1B23',
+      1000: '#0b0b17',
+    },
+
+    text: {
+      100: '#ffffff',
+      300: '#B1B1B1',
+      600: '#2D2D35',
+      900: '#000000'
+    },
+
+    background: {
+      100: '#0F1511',
+      200: '#2d2d35'
+    },
+
+    base: {
+      50: '#5BE49B',
+      100: '#5BE49B',
+      200: '#5BE49B',
+      300: '#5BE49B',
+      400: '#5BE49B',
+      500: '#5BE49B',
+      600: '#5BE49B',
+      700: '#5BE49B',
+      800: '#5BE49B',
+      900: '#5BE49B',
+      1000: '#5BE49B'
+    },
+
     black: {
       10: '#FFFFFF',
       50: '#F4F4F6',
@@ -18,62 +57,6 @@ const defaultTheme = extendTheme({
       800: '#1B1B23',
       850: '#0b0b17', // button
     },
-
-    inputFont: {
-      300: '#B1B1B1',
-    },
-
-    text: {
-      100: '#ffffff',
-      300: '#B1B1B1',
-      600: '#2D2D35',
-      900: '#0b0b17'
-    },
-
-    heading: {
-      100: '#ffffff',
-      900: '#151515'
-    },
-
-    background: {
-      100: '#0F1511',
-      200: '#2d2d35'
-    },
-
-    white: {
-      100: '#FFFFFF',
-      200: '#F8F8F8',
-      300: '#E8E8E8',
-      800: '#C0C0C0',
-    },
-
-    primary: {
-      50: '#F7F7F7',
-      100: '#E1E1E1',
-      200: '#CFCFCF',
-      300: '#B1B1B1',
-      400: '#9E9E9E',
-      500: '#7E7E7E',
-      600: '#4A4A4A',
-      700: '#2E2E2E',
-      750: '#2D2D35', // card
-      800: '#000000',
-    },
-
-    base: {
-      50: '#F6FFE5',
-      100: '#ECFFC7',
-      200: '#E2FFAA',
-      300: '#D5FF8B',
-      400: '#CAFF71',
-      500: '#97ff00', // base default
-      600: '#B8E64F',
-      700: '#9ACC40',
-      800: '#7CB131',
-      900: '#5E9721',
-      1000: '#4B7A18'
-    },
-
 
     yellow: {
       50: '#FFF8E1',
@@ -204,7 +187,7 @@ const defaultTheme = extendTheme({
     },
     ModalHeader: {
       baseStyle: {
-        color: 'white.100',
+        color: 'primary.100',
         bg: 'background.200',
         borderColor: 'background.200'
       }
@@ -227,12 +210,12 @@ const defaultTheme = extendTheme({
     },
     Flex: {
       baseStyle: {
-        color: 'white.100',
+        color: 'primary.100',
       },
     },
     Divider: {
       baseStyle: {
-        backgroundColor: 'white.100',
+        backgroundColor: 'primary.100',
       },
     },
 
@@ -281,21 +264,14 @@ const defaultTheme = extendTheme({
       },
     },
 
-    FormControl: {
-      baseStyle: {
-        label: {
-          color: 'text.100',
-        },
-      },
-    },
 
     Input: {
       defaultProps: {
         color: 'text.100',
-        borderColor: 'black.300',
+        borderColor: 'primary.700',
         _focus: {
-          borderColor: "black.300",
-          backgroundColor: "black.800",
+          borderColor: "primary.700",
+          backgroundColor: "primary.900",
         },
         _input: {
           cursorColor: 'base.500',
@@ -309,19 +285,23 @@ const defaultTheme = extendTheme({
       },
     },
     Select: {
-        baseStyle: {
-          _selectedItem: {
-            bg: 'base.200',  
-            endIcon: <CheckIcon size="5" />,
-          },
+      baseStyle: {
+        _selectedItem: {
+          bg: 'primary.900',
           color: 'text.100',
-          _item: {
-            bg: 'background.500',  
+        },
+        _pressed: {
+          bg: 'primary.900',
+          color: 'text.100',
+        },
+        _item: {
+          bg: 'background.200',
+          color: 'text.100',
+          _pressed: {
+            bg: 'primary.900',
             color: 'text.100',
-            _pressed: {
-              bg: 'base.100',  
-            },
           },
+        },
       },
     },
     IconButton: {
@@ -336,23 +316,23 @@ const defaultTheme = extendTheme({
 
     Button: {
       defaultProps: {
-        backgroundColor: 'black.850',
+        backgroundColor: 'primary.1000',
         borderRadius: 25,
         width: "72",
         _loading: {
-          bg: 'black.850',
+          bg: 'primary.1000',
         },
         _text: {
           fontFamily: 'heading',
           fontStyle: 'bold',
-          letterSpacing: 1, 
+          letterSpacing: 1,
           color: 'base.500',
         },
         _pressed: {
-          bg: 'black.850',
+          bg: 'primary.1000',
         },
         _hover: {
-          bg: 'black.850',
+          bg: 'primary.1000',
         },
       },
     },
@@ -382,7 +362,6 @@ export const ThemeProvider = ({ children }) => {
   const userPreferences = useSelector((state) => state.userPreferences);
   const [theme, setTheme] = useState(userPreferences.theme || 'default');
 
-  // currently only one theme available
   const themeObject = useMemo(() => (defaultTheme), [theme]);
   const contextValue = useMemo(() => ({ theme, setTheme }), [theme]);
 

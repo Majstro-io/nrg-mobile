@@ -14,7 +14,7 @@ const RoundButton = ({ onPress, color, text, size, icon }) => {
             rounded="full"
             _icon={icon}
             onPress={onPress}
-            _text={{ fontSize: '2xl', color: 'black.800' }}
+            _text={{ fontSize: '2xl', color: 'text.100' }}
         >
             {text}
         </Button>

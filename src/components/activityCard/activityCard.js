@@ -27,7 +27,6 @@ const ActivityCard = ({ activityId, title, imageSource, onPress, style, hStackBg
       p="1"
       width={`${boxWidth}px`}
       height={`${boxHeight}px`}
-      bg="white"
     >
       <Pressable
         rounded="2xl"

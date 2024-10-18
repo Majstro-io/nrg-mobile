@@ -147,7 +147,8 @@ const ActivitiesPage = () => {
               alt="NRG Remix Logo"
               mb={3}
               height={'100%'}
-              width={'40%'}
+              width={'50%'}
+              resizeMode='contain'
             />
             <HStack space={5} justifyContent="space-between" alignItems="center">
               <IconButton icon={<FavouriteIcon size="xl" />} onPress={onFavouriteFilterPress} colorScheme={isOnlyFavourites ? "base" : "gray"} />
